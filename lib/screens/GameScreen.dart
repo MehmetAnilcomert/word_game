@@ -1,12 +1,15 @@
-// Game Screen
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
-import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/screens/ResultScreen.dart';
+import 'package:word_game/widgets/game_widgets/end_button.dart';
+import 'package:word_game/widgets/game_widgets/game_appbar.dart';
+import 'package:word_game/widgets/game_widgets/letters.dart';
+import 'package:word_game/widgets/game_widgets/scoreboard.dart';
+import 'package:word_game/widgets/game_widgets/word_input.dart';
 
 class GameScreen extends StatelessWidget {
   final String roomId;
@@ -36,56 +39,55 @@ class GameScreen extends StatelessWidget {
             final letters = List<String>.from(state.data['letters']);
             final scores = Map<String, int>.from(state.data['scores'] ?? {});
             return Scaffold(
-              appBar: AppBar(
-                title: Text(S.of(context).gameScreenTitle),
-                centerTitle: true,
-                leading: Container(),
-                backgroundColor: Colors.blue,
-              ),
-              body: Padding(
-                padding: const EdgeInsets.only(top: 20.0, bottom: 50.0),
-                child: Column(
-                  children: [
-                    Text(
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                      "${S.of(context).lettersLabel}: ${letters.join(", ")}",
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: scores.entries
-                            .map((e) => ListTile(
-                                  title: Text(e.key),
-                                  trailing: Text(e.value.toString()),
-                                ))
-                            .toList(),
+              body: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.blue[300]!, Colors.purple[300]!],
+                  ),
+                ),
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      buildGameAppBar(context),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Column(
+                            children: [
+                              buildLetters(letters, context),
+                              SizedBox(height: 20),
+                              buildScoreBoard(scores, context),
+                              buildWordInput(context, roomId, playerName),
+                              buildEndGameButton(context, roomId),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: TextField(
-                        onSubmitted: (word) {
-                          context
-                              .read<GameBloc>()
-                              .add(SubmitWord(roomId, playerName, word));
-                        },
-                        decoration:
-                            InputDecoration(labelText: S.of(context).enterWord),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<GameBloc>().add(EndGame(roomId));
-                      },
-                      child: Text(S.of(context).endGameButton),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
           }
 
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
+          return Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.blue[300]!, Colors.purple[300]!],
+                ),
+              ),
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
+            ),
+          );
         },
       ),
     );
