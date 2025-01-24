@@ -269,6 +269,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Rejoin into New Game`
+  String get reJoinButton {
+    return Intl.message(
+      'Rejoin into New Game',
+      name: 'reJoinButton',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

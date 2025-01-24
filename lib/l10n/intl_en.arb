@@ -21,6 +21,7 @@
     "roomCreationFailed": "Room creation failed. Please try another room id.",
     "roomJoinFailed": "Could not join the room. Please make sure you entered the correct room id.",
     "roomScreenTitleCreate": "Create Room",
-    "roomScreenTitleJoin": "Join Room"
+    "roomScreenTitleJoin": "Join Room",
+    "reJoinButton": "Rejoin into New Game"
   }
   

@@ -40,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "newGameButton":
             MessageLookupByLibrary.simpleMessage("Yeni Oyun Başlat"),
         "noWinner": MessageLookupByLibrary.simpleMessage("Kazanan Yok"),
+        "reJoinButton":
+            MessageLookupByLibrary.simpleMessage("Tekrar Oyuna Katıl"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Sonuçları"),
         "roomCreationFailed": MessageLookupByLibrary.simpleMessage(

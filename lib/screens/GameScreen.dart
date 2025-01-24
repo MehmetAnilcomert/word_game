@@ -69,7 +69,8 @@ class GameScreen extends StatelessWidget {
                               .read<GameBloc>()
                               .add(SubmitWord(roomId, playerName, word));
                         },
-                        decoration: InputDecoration(labelText: "Enter Word"),
+                        decoration:
+                            InputDecoration(labelText: S.of(context).enterWord),
                       ),
                     ),
                     ElevatedButton(

@@ -1,70 +1,82 @@
-// Result Screen
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:word_game/generated/l10n.dart';
-import 'package:word_game/screens/HomeScreen.dart';
-import 'package:word_game/screens/RoomScreen.dart';
+import 'package:confetti/confetti.dart';
+import 'package:word_game/widgets/result_widgets/button_widgets.dart';
+import 'package:word_game/widgets/result_widgets/score_table.dart';
+import 'package:word_game/widgets/result_widgets/winner.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   final Map<String, dynamic> data;
   ResultScreen({required this.data});
 
   @override
+  _ResultScreenState createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  late ConfettiController _confettiController;
+
+  @override
+  void initState() {
+    super.initState();
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 5));
+    _confettiController.play();
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final scores = Map<String, int>.from(data['scores'] ?? {});
+    final scores = Map<String, int>.from(widget.data['scores'] ?? {});
     final sortedScores = scores.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).resultScreenTitle),
-        centerTitle: true,
-        leading: Container(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              sortedScores.isNotEmpty
-                  ? "${S.of(context).winnerLabel}: ${sortedScores.first.key}"
-                  : "${S.of(context).winnerLabel}: ${S.of(context).noWinner}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.blue[300]!, Colors.purple[300]!],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  S.of(context).resultScreenTitle,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                buildWinnerCard(sortedScores, context),
+                SizedBox(height: 20),
+                buildScoreTable(sortedScores, context),
+                Spacer(),
+                buildButtons(context),
+                ConfettiWidget(
+                  confettiController: _confettiController,
+                  blastDirection: -pi / 2,
+                  emissionFrequency: 0.05,
+                  numberOfParticles: 20,
+                  gravity: 0.05,
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            Text(S.of(context).scoreTableLabel, style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
-            ...sortedScores.map((entry) => ListTile(
-                  title: Text(entry.key),
-                  trailing: Text(entry.value.toString()),
-                )),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RoomScreen(
-                                isCreateRoom: true,
-                              )));
-                },
-                child: Text(S.of(context).newGameButton),
-              ),
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                    (route) => false, // Remove all other routes
-                  );
-                },
-                child: Text(S.of(context).goHome),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

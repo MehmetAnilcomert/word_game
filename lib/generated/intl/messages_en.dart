@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Letters"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),
         "noWinner": MessageLookupByLibrary.simpleMessage("No Winner"),
+        "reJoinButton":
+            MessageLookupByLibrary.simpleMessage("Rejoin into New Game"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game Results"),
         "roomCreationFailed": MessageLookupByLibrary.simpleMessage(

@@ -21,6 +21,7 @@
     "roomCreationFailed": "Oda oluşturulamadı. Lütfen başka bir oda ismi deneyin.",
     "roomJoinFailed": "Odaya katılamadı. Lütfen doğru oda ID'si girdiğinizden emin olun.",
     "roomScreenTitleCreate": "Oda Oluştur",
-    "roomScreenTitleJoin": "Odaya Katıl"
+    "roomScreenTitleJoin": "Odaya Katıl",
+    "reJoinButton": "Tekrar Oyuna Katıl"
   }
   
