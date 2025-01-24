@@ -48,14 +48,17 @@ class GameScreen extends StatelessWidget {
                           .toList(),
                     ),
                   ),
-                  TextField(
-                    onSubmitted: (word) {
-                      context
-                          .read<GameBloc>()
-                          .add(SubmitWord(roomId, "Player1", word));
-                    },
-                    decoration:
-                        InputDecoration(labelText: S.of(context).enterWord),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextField(
+                      onSubmitted: (word) {
+                        context
+                            .read<GameBloc>()
+                            .add(SubmitWord(roomId, "Player1", word));
+                      },
+                      decoration:
+                          InputDecoration(labelText: S.of(context).enterWord),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {

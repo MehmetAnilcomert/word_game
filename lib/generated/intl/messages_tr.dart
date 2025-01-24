@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Harfler"),
         "newGameButton":
             MessageLookupByLibrary.simpleMessage("Yeni Oyun Başlat"),
+        "noWinner": MessageLookupByLibrary.simpleMessage("Kazanan Yok"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Sonuçları"),
         "roomScreenTitle":

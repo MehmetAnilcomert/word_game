@@ -1,5 +1,6 @@
 // Bloc Implementation
 import 'dart:async';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +9,29 @@ import 'package:word_game/bloc/gameBloc/GameStates.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   final FirebaseFirestore firestore;
+  final _random = Random(); // Required for random letter generation
   StreamSubscription? gameSubscription;
 
   GameBloc(this.firestore) : super(GameInitial()) {
+    on<CreateRoom>((event, emit) async {
+      emit(RoomCreating());
+
+      // Generate random letters for the game
+      final letters = _generateRandomLetters(length: 5);
+
+      // Create a game document in Firestore
+      final roomId = firestore.collection('games').doc().id;
+      await firestore.collection('games').doc(roomId).set({
+        'letters': letters,
+        'scores': {},
+        'usedWords': [],
+        'isActive': true,
+      });
+
+      // Notify the UI that the room has been created
+      emit(RoomCreated(roomId));
+    });
+
     on<StartGame>((event, emit) async {
       final game = await firestore.collection('games').doc(event.roomId).get();
       if (game.exists) {
@@ -62,6 +83,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         emit(GameOver(doc.data()!));
       }
     });
+  }
+
+  // Random Letters Generator
+  List<String> _generateRandomLetters({required int length}) {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return List.generate(
+        length, (_) => alphabet[_random.nextInt(alphabet.length)]);
   }
 
   @override

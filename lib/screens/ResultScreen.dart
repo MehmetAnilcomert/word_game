@@ -1,6 +1,7 @@
 // Result Screen
 import 'package:flutter/material.dart';
 import 'package:word_game/generated/l10n.dart';
+import 'package:word_game/screens/RoomScreen.dart';
 
 class ResultScreen extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -20,7 +21,9 @@ class ResultScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${S.of(context).winnerLabel}: ${sortedScores.first.key}",
+              sortedScores.isNotEmpty
+                  ? "${S.of(context).winnerLabel}: ${sortedScores.first.key}"
+                  : "${S.of(context).winnerLabel}: ${S.of(context).noWinner}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
@@ -33,7 +36,8 @@ class ResultScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => RoomScreen()));
               },
               child: Text(S.of(context).newGameButton),
             ),

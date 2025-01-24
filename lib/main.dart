@@ -7,7 +7,6 @@ import 'package:word_game/bloc/languageBloc.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/modals/language.dart';
 import 'package:word_game/screens/HomeScreen.dart';
-import 'package:word_game/screens/RoomScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +28,7 @@ class MyApp extends StatelessWidget {
         builder: (context, state) {
           Locale _locale = languageManager.locale;
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Word Game App',
             theme: ThemeData(
               primarySwatch: Colors.blue,

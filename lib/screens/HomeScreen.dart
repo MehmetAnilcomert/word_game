@@ -12,33 +12,38 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(S.of(context).appTitle),
         actions: [
-          ElevatedButton(
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.zero),
-              elevation: MaterialStateProperty.all(0), // No shadow
-              minimumSize: MaterialStateProperty.all(Size(50, 50)),
-            ),
-            onPressed: () {
-              // Toggle between English and Turkish
-              final currentLocale = Localizations.localeOf(context);
-              final newLocale = currentLocale.languageCode == 'en'
-                  ? Locale('tr')
-                  : Locale('en');
-              context.read<LanguageCubit>().changeLanguage(
-                  newLocale.languageCode == 'en'
-                      ? AppLanguage.en
-                      : AppLanguage.tr);
-            },
-            child: Container(
-              child: CountryFlag.fromLanguageCode(
-                Localizations.localeOf(context).languageCode == 'en'
-                    ? 'EN'
-                    : 'TR',
-                width: 50,
-                height: 50,
-                shape: Circle(),
+          Row(
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.zero),
+                  elevation: MaterialStateProperty.all(0), // No shadow
+                  minimumSize: MaterialStateProperty.all(Size(50, 50)),
+                ),
+                onPressed: () {
+                  // Toggle between English and Turkish
+                  final currentLocale = Localizations.localeOf(context);
+                  final newLocale = currentLocale.languageCode == 'en'
+                      ? Locale('tr')
+                      : Locale('en');
+                  context.read<LanguageCubit>().changeLanguage(
+                      newLocale.languageCode == 'en'
+                          ? AppLanguage.en
+                          : AppLanguage.tr);
+                },
+                child: Container(
+                  child: CountryFlag.fromLanguageCode(
+                    Localizations.localeOf(context).languageCode == 'en'
+                        ? 'EN'
+                        : 'TR',
+                    width: 50,
+                    height: 50,
+                    shape: Circle(),
+                  ),
+                ),
               ),
-            ),
+              SizedBox(width: 10),
+            ],
           ),
         ],
       ),

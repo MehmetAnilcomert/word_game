@@ -12,6 +12,7 @@
     "resultScreenTitle": "Oyun Sonuçları",
     "winnerLabel": "Kazanan",
     "scoreTableLabel": "Skor Tablosu",
-    "newGameButton": "Yeni Oyun Başlat"
+    "newGameButton": "Yeni Oyun Başlat",
+    "noWinner": "Kazanan Yok"
   }
   

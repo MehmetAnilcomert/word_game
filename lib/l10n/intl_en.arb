@@ -12,6 +12,7 @@
     "resultScreenTitle": "Game Results",
     "winnerLabel": "Winner",
     "scoreTableLabel": "Scoreboard",
-    "newGameButton": "Start New Game"
+    "newGameButton": "Start New Game",
+    "noWinner": "No Winner"
   }
   
