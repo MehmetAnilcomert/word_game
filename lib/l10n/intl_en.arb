@@ -17,6 +17,10 @@
     "goHome": "Go Home",
     "enterPlayerName": "Enter Player Name",
     "joinRoomButton": "Join Room",
-    "fillAllFields": "Please fill all fields"
+    "fillAllFields": "Please fill all fields",
+    "roomCreationFailed": "Room creation failed. Please try another room id.",
+    "roomJoinFailed": "Could not join the room. Please make sure you entered the correct room id.",
+    "roomScreenTitleCreate": "Create Room",
+    "roomScreenTitleJoin": "Join Room"
   }
   

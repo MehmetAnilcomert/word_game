@@ -1,11 +1,11 @@
 // Bloc Implementation
 import 'dart:async';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
+import 'package:word_game/generated/l10n.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   final FirebaseFirestore firestore;
@@ -16,20 +16,53 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<CreateRoom>((event, emit) async {
       emit(RoomCreating());
 
-      // Generate random letters for the game
-      final letters = _generateRandomLetters(length: 5);
+      try {
+        final roomId = event.roomId;
 
-      // Create a game document in Firestore
-      final roomId = event.roomId;
-      await firestore.collection('games').doc(roomId).set({
-        'letters': letters,
-        'scores': {},
-        'usedWords': [],
-        'isActive': true,
-      });
+        // Check if the room ID already exists in Firestore
+        final roomSnapshot =
+            await firestore.collection('games').doc(roomId).get();
 
-      // Notify the UI that the room has been created
-      emit(RoomCreated(roomId: roomId, playerName: event.playerName));
+        if (roomSnapshot.exists) {
+          // If roomId exists, emit an error state
+          emit(RoomCreationFailed(errorMessage: S.current.roomCreationFailed));
+          return;
+        }
+
+        // Generate random letters for the game
+        final letters = _generateRandomLetters(length: 5);
+
+        // Create a new game document in Firestore
+        await firestore.collection('games').doc(roomId).set({
+          'letters': letters,
+          'scores': {},
+          'usedWords': [],
+          'isActive': true,
+        });
+
+        // Notify the UI that the room has been created
+        emit(RoomCreated(roomId: roomId, playerName: event.playerName));
+      } catch (e) {
+        // Emit a generic error state if something goes wrong
+        emit(RoomCreationFailed(errorMessage: S.current.roomCreationFailed));
+      }
+    });
+
+    on<JoinRoom>((event, emit) async {
+      emit(RoomJoining(roomId: event.roomId, playerName: event.playerName));
+
+      try {
+        final roomDoc =
+            await firestore.collection('games').doc(event.roomId).get();
+
+        if (!roomDoc.exists) {
+          throw Exception(S.current.roomJoinFailed);
+        }
+
+        emit(RoomJoined(roomId: event.roomId, playerName: event.playerName));
+      } catch (e) {
+        emit(RoomJoinFailed(errorMessage: e.toString()));
+      }
     });
 
     on<StartGame>((event, emit) async {

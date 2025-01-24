@@ -42,8 +42,12 @@ class ResultScreen extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => RoomScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RoomScreen(
+                                isCreateRoom: true,
+                              )));
                 },
                 child: Text(S.of(context).newGameButton),
               ),

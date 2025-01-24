@@ -77,10 +77,26 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RoomScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => RoomScreen(
+                            isCreateRoom: true,
+                          )),
                 );
               },
               child: Text(S.of(context).createRoomButton),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RoomScreen(
+                            isCreateRoom: false,
+                          )),
+                );
+              },
+              child: Text(S.of(context).joinRoomButton),
             ),
           ],
         ),

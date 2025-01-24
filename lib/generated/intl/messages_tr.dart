@@ -42,8 +42,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "noWinner": MessageLookupByLibrary.simpleMessage("Kazanan Yok"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Sonuçları"),
+        "roomCreationFailed": MessageLookupByLibrary.simpleMessage(
+            "Oda oluşturulamadı. Lütfen başka bir oda ismi deneyin."),
+        "roomJoinFailed": MessageLookupByLibrary.simpleMessage(
+            "Odaya katılamadı. Lütfen doğru oda ID\'si girdiğinizden emin olun."),
         "roomScreenTitle":
             MessageLookupByLibrary.simpleMessage("Odaya Katıl veya Oluştur"),
+        "roomScreenTitleCreate":
+            MessageLookupByLibrary.simpleMessage("Oda Oluştur"),
+        "roomScreenTitleJoin":
+            MessageLookupByLibrary.simpleMessage("Odaya Katıl"),
         "scoreTableLabel": MessageLookupByLibrary.simpleMessage("Skor Tablosu"),
         "selectLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Dil Seçin"),

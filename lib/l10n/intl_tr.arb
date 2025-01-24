@@ -17,6 +17,10 @@
     "goHome": "Ana Sayfaya Dön",
     "enterPlayerName": "Oyuncu Adı Girin",
     "joinRoomButton": "Odaya Katıl",
-    "fillAllFields": "Lütfen tüm alanları doldurun"
+    "fillAllFields": "Lütfen tüm alanları doldurun",
+    "roomCreationFailed": "Oda oluşturulamadı. Lütfen başka bir oda ismi deneyin.",
+    "roomJoinFailed": "Odaya katılamadı. Lütfen doğru oda ID'si girdiğinizden emin olun.",
+    "roomScreenTitleCreate": "Oda Oluştur",
+    "roomScreenTitleJoin": "Odaya Katıl"
   }
   

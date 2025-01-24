@@ -229,6 +229,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Room creation failed. Please try another room id.`
+  String get roomCreationFailed {
+    return Intl.message(
+      'Room creation failed. Please try another room id.',
+      name: 'roomCreationFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not join the room. Please make sure you entered the correct room id.`
+  String get roomJoinFailed {
+    return Intl.message(
+      'Could not join the room. Please make sure you entered the correct room id.',
+      name: 'roomJoinFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Room`
+  String get roomScreenTitleCreate {
+    return Intl.message(
+      'Create Room',
+      name: 'roomScreenTitleCreate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join Room`
+  String get roomScreenTitleJoin {
+    return Intl.message(
+      'Join Room',
+      name: 'roomScreenTitleJoin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

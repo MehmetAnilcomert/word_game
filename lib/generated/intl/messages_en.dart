@@ -40,8 +40,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "noWinner": MessageLookupByLibrary.simpleMessage("No Winner"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game Results"),
+        "roomCreationFailed": MessageLookupByLibrary.simpleMessage(
+            "Room creation failed. Please try another room id."),
+        "roomJoinFailed": MessageLookupByLibrary.simpleMessage(
+            "Could not join the room. Please make sure you entered the correct room id."),
         "roomScreenTitle":
             MessageLookupByLibrary.simpleMessage("Join or Create Room"),
+        "roomScreenTitleCreate":
+            MessageLookupByLibrary.simpleMessage("Create Room"),
+        "roomScreenTitleJoin":
+            MessageLookupByLibrary.simpleMessage("Join Room"),
         "scoreTableLabel": MessageLookupByLibrary.simpleMessage("Scoreboard"),
         "selectLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Select Language"),

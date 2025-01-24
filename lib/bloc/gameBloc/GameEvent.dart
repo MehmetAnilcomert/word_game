@@ -8,6 +8,13 @@ class CreateRoom extends GameEvent {
   CreateRoom({required this.playerName, required this.roomId});
 }
 
+class JoinRoom extends GameEvent {
+  final String roomId;
+  final String playerName;
+
+  JoinRoom({required this.roomId, required this.playerName});
+}
+
 class StartGame extends GameEvent {
   final String roomId;
   StartGame(this.roomId);

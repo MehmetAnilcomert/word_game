@@ -11,6 +11,10 @@ import 'package:word_game/screens/HomeScreen.dart'; // Import your home screen
 class RoomScreen extends StatelessWidget {
   final TextEditingController playerNameController = TextEditingController();
   final TextEditingController roomIdController = TextEditingController();
+  final bool
+      isCreateRoom; // Add a boolean to determine whether it's create or join
+
+  RoomScreen({required this.isCreateRoom});
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +41,36 @@ class RoomScreen extends StatelessWidget {
                   ),
                 ),
               );
+            } else if (state is RoomCreationFailed) {
+              // Handle RoomCreationFailed state
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            } else if (state is RoomJoined) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GameScreen(
+                    roomId: roomIdController.text,
+                    playerName: playerNameController.text,
+                  ),
+                ),
+              );
+            } else if (state is RoomJoinFailed) {
+              // Handle RoomJoinFailed state
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage),
+                  backgroundColor: Colors.red,
+                ),
+              );
             }
           },
           builder: (context, state) {
-            if (state is RoomCreating) {
+            if (state is RoomCreating || state is RoomJoining) {
               return Scaffold(
                 body: Center(child: CircularProgressIndicator()),
               );
@@ -48,7 +78,10 @@ class RoomScreen extends StatelessWidget {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text(S.of(context).roomScreenTitle),
+                centerTitle: true,
+                title: (isCreateRoom
+                    ? Text(S.of(context).roomScreenTitleCreate)
+                    : Text(S.of(context).roomScreenTitleJoin)),
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
@@ -65,7 +98,6 @@ class RoomScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Kullanıcı adı girişi
                     TextField(
                       controller: playerNameController,
                       decoration: InputDecoration(
@@ -73,7 +105,6 @@ class RoomScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // Oda kimliği girişi
                     TextField(
                       controller: roomIdController,
                       decoration: InputDecoration(
@@ -95,13 +126,22 @@ class RoomScreen extends StatelessWidget {
                           );
                           return;
                         }
-                        context.read<GameBloc>().add(CreateRoom(
-                              // Change CreateRoom to JoinRoom
-                              roomId: roomId,
-                              playerName: playerName,
-                            ));
+
+                        if (isCreateRoom) {
+                          context.read<GameBloc>().add(CreateRoom(
+                                roomId: roomId,
+                                playerName: playerName,
+                              ));
+                        } else {
+                          context.read<GameBloc>().add(JoinRoom(
+                                roomId: roomId,
+                                playerName: playerName,
+                              ));
+                        }
                       },
-                      child: Text(S.of(context).joinRoomButton),
+                      child: Text(isCreateRoom
+                          ? S.of(context).createRoomButton
+                          : S.of(context).joinRoomButton),
                     ),
                   ],
                 ),

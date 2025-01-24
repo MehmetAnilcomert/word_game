@@ -12,6 +12,31 @@ class RoomCreated extends GameState {
   RoomCreated({required this.roomId, required this.playerName});
 }
 
+class RoomJoined extends GameState {
+  final String roomId;
+  final String playerName;
+
+  RoomJoined({required this.roomId, required this.playerName});
+}
+
+class RoomJoining extends GameState {
+  final String roomId;
+  final String playerName;
+
+  RoomJoining({required this.roomId, required this.playerName});
+}
+
+class RoomJoinFailed extends GameState {
+  final String errorMessage;
+
+  RoomJoinFailed({required this.errorMessage});
+}
+
+class RoomCreationFailed extends GameState {
+  final String errorMessage;
+  RoomCreationFailed({required this.errorMessage});
+}
+
 class GameInProgress extends GameState {
   final Map<String, dynamic> data;
   GameInProgress(this.data);
