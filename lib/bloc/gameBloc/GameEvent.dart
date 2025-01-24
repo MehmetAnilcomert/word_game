@@ -1,7 +1,12 @@
 // Bloc Events
 abstract class GameEvent {}
 
-class CreateRoom extends GameEvent {}
+class CreateRoom extends GameEvent {
+  final String playerName;
+  final String roomId;
+
+  CreateRoom({required this.playerName, required this.roomId});
+}
 
 class StartGame extends GameEvent {
   final String roomId;

@@ -26,10 +26,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kelime Oyunu Uygulaması"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Oda Oluştur"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("Oyunu Bitir"),
+        "enterPlayerName":
+            MessageLookupByLibrary.simpleMessage("Oyuncu Adı Girin"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Oda ID\'si Girin"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Bir kelime girin"),
+        "fillAllFields": MessageLookupByLibrary.simpleMessage(
+            "Lütfen tüm alanları doldurun"),
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Devam Ediyor"),
+        "goHome": MessageLookupByLibrary.simpleMessage("Ana Sayfaya Dön"),
+        "joinRoomButton": MessageLookupByLibrary.simpleMessage("Odaya Katıl"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Harfler"),
         "newGameButton":
             MessageLookupByLibrary.simpleMessage("Yeni Oyun Başlat"),

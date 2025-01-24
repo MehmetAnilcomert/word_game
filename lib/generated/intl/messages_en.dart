@@ -25,10 +25,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "appTitle": MessageLookupByLibrary.simpleMessage("Word Game App"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Create Room"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("End Game"),
+        "enterPlayerName":
+            MessageLookupByLibrary.simpleMessage("Enter Player Name"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Enter Room ID"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Enter a word"),
+        "fillAllFields":
+            MessageLookupByLibrary.simpleMessage("Please fill all fields"),
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game in Progress"),
+        "goHome": MessageLookupByLibrary.simpleMessage("Go Home"),
+        "joinRoomButton": MessageLookupByLibrary.simpleMessage("Join Room"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Letters"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),
         "noWinner": MessageLookupByLibrary.simpleMessage("No Winner"),

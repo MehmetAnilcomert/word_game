@@ -7,7 +7,7 @@ enum AppLanguage { en, tr }
 class LanguageCubit extends Cubit<AppLanguage> {
   final LanguageManager languageManager;
 
-  LanguageCubit(this.languageManager) : super(AppLanguage.en);
+  LanguageCubit(this.languageManager) : super(AppLanguage.tr);
 
   void changeLanguage(AppLanguage language) {
     if (language == AppLanguage.tr) {

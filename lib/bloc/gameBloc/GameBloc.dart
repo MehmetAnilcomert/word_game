@@ -20,7 +20,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final letters = _generateRandomLetters(length: 5);
 
       // Create a game document in Firestore
-      final roomId = firestore.collection('games').doc().id;
+      final roomId = event.roomId;
       await firestore.collection('games').doc(roomId).set({
         'letters': letters,
         'scores': {},
@@ -29,7 +29,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       });
 
       // Notify the UI that the room has been created
-      emit(RoomCreated(roomId));
+      emit(RoomCreated(roomId: roomId, playerName: event.playerName));
     });
 
     on<StartGame>((event, emit) async {

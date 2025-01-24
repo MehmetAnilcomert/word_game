@@ -7,7 +7,9 @@ class RoomCreating extends GameState {}
 
 class RoomCreated extends GameState {
   final String roomId;
-  RoomCreated(this.roomId);
+  final String playerName;
+
+  RoomCreated({required this.roomId, required this.playerName});
 }
 
 class GameInProgress extends GameState {

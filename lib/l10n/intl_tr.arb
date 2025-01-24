@@ -13,6 +13,10 @@
     "winnerLabel": "Kazanan",
     "scoreTableLabel": "Skor Tablosu",
     "newGameButton": "Yeni Oyun Başlat",
-    "noWinner": "Kazanan Yok"
+    "noWinner": "Kazanan Yok",
+    "goHome": "Ana Sayfaya Dön",
+    "enterPlayerName": "Oyuncu Adı Girin",
+    "joinRoomButton": "Odaya Katıl",
+    "fillAllFields": "Lütfen tüm alanları doldurun"
   }
   

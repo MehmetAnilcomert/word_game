@@ -1,6 +1,7 @@
 // Result Screen
 import 'package:flutter/material.dart';
 import 'package:word_game/generated/l10n.dart';
+import 'package:word_game/screens/HomeScreen.dart';
 import 'package:word_game/screens/RoomScreen.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -14,7 +15,11 @@ class ResultScreen extends StatelessWidget {
       ..sort((a, b) => b.value.compareTo(a.value));
 
     return Scaffold(
-      appBar: AppBar(title: Text(S.of(context).resultScreenTitle)),
+      appBar: AppBar(
+        title: Text(S.of(context).resultScreenTitle),
+        centerTitle: true,
+        leading: Container(),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -34,12 +39,26 @@ class ResultScreen extends StatelessWidget {
                   trailing: Text(entry.value.toString()),
                 )),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => RoomScreen()));
-              },
-              child: Text(S.of(context).newGameButton),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => RoomScreen()));
+                },
+                child: Text(S.of(context).newGameButton),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    (route) => false, // Remove all other routes
+                  );
+                },
+                child: Text(S.of(context).goHome),
+              ),
             ),
           ],
         ),
