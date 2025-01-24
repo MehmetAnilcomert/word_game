@@ -1,0 +1,17 @@
+{
+    "@@locale": "en",
+    "appTitle": "Word Game App",
+    "selectLanguageTitle": "Select Language",
+    "roomScreenTitle": "Join or Create Room",
+    "enterRoomId": "Enter Room ID",
+    "createRoomButton": "Create Room",
+    "gameScreenTitle": "Game in Progress",
+    "lettersLabel": "Letters",
+    "enterWord": "Enter a word",
+    "endGameButton": "End Game",
+    "resultScreenTitle": "Game Results",
+    "winnerLabel": "Winner",
+    "scoreTableLabel": "Scoreboard",
+    "newGameButton": "Start New Game"
+  }
+  

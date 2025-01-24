@@ -1,0 +1,17 @@
+{
+    "@@locale": "tr",
+    "appTitle": "Kelime Oyunu Uygulaması",
+    "selectLanguageTitle": "Dil Seçin",
+    "roomScreenTitle": "Odaya Katıl veya Oluştur",
+    "enterRoomId": "Oda ID'si Girin",
+    "createRoomButton": "Oda Oluştur",
+    "gameScreenTitle": "Oyun Devam Ediyor",
+    "lettersLabel": "Harfler",
+    "enterWord": "Bir kelime girin",
+    "endGameButton": "Oyunu Bitir",
+    "resultScreenTitle": "Oyun Sonuçları",
+    "winnerLabel": "Kazanan",
+    "scoreTableLabel": "Skor Tablosu",
+    "newGameButton": "Yeni Oyun Başlat"
+  }
+  
