@@ -16,16 +16,33 @@ Widget buildGameAppBar(BuildContext context) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: state is TimerRunning && state.isNearingEnd
-                    ? Colors.red
-                    : Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            state is TimerRunning && state.isNearingEnd
+                ? Row(
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: Colors.deepPurple,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        color: Colors.deepPurple,
+                        size: 20,
+                      ),
+                    ],
+                  ) // Hurry up Widget
+                : Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ), // Normal Widget style
+                  ),
           ],
         );
       },

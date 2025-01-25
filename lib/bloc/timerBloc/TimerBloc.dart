@@ -24,7 +24,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
             ((event.endTime - DateTime.now().millisecondsSinceEpoch) / 1000)
                 .floor();
 
-        final warningThreshold = (_totalGameTime! ~/ 4).floor();
+        final warningThreshold = (_totalGameTime! ~/ 3).floor();
 
         if (currentRemainingSeconds <= 0) {
           timer.cancel();
