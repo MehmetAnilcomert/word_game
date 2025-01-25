@@ -29,7 +29,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
           timer.cancel();
           add(EndTimer());
         } else {
-          final warningThreshold = (_totalGameTime! ~/ 3).floor();
+          final warningThreshold = (_totalGameTime! ~/ 2).floor();
           final isFlashing = currentRemainingSeconds <= 10;
           final isNearingEnd = currentRemainingSeconds <= warningThreshold;
 

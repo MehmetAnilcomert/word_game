@@ -22,7 +22,7 @@ Widget buildGameAppBar(BuildContext context) {
                       Text(
                         title,
                         style: TextStyle(
-                          color: Colors.deepPurple,
+                          color: Colors.white,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
@@ -30,8 +30,8 @@ Widget buildGameAppBar(BuildContext context) {
                       SizedBox(width: 10),
                       Icon(
                         Icons.warning_amber_rounded,
-                        color: Colors.deepPurple,
-                        size: 20,
+                        color: Colors.red,
+                        size: 35,
                       ),
                     ],
                   ) // Hurry up Widget
