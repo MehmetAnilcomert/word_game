@@ -66,3 +66,9 @@ class GameTimerError extends GameState {
   @override
   List<Object?> get props => [errorMessage];
 }
+
+class WordSubmissionError extends GameState {
+  final String errorMessage;
+
+  WordSubmissionError({required this.errorMessage});
+}

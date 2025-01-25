@@ -33,22 +33,34 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterWord": MessageLookupByLibrary.simpleMessage("Enter a word"),
         "fillAllFields":
             MessageLookupByLibrary.simpleMessage("Please fill all fields"),
+        "gameAlreadyStarted": MessageLookupByLibrary.simpleMessage(
+            "Game has already started. You can not join."),
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game in Progress"),
         "goHome": MessageLookupByLibrary.simpleMessage("Go Home"),
         "hurryUp": MessageLookupByLibrary.simpleMessage("Hurry Up!"),
+        "invalidWordLetters": MessageLookupByLibrary.simpleMessage(
+            "Word is not valid. Use the given letters."),
         "joinRoomButton": MessageLookupByLibrary.simpleMessage("Join Room"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Letters"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),
         "noWinner": MessageLookupByLibrary.simpleMessage("No Winner"),
+        "playerAlreadyInRoom": MessageLookupByLibrary.simpleMessage(
+            "Playername is already using in the room. Please try another player id."),
+        "playerWordRepeated": MessageLookupByLibrary.simpleMessage(
+            "Already found.Try another word."),
         "reJoinButton":
             MessageLookupByLibrary.simpleMessage("Rejoin into New Game"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game Results"),
         "roomCreationFailed": MessageLookupByLibrary.simpleMessage(
             "Room creation failed. Please try another room id."),
+        "roomFull": MessageLookupByLibrary.simpleMessage(
+            "Room is full. Please try joining to another room."),
         "roomJoinFailed": MessageLookupByLibrary.simpleMessage(
             "Could not join the room. Please make sure you entered the correct room id."),
+        "roomNotActive": MessageLookupByLibrary.simpleMessage(
+            "Room is not active. Please try joining to an active room."),
         "roomScreenTitle":
             MessageLookupByLibrary.simpleMessage("Join or Create Room"),
         "roomScreenTitleCreate":
@@ -58,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "scoreTableLabel": MessageLookupByLibrary.simpleMessage("Scoreboard"),
         "selectLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Select Language"),
-        "winnerLabel": MessageLookupByLibrary.simpleMessage("Winner")
+        "winnerLabel": MessageLookupByLibrary.simpleMessage("Winner"),
+        "wordAlreadyUsed": MessageLookupByLibrary.simpleMessage(
+            "Word is already used. Try another word.")
       };
 }

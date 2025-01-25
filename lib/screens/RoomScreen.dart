@@ -75,7 +75,8 @@ class RoomScreen extends StatelessWidget {
                         Expanded(
                           child: Center(
                             child: SingleChildScrollView(
-                              child: _buildContent(context, state),
+                              child:
+                                  _buildContent(context, state, isCreateRoom),
                             ),
                           ),
                         ),
@@ -91,7 +92,8 @@ class RoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(BuildContext context, GameState state) {
+  Widget _buildContent(
+      BuildContext context, GameState state, bool isCreateRoom) {
     return Card(
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -112,13 +114,15 @@ class RoomScreen extends StatelessWidget {
               icon: Icons.meeting_room,
             ),
             SizedBox(height: 20),
-            buildInputField(
-              controller: endTimeController, // Input field for end time
-              label: S.of(context).enterEndTime,
-              icon: Icons.timer,
-              keyboardType:
-                  TextInputType.number, // Assuming time is in milliseconds
-            ),
+            isCreateRoom
+                ? buildInputField(
+                    controller: endTimeController, // Input field for end time
+                    label: S.of(context).enterEndTime,
+                    icon: Icons.timer,
+                    keyboardType: TextInputType
+                        .number, // Assuming time is in milliseconds
+                  )
+                : SizedBox(),
             SizedBox(height: 40),
             buildActionButton(context, state, isCreateRoom,
                 playerNameController, roomIdController, endTimeController),

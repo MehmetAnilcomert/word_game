@@ -299,6 +299,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Room is not active. Please try joining to an active room.`
+  String get roomNotActive {
+    return Intl.message(
+      'Room is not active. Please try joining to an active room.',
+      name: 'roomNotActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Room is full. Please try joining to another room.`
+  String get roomFull {
+    return Intl.message(
+      'Room is full. Please try joining to another room.',
+      name: 'roomFull',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Game has already started. You can not join.`
+  String get gameAlreadyStarted {
+    return Intl.message(
+      'Game has already started. You can not join.',
+      name: 'gameAlreadyStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Playername is already using in the room. Please try another player id.`
+  String get playerAlreadyInRoom {
+    return Intl.message(
+      'Playername is already using in the room. Please try another player id.',
+      name: 'playerAlreadyInRoom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already found.Try another word.`
+  String get playerWordRepeated {
+    return Intl.message(
+      'Already found.Try another word.',
+      name: 'playerWordRepeated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Word is already used. Try another word.`
+  String get wordAlreadyUsed {
+    return Intl.message(
+      'Word is already used. Try another word.',
+      name: 'wordAlreadyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Word is not valid. Use the given letters.`
+  String get invalidWordLetters {
+    return Intl.message(
+      'Word is not valid. Use the given letters.',
+      name: 'invalidWordLetters',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

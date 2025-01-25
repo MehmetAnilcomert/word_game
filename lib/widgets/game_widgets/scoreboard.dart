@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:word_game/generated/l10n.dart';
 
-Widget buildScoreBoard(Map<String, int> scores, BuildContext context) {
+Widget buildScoreBoard(Map<String, int> scores,
+    Map<String, List<dynamic>> usedWords, BuildContext context) {
   return Expanded(
     child: Container(
       margin: EdgeInsets.symmetric(vertical: 20),
@@ -31,7 +34,8 @@ Widget buildScoreBoard(Map<String, int> scores, BuildContext context) {
           Expanded(
             child: ListView(
               children: scores.entries
-                  .map((e) => _buildScoreItem(e.key, e.value))
+                  .map((e) => _buildPlayerWordBoard(
+                      (usedWords[e.key] ?? []).cast<String>(), context))
                   .toList(),
             ),
           ),
@@ -41,32 +45,34 @@ Widget buildScoreBoard(Map<String, int> scores, BuildContext context) {
   );
 }
 
-Widget _buildScoreItem(String playerName, int score) {
+Widget _buildPlayerWordBoard(List<String> words, BuildContext context) {
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 5),
+    margin: EdgeInsets.symmetric(vertical: 10),
     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     decoration: BoxDecoration(
       color: Colors.blue[50],
       borderRadius: BorderRadius.circular(8),
     ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          playerName,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue[700],
-          ),
-        ),
-        Text(
-          score.toString(),
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue[900],
-          ),
+        SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 4,
+          children: words
+              .map((word) => Text(
+                    word,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.blue[900],
+                      decoration:
+                          word == context.read<GameBloc>().lastInvalidWord
+                              ? TextDecoration.lineThrough
+                              : null,
+                    ),
+                  ))
+              .toList(),
         ),
       ],
     ),

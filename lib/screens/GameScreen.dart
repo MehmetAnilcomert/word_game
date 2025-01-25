@@ -36,6 +36,15 @@ class GameScreen extends StatelessWidget {
       ],
       child: BlocConsumer<GameBloc, GameState>(
         listener: (context, state) {
+          if (state is WordSubmissionError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
           if (state is GameOver) {
             // Navigate to result screen when the game is over
             Navigator.push(
@@ -54,6 +63,8 @@ class GameScreen extends StatelessWidget {
           if (state is GameInProgress) {
             final letters = List<String>.from(state.data['letters']);
             final scores = Map<String, int>.from(state.data['scores'] ?? {});
+            final usedWords =
+                Map<String, List<dynamic>>.from(state.data['usedWords'] ?? {});
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
@@ -77,7 +88,7 @@ class GameScreen extends StatelessWidget {
                                 children: [
                                   buildLetters(letters, context),
                                   SizedBox(height: 20),
-                                  buildScoreBoard(scores, context),
+                                  buildScoreBoard(scores, usedWords, context),
                                   buildWordInput(context, roomId, playerName),
                                   buildEndGameButton(context, roomId),
                                 ],

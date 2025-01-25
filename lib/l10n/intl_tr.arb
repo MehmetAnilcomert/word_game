@@ -24,6 +24,13 @@
     "roomScreenTitleJoin": "Odaya Katıl",
     "reJoinButton": "Tekrar Oyuna Katıl",
     "hurryUp":"Acele Et!",
-    "enterEndTime":"Oyun Süresini Girin (dakika cinsinden)"
+    "enterEndTime":"Oyun Süresini Girin (dk)",
+    "roomNotActive":"Oda aktif değil. Lütfen aktif bir odaya katılmayı deneyin.",
+    "roomFull":"Oda dolu. Lütfen başka bir odaya katılmayı deneyin.",
+    "gameAlreadyStarted":"Oyun zaten başladı. Katılamazsınız.",
+    "playerAlreadyInRoom":"Oyuncu adı kullanılıyor. Lütfen başka bir oyuncu adı deneyin.",
+    "playerWordRepeated":"Zaten bulundu. Başka bir kelime deneyin.",
+    "wordAlreadyUsed":"Kelime zaten kullanıldı. Başka bir kelime deneyin.",
+    "invalidWordLetters":"Kelime geçerli değil. Verilen harfleri kullanın."
   }
   

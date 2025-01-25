@@ -6,13 +6,16 @@ import 'dart:async';
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Timer? _timer;
   int? _totalGameTime;
+  late int _endTime;
 
   TimerBloc() : super(TimerInitial()) {
     on<StartTimer>((event, emit) {
       _timer?.cancel();
+
+      // Calculate total game time and end time.
+      _endTime = event.endTime;
       _totalGameTime =
-          ((event.endTime - DateTime.now().millisecondsSinceEpoch) / 1000)
-              .floor();
+          ((_endTime - DateTime.now().millisecondsSinceEpoch) / 1000).floor();
 
       _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         if (isClosed) {
@@ -20,20 +23,25 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
           return;
         }
 
-        final currentRemainingSeconds =
-            ((event.endTime - DateTime.now().millisecondsSinceEpoch) / 1000)
-                .floor();
-
-        final warningThreshold = (_totalGameTime! ~/ 3).floor();
+        final currentRemainingSeconds = _totalGameTime! - timer.tick;
 
         if (currentRemainingSeconds <= 0) {
           timer.cancel();
           add(EndTimer());
         } else {
-          add(UpdateTimer(
+          final warningThreshold = (_totalGameTime! ~/ 3).floor();
+          final isFlashing = currentRemainingSeconds <= 10;
+          final isNearingEnd = currentRemainingSeconds <= warningThreshold;
+
+          if (state is! TimerRunning ||
+              (state as TimerRunning).remainingTime !=
+                  currentRemainingSeconds) {
+            add(UpdateTimer(
               remainingTime: currentRemainingSeconds,
-              isFlashing: currentRemainingSeconds <= 10,
-              isNearingEnd: currentRemainingSeconds <= warningThreshold));
+              isFlashing: isFlashing,
+              isNearingEnd: isNearingEnd,
+            ));
+          }
         }
       });
     });
@@ -41,21 +49,23 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<UpdateTimer>((event, emit) {
       if (!isClosed) {
         emit(TimerRunning(
-            remainingTime: event.remainingTime,
-            isFlashing: event.isFlashing,
-            isNearingEnd: event.isNearingEnd));
+          remainingTime: event.remainingTime,
+          isFlashing: event.isFlashing,
+          isNearingEnd: event.isNearingEnd,
+        ));
       }
     });
 
     on<EndTimer>((event, emit) {
       _timer?.cancel();
-      emit(TimerEnded()); // Emit the TimerEnded state.
+      emit(TimerEnded());
     });
   }
 
   @override
   Future<void> close() {
     _timer?.cancel();
+    _totalGameTime = null;
     return super.close();
   }
 }

@@ -26,31 +26,43 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kelime Mücadelesi Oyunu"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Oda Oluştur"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("Oyunu Bitir"),
-        "enterEndTime": MessageLookupByLibrary.simpleMessage(
-            "Oyun Süresini Girin (dakika cinsinden)"),
+        "enterEndTime":
+            MessageLookupByLibrary.simpleMessage("Oyun Süresini Girin (dk)"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Oyuncu Adı Girin"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Oda ID\'si Girin"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Bir kelime girin"),
         "fillAllFields": MessageLookupByLibrary.simpleMessage(
             "Lütfen tüm alanları doldurun"),
+        "gameAlreadyStarted": MessageLookupByLibrary.simpleMessage(
+            "Oyun zaten başladı. Katılamazsınız."),
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Devam Ediyor"),
         "goHome": MessageLookupByLibrary.simpleMessage("Ana Sayfaya Dön"),
         "hurryUp": MessageLookupByLibrary.simpleMessage("Acele Et!"),
+        "invalidWordLetters": MessageLookupByLibrary.simpleMessage(
+            "Kelime geçerli değil. Verilen harfleri kullanın."),
         "joinRoomButton": MessageLookupByLibrary.simpleMessage("Odaya Katıl"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Harfler"),
         "newGameButton":
             MessageLookupByLibrary.simpleMessage("Yeni Oyun Başlat"),
         "noWinner": MessageLookupByLibrary.simpleMessage("Kazanan Yok"),
+        "playerAlreadyInRoom": MessageLookupByLibrary.simpleMessage(
+            "Oyuncu adı kullanılıyor. Lütfen başka bir oyuncu adı deneyin."),
+        "playerWordRepeated": MessageLookupByLibrary.simpleMessage(
+            "Zaten bulundu. Başka bir kelime deneyin."),
         "reJoinButton":
             MessageLookupByLibrary.simpleMessage("Tekrar Oyuna Katıl"),
         "resultScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Sonuçları"),
         "roomCreationFailed": MessageLookupByLibrary.simpleMessage(
             "Oda oluşturulamadı. Lütfen başka bir oda ismi deneyin."),
+        "roomFull": MessageLookupByLibrary.simpleMessage(
+            "Oda dolu. Lütfen başka bir odaya katılmayı deneyin."),
         "roomJoinFailed": MessageLookupByLibrary.simpleMessage(
             "Odaya katılamadı. Lütfen doğru oda ID\'si girdiğinizden emin olun."),
+        "roomNotActive": MessageLookupByLibrary.simpleMessage(
+            "Oda aktif değil. Lütfen aktif bir odaya katılmayı deneyin."),
         "roomScreenTitle":
             MessageLookupByLibrary.simpleMessage("Odaya Katıl veya Oluştur"),
         "roomScreenTitleCreate":
@@ -60,6 +72,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "scoreTableLabel": MessageLookupByLibrary.simpleMessage("Skor Tablosu"),
         "selectLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Dil Seçin"),
-        "winnerLabel": MessageLookupByLibrary.simpleMessage("Kazanan")
+        "winnerLabel": MessageLookupByLibrary.simpleMessage("Kazanan"),
+        "wordAlreadyUsed": MessageLookupByLibrary.simpleMessage(
+            "Kelime zaten kullanıldı. Başka bir kelime deneyin.")
       };
 }
