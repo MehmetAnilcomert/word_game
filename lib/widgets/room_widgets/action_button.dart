@@ -10,12 +10,13 @@ Widget buildActionButton(
     GameState state,
     bool isCreateRoom,
     TextEditingController playerNameController,
-    TextEditingController roomIdController) {
+    TextEditingController roomIdController,
+    TextEditingController endTimeController) {
   return ElevatedButton(
     onPressed: state is RoomCreating || state is RoomJoining
         ? null
-        : () => _handleAction(
-            context, isCreateRoom, playerNameController, roomIdController),
+        : () => _handleAction(context, isCreateRoom, playerNameController,
+            roomIdController, endTimeController),
     child: state is RoomCreating || state is RoomJoining
         ? CircularProgressIndicator(color: Colors.white)
         : Text(
@@ -37,9 +38,11 @@ void _handleAction(
     BuildContext context,
     bool isCreateRoom,
     TextEditingController playerNameController,
-    TextEditingController roomIdController) {
+    TextEditingController roomIdController,
+    TextEditingController endTimeController) {
   final playerName = playerNameController.text;
   final roomId = roomIdController.text;
+  final endTime = endTimeController.text;
 
   if (playerName.isEmpty || roomId.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -55,6 +58,7 @@ void _handleAction(
     context.read<GameBloc>().add(CreateRoom(
           roomId: roomId,
           playerName: playerName,
+          endTime: endTime.isEmpty ? 1 : int.parse(endTime),
         ));
   } else {
     context.read<GameBloc>().add(JoinRoom(

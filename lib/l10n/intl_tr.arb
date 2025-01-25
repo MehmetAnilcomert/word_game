@@ -22,6 +22,8 @@
     "roomJoinFailed": "Odaya katılamadı. Lütfen doğru oda ID'si girdiğinizden emin olun.",
     "roomScreenTitleCreate": "Oda Oluştur",
     "roomScreenTitleJoin": "Odaya Katıl",
-    "reJoinButton": "Tekrar Oyuna Katıl"
+    "reJoinButton": "Tekrar Oyuna Katıl",
+    "hurryUp":"Acele Et!",
+    "enterEndTime":"Oyun Süresini Girin (dakika cinsinden)"
   }
   

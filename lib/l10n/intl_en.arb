@@ -22,6 +22,8 @@
     "roomJoinFailed": "Could not join the room. Please make sure you entered the correct room id.",
     "roomScreenTitleCreate": "Create Room",
     "roomScreenTitleJoin": "Join Room",
-    "reJoinButton": "Rejoin into New Game"
+    "reJoinButton": "Rejoin into New Game",
+    "hurryUp":"Hurry Up!",
+    "enterEndTime":"Enter Game Duration (in minutes)"
   }
   

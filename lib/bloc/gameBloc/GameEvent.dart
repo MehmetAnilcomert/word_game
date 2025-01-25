@@ -4,8 +4,10 @@ abstract class GameEvent {}
 class CreateRoom extends GameEvent {
   final String playerName;
   final String roomId;
+  final int endTime;
 
-  CreateRoom({required this.playerName, required this.roomId});
+  CreateRoom(
+      {required this.endTime, required this.playerName, required this.roomId});
 }
 
 class JoinRoom extends GameEvent {

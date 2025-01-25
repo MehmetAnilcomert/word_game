@@ -46,3 +46,23 @@ class GameOver extends GameState {
   final Map<String, dynamic> data;
   GameOver(this.data);
 }
+
+class GameTimerRunning extends GameState {
+  final int remainingTime; // Kalan süre
+
+  GameTimerRunning(this.remainingTime);
+
+  @override
+  List<Object?> get props => [remainingTime];
+}
+
+class GameTimerFinished extends GameState {}
+
+class GameTimerError extends GameState {
+  final String errorMessage;
+
+  GameTimerError({required this.errorMessage});
+
+  @override
+  List<Object?> get props => [errorMessage];
+}

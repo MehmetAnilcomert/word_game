@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kelime Mücadelesi Oyunu"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Oda Oluştur"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("Oyunu Bitir"),
+        "enterEndTime": MessageLookupByLibrary.simpleMessage(
+            "Oyun Süresini Girin (dakika cinsinden)"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Oyuncu Adı Girin"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Oda ID\'si Girin"),
@@ -35,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Devam Ediyor"),
         "goHome": MessageLookupByLibrary.simpleMessage("Ana Sayfaya Dön"),
+        "hurryUp": MessageLookupByLibrary.simpleMessage("Acele Et!"),
         "joinRoomButton": MessageLookupByLibrary.simpleMessage("Odaya Katıl"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Harfler"),
         "newGameButton":

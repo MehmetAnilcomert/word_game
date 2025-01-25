@@ -1,49 +1,54 @@
-// Bloc Implementation
 import 'dart:async';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
+import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
+import 'package:word_game/bloc/timerBloc/TimerEvent.dart';
 import 'package:word_game/generated/l10n.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   final FirebaseFirestore firestore;
-  final _random = Random(); // Required for random letter generation
+  final _random = Random(); // Random letter generator
   StreamSubscription? gameSubscription;
+  TimerBloc? timerBloc;
 
-  GameBloc(this.firestore) : super(GameInitial()) {
+  GameBloc(this.firestore, {this.timerBloc}) : super(GameInitial()) {
     on<CreateRoom>((event, emit) async {
       emit(RoomCreating());
 
       try {
         final roomId = event.roomId;
 
-        // Check if the room ID already exists in Firestore
+        // Check if the room ID already exists
         final roomSnapshot =
             await firestore.collection('games').doc(roomId).get();
 
         if (roomSnapshot.exists) {
-          // If roomId exists, emit an error state
           emit(RoomCreationFailed(errorMessage: S.current.roomCreationFailed));
           return;
         }
 
-        // Generate random letters for the game
+        // Generate random letters
         final letters = _generateRandomLetters(length: 5);
 
-        // Create a new game document in Firestore
+        // Set end time (e.g., 5 minutes from now)
+        final endTime = DateTime.now()
+            .add(Duration(minutes: event.endTime))
+            .millisecondsSinceEpoch;
+
+        // Create a new game in Firestore
         await firestore.collection('games').doc(roomId).set({
           'letters': letters,
           'scores': {},
           'usedWords': [],
           'isActive': true,
+          'endTime': endTime,
         });
 
-        // Notify the UI that the room has been created
         emit(RoomCreated(roomId: roomId, playerName: event.playerName));
       } catch (e) {
-        // Emit a generic error state if something goes wrong
         emit(RoomCreationFailed(errorMessage: S.current.roomCreationFailed));
       }
     });
@@ -66,9 +71,25 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     });
 
     on<StartGame>((event, emit) async {
-      final game = await firestore.collection('games').doc(event.roomId).get();
-      if (game.exists) {
-        emit(GameInProgress(game.data()!));
+      final gameDoc =
+          await firestore.collection('games').doc(event.roomId).get();
+
+      if (gameDoc.exists) {
+        final gameData = gameDoc.data()!;
+        final endTime = gameData['endTime'] as int;
+        final currentTime = DateTime.now().millisecondsSinceEpoch;
+
+        // Calculate remaining time
+        final remainingTime =
+            (endTime - currentTime).clamp(0, double.infinity).toInt();
+        print("remainingTime: $remainingTime");
+        if (remainingTime > 0) {
+          timerBloc!.add(StartTimer(remainingTime)); // Start the timer
+        } else {
+          add(EndGame(event.roomId)); // End the game if the time is up
+        }
+
+        emit(GameInProgress(gameData));
       }
     });
 
@@ -79,7 +100,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           .snapshots()
           .listen((snapshot) {
         if (snapshot.exists) {
-          emit(GameInProgress(snapshot.data()!));
+          final gameData = snapshot.data()!;
+          final isActive = gameData['isActive'] as bool;
+
+          if (isActive) {
+            emit(GameInProgress(gameData));
+          } else {
+            emit(GameOver(gameData));
+          }
         }
       });
     });
@@ -107,6 +135,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     });
 
     on<EndGame>((event, emit) async {
+      // Mark the game as inactive
       await firestore
           .collection('games')
           .doc(event.roomId)
@@ -118,7 +147,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     });
   }
 
-  // Random Letters Generator
+  // Random letters generator
   List<String> _generateRandomLetters({required int length}) {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return List.generate(
@@ -128,6 +157,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   @override
   Future<void> close() {
     gameSubscription?.cancel();
+    // Cancel the timer when the Bloc is closed
     return super.close();
   }
 }

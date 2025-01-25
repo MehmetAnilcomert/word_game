@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "appTitle": MessageLookupByLibrary.simpleMessage("Word Challenge Game"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Create Room"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("End Game"),
+        "enterEndTime": MessageLookupByLibrary.simpleMessage(
+            "Enter Game Duration (in minutes)"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Enter Player Name"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Enter Room ID"),
@@ -34,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game in Progress"),
         "goHome": MessageLookupByLibrary.simpleMessage("Go Home"),
+        "hurryUp": MessageLookupByLibrary.simpleMessage("Hurry Up!"),
         "joinRoomButton": MessageLookupByLibrary.simpleMessage("Join Room"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Letters"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),

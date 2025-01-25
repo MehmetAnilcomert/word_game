@@ -13,6 +13,8 @@ import 'package:word_game/widgets/room_widgets/input_widget.dart';
 class RoomScreen extends StatelessWidget {
   final TextEditingController playerNameController = TextEditingController();
   final TextEditingController roomIdController = TextEditingController();
+  final TextEditingController endTimeController =
+      TextEditingController(); // New controller
   final bool isCreateRoom;
 
   RoomScreen({required this.isCreateRoom});
@@ -109,9 +111,17 @@ class RoomScreen extends StatelessWidget {
               label: S.of(context).enterRoomId,
               icon: Icons.meeting_room,
             ),
+            SizedBox(height: 20),
+            buildInputField(
+              controller: endTimeController, // Input field for end time
+              label: S.of(context).enterEndTime,
+              icon: Icons.timer,
+              keyboardType:
+                  TextInputType.number, // Assuming time is in milliseconds
+            ),
             SizedBox(height: 40),
             buildActionButton(context, state, isCreateRoom,
-                playerNameController, roomIdController),
+                playerNameController, roomIdController, endTimeController),
           ],
         ),
       ),

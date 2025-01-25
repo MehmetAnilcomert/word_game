@@ -4,8 +4,10 @@ Widget buildInputField({
   required TextEditingController controller,
   required String label,
   required IconData icon,
+  TextInputType? keyboardType,
 }) {
   return TextField(
+    keyboardType: keyboardType,
     controller: controller,
     decoration: InputDecoration(
       labelText: label,

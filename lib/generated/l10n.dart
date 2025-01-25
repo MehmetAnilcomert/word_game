@@ -279,6 +279,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Hurry Up!`
+  String get hurryUp {
+    return Intl.message(
+      'Hurry Up!',
+      name: 'hurryUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Game Duration (in minutes)`
+  String get enterEndTime {
+    return Intl.message(
+      'Enter Game Duration (in minutes)',
+      name: 'enterEndTime',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
