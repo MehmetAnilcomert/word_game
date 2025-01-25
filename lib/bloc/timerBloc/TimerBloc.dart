@@ -28,7 +28,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
         if (currentRemainingSeconds <= 0) {
           timer.cancel();
-          add(StartTimer(event.endTime));
+          add(EndTimer());
         } else {
           add(UpdateTimer(
               remainingTime: currentRemainingSeconds,
@@ -45,6 +45,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
             isFlashing: event.isFlashing,
             isNearingEnd: event.isNearingEnd));
       }
+    });
+
+    on<EndTimer>((event, emit) {
+      _timer?.cancel();
+      emit(TimerEnded()); // Emit the TimerEnded state.
     });
   }
 

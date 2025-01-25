@@ -15,3 +15,5 @@ class UpdateTimer extends TimerEvent {
       this.isFlashing = false,
       this.isNearingEnd = false});
 }
+
+class EndTimer extends TimerEvent {}

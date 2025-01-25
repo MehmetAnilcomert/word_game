@@ -6,6 +6,7 @@ import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
 import 'package:word_game/bloc/timerBloc/TimerEvent.dart';
+import 'package:word_game/bloc/timerBloc/TimerState.dart';
 import 'package:word_game/generated/l10n.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
@@ -82,7 +83,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         // Calculate remaining time
         final remainingTime =
             (endTime - currentTime).clamp(0, double.infinity).toInt();
-        print("remainingTime: $remainingTime");
+
         if (remainingTime > 0) {
           timerBloc!.add(StartTimer(remainingTime)); // Start the timer
         } else {
@@ -108,6 +109,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           } else {
             emit(GameOver(gameData));
           }
+        }
+      });
+
+      timerBloc?.stream.listen((timerState) {
+        if (timerState is TimerEnded) {
+          add(EndGame(event.roomId)); // Trigger EndGame when the timer ends.
         }
       });
     });

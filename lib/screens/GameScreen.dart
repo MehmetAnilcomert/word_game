@@ -37,6 +37,7 @@ class GameScreen extends StatelessWidget {
       child: BlocConsumer<GameBloc, GameState>(
         listener: (context, state) {
           if (state is GameOver) {
+            // Navigate to result screen when the game is over
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -85,7 +86,7 @@ class GameScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // Süre gösterici (sağ üst köşe)
+                      // Timer indicator (top right corner)
                       Positioned(
                         top: 15,
                         right: 10,
@@ -126,25 +127,12 @@ class GameScreen extends StatelessWidget {
                                 ),
                               );
                             } else if (timerState is TimerEnded) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.red.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  "00:00",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              );
+                              context
+                                  .read<GameBloc>()
+                                  .add(GameEvent.EndGame(roomId));
                             }
                             return SizedBox
-                                .shrink(); // Eğer timer aktif değilse boş döndür
+                                .shrink(); // If timer is not active, return empty widget
                           },
                         ),
                       ),
