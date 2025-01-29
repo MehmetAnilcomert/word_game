@@ -45,8 +45,8 @@ dependencies:
   intl_utils: ^2.8.8
   country_flags: ^3.0.0
   confetti: ^0.8.0
-  provider: ^6.1.2
   bloc: ^9.0.0
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

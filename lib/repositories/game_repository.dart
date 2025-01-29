@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/timerBloc/TimerState.dart';
+import 'package:rxdart/rxdart.dart';
 
 class GameRepository {
   final FirebaseFirestore firestore;
@@ -58,18 +59,15 @@ class GameRepository {
     });
   }
 
-  // Stream<GameState> getGameStateWithTimer(String roomId, Stream<TimerState> timerStream) {
-  //   return Stream.merge([
-  //     // Oyun durumu stream'i
-  //     getGameStateStream(roomId),
-
-  //     // Timer durumu stream'i
-  //     timerStream.where((state) => state is TimerEnded).map((_) {
-  //       // Timer bittiğinde GameOver state'ine geç
-  //       return GameOver([]);
-  //     })
-  //   ]);
-  // }
+  Stream<GameState> getGameStateWithTimer(
+      String roomId, Stream<TimerState> timerStream) {
+    return Rx.merge([
+      getGameStateStream(roomId),
+      timerStream.where((state) => state is TimerEnded).map((_) {
+        return GameOver([]);
+      })
+    ]);
+  }
 
   Future<void> submitWord({
     required String roomId,

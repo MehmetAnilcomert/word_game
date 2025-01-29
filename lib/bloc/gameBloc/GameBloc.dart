@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameEvent.dart';
@@ -7,7 +6,6 @@ import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/game_repo_cubit.dart';
 import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
 import 'package:word_game/bloc/timerBloc/TimerEvent.dart';
-import 'package:word_game/bloc/timerBloc/TimerState.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/repositories/game_repository.dart';
 import 'package:word_game/utils/game_utils.dart';
@@ -106,22 +104,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       ListenToGameUpdates event, Emitter<GameState> emit) async {
     await gameSubscription?.cancel();
 
-    await emit.forEach<DocumentSnapshot>(
-      gameRepository.listenToGameUpdates(event.roomId),
-      onData: (snapshot) {
-        if (snapshot.exists) {
-          return GameInProgress(snapshot.data()! as Map<String, dynamic>);
-        } else {
-          return GameOver([]);
-        }
-      },
+    // Basit kullanım (sadece oyun durumu)
+    await emit.forEach(
+      gameRepository.getGameStateStream(event.roomId),
+      onData: (state) => state,
     );
 
-    await timerBloc?.stream.forEach((timerState) {
-      if (timerState is TimerEnded && !emit.isDone) {
-        add(EndGame(event.roomId));
-      }
-    });
+    // Timer ile birlikte kullanım
+    if (timerBloc != null) {
+      await emit.forEach(
+        gameRepository.getGameStateWithTimer(event.roomId, timerBloc!.stream),
+        onData: (state) => state,
+      );
+    }
   }
 
   Future<void> _onSubmitWord(SubmitWord event, Emitter<GameState> emit) async {
