@@ -104,13 +104,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       ListenToGameUpdates event, Emitter<GameState> emit) async {
     await gameSubscription?.cancel();
 
-    // Basit kullanım (sadece oyun durumu)
     await emit.forEach(
       gameRepository.getGameStateStream(event.roomId),
       onData: (state) => state,
     );
 
-    // Timer ile birlikte kullanım
     if (timerBloc != null) {
       await emit.forEach(
         gameRepository.getGameStateWithTimer(event.roomId, timerBloc!.stream),

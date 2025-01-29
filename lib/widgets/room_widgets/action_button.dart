@@ -11,7 +11,7 @@ Widget buildActionButton(
     bool isCreateRoom,
     TextEditingController playerNameController,
     TextEditingController roomIdController,
-    TextEditingController endTimeController) {
+    int endTimeController) {
   return ElevatedButton(
     onPressed: state is RoomCreating || state is RoomJoining
         ? null
@@ -39,10 +39,10 @@ void _handleAction(
     bool isCreateRoom,
     TextEditingController playerNameController,
     TextEditingController roomIdController,
-    TextEditingController endTimeController) {
+    int endTimeController) {
   final playerName = playerNameController.text;
   final roomId = roomIdController.text;
-  final endTime = endTimeController.text;
+  final endTime = endTimeController.toString();
 
   if (playerName.isEmpty || roomId.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(

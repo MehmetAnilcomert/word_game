@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Oyun Süresini Girin (dk)"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Oyuncu Adı Girin"),
+        "enterPlayerNumber":
+            MessageLookupByLibrary.simpleMessage("Oyuncu Sayısını Girin"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Oda ID\'si Girin"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Bir kelime girin"),
         "fillAllFields": MessageLookupByLibrary.simpleMessage(

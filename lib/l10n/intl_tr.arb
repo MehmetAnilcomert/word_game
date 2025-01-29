@@ -31,6 +31,7 @@
     "playerAlreadyInRoom":"Oyuncu adı kullanılıyor. Lütfen başka bir oyuncu adı deneyin.",
     "playerWordRepeated":"Zaten bulundu. Başka bir kelime deneyin.",
     "wordAlreadyUsed":"Kelime zaten kullanıldı. Başka bir kelime deneyin.",
-    "invalidWordLetters":"Kelime geçerli değil. Verilen harfleri kullanın."
+    "invalidWordLetters":"Kelime geçerli değil. Verilen harfleri kullanın.",
+    "enterPlayerNumber":"Oyuncu Sayısını Girin"
   }
   

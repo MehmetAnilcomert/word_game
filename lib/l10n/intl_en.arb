@@ -31,6 +31,7 @@
     "playerAlreadyInRoom":"Playername is already using in the room. Please try another player id.",
     "playerWordRepeated":"Already found.Try another word.",
     "wordAlreadyUsed":"Word is already used. Try another word.",
-    "invalidWordLetters":"Word is not valid. Use the given letters."
+    "invalidWordLetters":"Word is not valid. Use the given letters.",
+    "enterPlayerNumber":"Enter Number of Players"
   }
   

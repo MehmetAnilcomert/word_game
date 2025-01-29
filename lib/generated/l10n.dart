@@ -369,6 +369,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Enter Number of Players`
+  String get enterPlayerNumber {
+    return Intl.message(
+      'Enter Number of Players',
+      name: 'enterPlayerNumber',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

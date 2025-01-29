@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Enter Game Duration (in minutes)"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Enter Player Name"),
+        "enterPlayerNumber":
+            MessageLookupByLibrary.simpleMessage("Enter Number of Players"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Enter Room ID"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Enter a word"),
         "fillAllFields":

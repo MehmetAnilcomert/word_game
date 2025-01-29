@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/timerBloc/TimerState.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:word_game/generated/l10n.dart';
+import 'package:word_game/utils/game_utils.dart';
 
 class GameRepository {
   final FirebaseFirestore firestore;
@@ -78,10 +80,17 @@ class GameRepository {
     if (!doc.exists) return;
 
     final data = doc.data()!;
+    final letters = List<String>.from(data['letters']);
     final usedWords = Map<String, dynamic>.from(data['usedWords'] ?? {});
     final globalUsedWords = List<String>.from(data['globalUsedWords'] ?? []);
     final scores = Map<String, int>.from(data['scores'] ?? {});
 
+    if (!GameUtils.isWordValid(word, letters)) {
+      throw S.current.invalidWordLetters;
+    }
+    if (!GameUtils.isWordUsed(word, globalUsedWords)) {
+      throw S.current.wordAlreadyUsed;
+    }
     usedWords[playerName] = (usedWords[playerName] ?? [])..add(word);
     globalUsedWords.add(word);
     scores[playerName] = (scores[playerName] ?? 0) + word.length;

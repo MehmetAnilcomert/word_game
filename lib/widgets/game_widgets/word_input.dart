@@ -5,6 +5,8 @@ import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/generated/l10n.dart';
 
 Widget buildWordInput(BuildContext context, String roomId, String playerName) {
+  final TextEditingController _controller = TextEditingController();
+
   return Container(
     margin: EdgeInsets.symmetric(vertical: 20),
     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -20,8 +22,12 @@ Widget buildWordInput(BuildContext context, String roomId, String playerName) {
       ],
     ),
     child: TextField(
+      controller: _controller,
       onSubmitted: (word) {
-        context.read<GameBloc>().add(SubmitWord(roomId, playerName, word));
+        if (word.trim().isNotEmpty) {
+          context.read<GameBloc>().add(SubmitWord(roomId, playerName, word));
+          _controller.clear();
+        }
       },
       decoration: InputDecoration(
         hintText: S.of(context).enterWord,

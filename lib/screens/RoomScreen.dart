@@ -6,13 +6,15 @@ import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/screens/GameScreen.dart';
 import 'package:word_game/screens/HomeScreen.dart';
 import 'package:word_game/widgets/room_widgets/action_button.dart';
+import 'package:word_game/widgets/room_widgets/build_number.dart';
 import 'package:word_game/widgets/room_widgets/header.dart';
 import 'package:word_game/widgets/room_widgets/input_widget.dart';
 
 class RoomScreen extends StatelessWidget {
   final TextEditingController playerNameController = TextEditingController();
   final TextEditingController roomIdController = TextEditingController();
-  final TextEditingController endTimeController = TextEditingController();
+  late int endTime = 1;
+  late int playerNumber = 4;
   final bool isCreateRoom;
 
   RoomScreen({required this.isCreateRoom});
@@ -109,16 +111,37 @@ class RoomScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             isCreateRoom
-                ? buildInputField(
-                    controller: endTimeController,
-                    label: S.of(context).enterEndTime,
-                    icon: Icons.timer,
-                    keyboardType: TextInputType.number,
+                ? Column(
+                    children: [
+                      buildNumberSelector(
+                        label: S.of(context).enterEndTime,
+                        icon: Icons.timer,
+                        minValue: 1,
+                        maxValue: 10,
+                        onChanged: (value) {
+                          // Seçilen değeri kullan
+                          print('Seçilen değer: $value');
+                          endTime = value.toInt();
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      buildNumberSelector(
+                        label: S.of(context).enterPlayerNumber,
+                        icon: Icons.person,
+                        minValue: 2,
+                        maxValue: 10,
+                        onChanged: (value) {
+                          // Seçilen değeri kullan
+                          print('Seçilen oyuncu sayısı: $value');
+                          playerNumber = value.toInt();
+                        },
+                      ),
+                    ],
                   )
                 : SizedBox(),
             SizedBox(height: 40),
             buildActionButton(context, state, isCreateRoom,
-                playerNameController, roomIdController, endTimeController),
+                playerNameController, roomIdController, endTime),
           ],
         ),
       ),
