@@ -1,7 +1,7 @@
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:word_game/bloc/languageBloc.dart';
+import 'package:word_game/bloc/language_bloc.dart';
 
 Widget buildLanguageToggle(BuildContext context) {
   return Container(

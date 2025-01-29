@@ -50,7 +50,10 @@ class GameScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ResultScreen(data: state.data),
+                builder: (context) => ResultScreen(
+                  data: state.data,
+                  currentUser: playerName,
+                ),
               ),
             );
           }

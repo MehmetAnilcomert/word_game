@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:provider/provider.dart';
-import 'package:word_game/bloc/languageBloc.dart';
+import 'package:word_game/bloc/language_bloc.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/modals/language.dart';
 import 'package:word_game/repositories/game_repository.dart';
