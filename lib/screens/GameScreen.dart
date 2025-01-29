@@ -28,10 +28,10 @@ class GameScreen extends StatelessWidget {
           create: (context) => TimerBloc(),
         ),
         BlocProvider(
-          create: (context) => GameBloc(context.read<GameRepository>(),
-              timerBloc: context.read<TimerBloc>())
-            ..add(GameEvent.StartGame(roomId))
-            ..add(GameEvent.ListenToGameUpdates(roomId)),
+          create: (context) =>
+              GameBloc(context, timerBloc: context.read<TimerBloc>())
+                ..add(GameEvent.StartGame(roomId))
+                ..add(GameEvent.ListenToGameUpdates(roomId)),
         )
       ],
       child: BlocConsumer<GameBloc, GameState>(

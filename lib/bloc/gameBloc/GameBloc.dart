@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
+import 'package:word_game/bloc/game_repo_cubit.dart';
 import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
 import 'package:word_game/bloc/timerBloc/TimerEvent.dart';
 import 'package:word_game/bloc/timerBloc/TimerState.dart';
@@ -14,7 +17,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   StreamSubscription? gameSubscription;
   TimerBloc? timerBloc;
 
-  GameBloc(this.gameRepository, {this.timerBloc}) : super(GameInitial()) {
+  GameBloc(BuildContext context, {TimerBloc? timerBloc})
+      : gameRepository = context.read<GameRepositoryCubit>().state.repository,
+        super(GameInitial()) {
     on<CreateRoom>(_onCreateRoom);
     on<JoinRoom>(_onJoinRoom);
     on<StartGame>(_onStartGame);
@@ -98,18 +103,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   void _onListenToGameUpdates(
-      ListenToGameUpdates event, Emitter<GameState> emit) {
-    gameSubscription =
-        gameRepository.listenToGameUpdates(event.roomId).listen((snapshot) {
-      if (snapshot.exists) {
-        emit(GameInProgress(snapshot.data()! as Map<String, dynamic>));
-      } else {
-        emit(GameOver([]));
-      }
-    });
+      ListenToGameUpdates event, Emitter<GameState> emit) async {
+    await gameSubscription?.cancel();
 
-    timerBloc?.stream.listen((timerState) {
-      if (timerState is TimerEnded) {
+    await emit.forEach<DocumentSnapshot>(
+      gameRepository.listenToGameUpdates(event.roomId),
+      onData: (snapshot) {
+        if (snapshot.exists) {
+          return GameInProgress(snapshot.data()! as Map<String, dynamic>);
+        } else {
+          return GameOver([]);
+        }
+      },
+    );
+
+    await timerBloc?.stream.forEach((timerState) {
+      if (timerState is TimerEnded && !emit.isDone) {
         add(EndGame(event.roomId));
       }
     });
@@ -140,10 +149,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   @override
-  Future<void> close() {
-    print("GameBloc closed");
-    gameSubscription?.cancel();
-    timerBloc?.close();
+  Future<void> close() async {
+    await gameSubscription?.cancel();
+    await timerBloc?.close();
     return super.close();
   }
 }

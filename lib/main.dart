@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:provider/provider.dart';
+import 'package:word_game/bloc/game_repo_cubit.dart';
 import 'package:word_game/bloc/language_bloc.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/modals/language.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        BlocProvider(create: (context) => GameRepositoryCubit()),
         Provider<GameRepository>(
           create: (_) => GameRepository(firestore: FirebaseFirestore.instance),
         ),
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
           create: (context) => LanguageCubit(languageManager),
         ),
         BlocProvider<GameBloc>(
-          create: (context) => GameBloc(context.read<GameRepository>()),
+          create: (context) => GameBloc(context),
         ),
       ],
       child: BlocBuilder<LanguageCubit, AppLanguage>(
