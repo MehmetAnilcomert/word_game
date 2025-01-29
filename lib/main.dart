@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:word_game/bloc/gameBloc/GameBloc.dart';
+import 'package:provider/provider.dart';
 import 'package:word_game/bloc/languageBloc.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/modals/language.dart';
+import 'package:word_game/repositories/game_repository.dart';
 import 'package:word_game/screens/HomeScreen.dart';
 
 Future<void> main() async {
@@ -22,8 +26,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LanguageCubit(languageManager),
+    return MultiProvider(
+      providers: [
+        Provider<GameRepository>(
+          create: (_) => GameRepository(firestore: FirebaseFirestore.instance),
+        ),
+        BlocProvider<LanguageCubit>(
+          create: (context) => LanguageCubit(languageManager),
+        ),
+        BlocProvider<GameBloc>(
+          create: (context) => GameBloc(context.read<GameRepository>()),
+        ),
+      ],
       child: BlocBuilder<LanguageCubit, AppLanguage>(
         builder: (context, state) {
           Locale _locale = languageManager.locale;

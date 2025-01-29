@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
@@ -13,81 +12,76 @@ import 'package:word_game/widgets/room_widgets/input_widget.dart';
 class RoomScreen extends StatelessWidget {
   final TextEditingController playerNameController = TextEditingController();
   final TextEditingController roomIdController = TextEditingController();
-  final TextEditingController endTimeController =
-      TextEditingController(); // New controller
+  final TextEditingController endTimeController = TextEditingController();
   final bool isCreateRoom;
 
   RoomScreen({required this.isCreateRoom});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GameBloc(FirebaseFirestore.instance),
-      child: WillPopScope(
-        onWillPop: () async {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-            (route) => false,
-          );
-          return false;
-        },
-        child: BlocConsumer<GameBloc, GameState>(
-          listener: (context, state) {
-            if (state is RoomCreated || state is RoomJoined) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GameScreen(
-                    roomId: roomIdController.text,
-                    playerName: playerNameController.text,
-                  ),
-                ),
-              );
-            } else if (state is RoomCreationFailed || state is RoomJoinFailed) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state is RoomCreationFailed
-                      ? state.errorMessage
-                      : (state as RoomJoinFailed).errorMessage),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            return Scaffold(
-              body: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.blue[300]!, Colors.purple[300]!],
-                  ),
-                ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        buildHeader(context, isCreateRoom),
-                        Expanded(
-                          child: Center(
-                            child: SingleChildScrollView(
-                              child:
-                                  _buildContent(context, state, isCreateRoom),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false,
+        );
+        return false;
+      },
+      child: BlocConsumer<GameBloc, GameState>(
+        listener: (context, state) {
+          if (state is RoomCreated || state is RoomJoined) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GameScreen(
+                  roomId: roomIdController.text,
+                  playerName: playerNameController.text,
                 ),
               ),
             );
-          },
-        ),
+          } else if (state is RoomCreationFailed || state is RoomJoinFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state is RoomCreationFailed
+                    ? state.errorMessage
+                    : (state as RoomJoinFailed).errorMessage),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.blue[300]!, Colors.purple[300]!],
+                ),
+              ),
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      buildHeader(context, isCreateRoom),
+                      Expanded(
+                        child: Center(
+                          child: SingleChildScrollView(
+                            child: _buildContent(context, state, isCreateRoom),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -116,11 +110,10 @@ class RoomScreen extends StatelessWidget {
             SizedBox(height: 20),
             isCreateRoom
                 ? buildInputField(
-                    controller: endTimeController, // Input field for end time
+                    controller: endTimeController,
                     label: S.of(context).enterEndTime,
                     icon: Icons.timer,
-                    keyboardType: TextInputType
-                        .number, // Assuming time is in milliseconds
+                    keyboardType: TextInputType.number,
                   )
                 : SizedBox(),
             SizedBox(height: 40),

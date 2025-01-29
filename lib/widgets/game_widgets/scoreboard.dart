@@ -66,10 +66,6 @@ Widget _buildPlayerWordBoard(List<String> words, BuildContext context) {
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.blue[900],
-                      decoration:
-                          word == context.read<GameBloc>().lastInvalidWord
-                              ? TextDecoration.lineThrough
-                              : null,
                     ),
                   ))
               .toList(),
