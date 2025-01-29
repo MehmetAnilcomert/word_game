@@ -104,7 +104,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       if (snapshot.exists) {
         emit(GameInProgress(snapshot.data()! as Map<String, dynamic>));
       } else {
-        emit(GameOver({}));
+        emit(GameOver([]));
       }
     });
 
@@ -128,10 +128,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final gameData = await gameRepository.getRoomData(event.roomId);
       if (gameData != null && gameData.exists) {
         final data = gameData.data() as Map<String, dynamic>;
-        emit(GameOver(data)); // End the game with the result data
+        final scores = Map<String, int>.from(data['scores'] ?? {});
+        final sortedScores = scores.entries.toList()
+          ..sort((a, b) => b.value.compareTo(a.value));
+        // {maxPlayers: 4, scores: {}, players: [gefd], usedWords: {}, endTime: 1738176940400, isStarted: true, globalUsedWords: [], isActive: true, letters: [M, Z, L, O, Z]}
+        emit(GameOver(sortedScores)); // End the game with the result data
       }
     } catch (e) {
-      emit(GameOver({})); // If an error occurs, just end the game
+      emit(GameOver([])); // If an error occurs, just end the game
     }
+  }
+
+  @override
+  Future<void> close() {
+    print("GameBloc closed");
+    gameSubscription?.cancel();
+    timerBloc?.close();
+    return super.close();
   }
 }

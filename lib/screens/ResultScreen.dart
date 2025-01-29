@@ -7,7 +7,7 @@ import 'package:word_game/widgets/result_widgets/score_table.dart';
 import 'package:word_game/widgets/result_widgets/winner.dart';
 
 class ResultScreen extends StatefulWidget {
-  final Map<String, dynamic> data;
+  final List<MapEntry<String, int>> data;
   ResultScreen({required this.data});
 
   @override
@@ -33,9 +33,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final scores = Map<String, int>.from(widget.data['scores'] ?? {});
-    final sortedScores = scores.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
+    final sortedScores = widget.data;
 
     return Scaffold(
       body: Container(

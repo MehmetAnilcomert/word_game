@@ -43,7 +43,7 @@ class GameInProgress extends GameState {
 }
 
 class GameOver extends GameState {
-  final Map<String, dynamic> data;
+  final List<MapEntry<String, int>> data;
   GameOver(this.data);
 }
 

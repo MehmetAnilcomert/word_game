@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:word_game/generated/l10n.dart';
 
 Widget buildScoreBoard(Map<String, int> scores,
