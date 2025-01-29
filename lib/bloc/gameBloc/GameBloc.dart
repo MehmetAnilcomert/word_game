@@ -58,18 +58,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     try {
       final roomDoc = await gameRepository.getRoomData(event.roomId);
       if (roomDoc == null || !roomDoc.exists) {
-        throw Exception(S.current.roomJoinFailed);
+        throw S.current.roomJoinFailed;
       }
 
       final roomData = roomDoc.data()! as Map<String, dynamic>;
       final players = List<String>.from(roomData['players'] ?? []);
       final maxPlayers = roomData['maxPlayers'] as int;
 
-      if (roomData['isStarted']) throw Exception(S.current.gameAlreadyStarted);
-      if (!roomData['isActive']) throw Exception(S.current.roomNotActive);
-      if (players.length >= maxPlayers) throw Exception(S.current.roomFull);
+      if (roomData['isStarted']) throw S.current.gameAlreadyStarted;
+      if (!roomData['isActive']) throw S.current.roomNotActive;
+      if (players.length >= maxPlayers) throw S.current.roomFull;
       if (players.contains(event.playerName))
-        throw Exception(S.current.playerAlreadyInRoom);
+        throw S.current.playerAlreadyInRoom;
 
       players.add(event.playerName);
       await gameRepository.updateRoom(event.roomId, {'players': players});
