@@ -23,7 +23,7 @@ class JoinRoom extends GameEvent {
 
 class StartGame extends GameEvent {
   final String roomId;
-  StartGame(this.roomId);
+  StartGame({required this.roomId});
 }
 
 class ListenToGameUpdates extends GameEvent {

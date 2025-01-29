@@ -32,6 +32,9 @@
     "playerWordRepeated":"Already found.Try another word.",
     "wordAlreadyUsed":"Word is already used. Try another word.",
     "invalidWordLetters":"Word is not valid. Use the given letters.",
-    "enterPlayerNumber":"Enter Number of Players"
+    "enterPlayerNumber":"Enter Number of Players",
+    "lobbyTitle": "Game Lobby",
+    "startGame": "Start Game",
+    "roomId": "Room ID:"
   }
   

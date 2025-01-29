@@ -72,3 +72,12 @@ class WordSubmissionError extends GameState {
 
   WordSubmissionError({required this.errorMessage});
 }
+
+class InLobby extends GameState {
+  final List<String> players;
+
+  InLobby({required this.players});
+
+  @override
+  List<Object> get props => [players];
+}

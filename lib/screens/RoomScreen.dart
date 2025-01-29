@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/generated/l10n.dart';
-import 'package:word_game/screens/GameScreen.dart';
 import 'package:word_game/screens/HomeScreen.dart';
+import 'package:word_game/screens/LobbyScreen.dart';
 import 'package:word_game/widgets/room_widgets/action_button.dart';
 import 'package:word_game/widgets/room_widgets/build_number.dart';
 import 'package:word_game/widgets/room_widgets/header.dart';
@@ -33,13 +33,13 @@ class RoomScreen extends StatelessWidget {
       child: BlocConsumer<GameBloc, GameState>(
         listener: (context, state) {
           if (state is RoomCreated || state is RoomJoined) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => GameScreen(
-                  roomId: roomIdController.text,
-                  playerName: playerNameController.text,
-                ),
+                builder: (context) => LobbyScreen(
+                    roomId: roomIdController.text,
+                    playerName: playerNameController.text,
+                    isLeader: isCreateRoom),
               ),
             );
           } else if (state is RoomCreationFailed || state is RoomJoinFailed) {

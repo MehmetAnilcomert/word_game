@@ -48,6 +48,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       );
 
       emit(RoomCreated(roomId: event.roomId, playerName: event.playerName));
+      emit(InLobby(players: [event.playerName]));
     } catch (_) {
       emit(RoomCreationFailed(errorMessage: S.current.roomCreationFailed));
     }

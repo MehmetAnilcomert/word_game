@@ -379,6 +379,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Game Lobby`
+  String get lobbyTitle {
+    return Intl.message(
+      'Game Lobby',
+      name: 'lobbyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Game`
+  String get startGame {
+    return Intl.message(
+      'Start Game',
+      name: 'startGame',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Room ID:`
+  String get roomId {
+    return Intl.message(
+      'Room ID:',
+      name: 'roomId',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

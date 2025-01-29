@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Word is not valid. Use the given letters."),
         "joinRoomButton": MessageLookupByLibrary.simpleMessage("Join Room"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Letters"),
+        "lobbyTitle": MessageLookupByLibrary.simpleMessage("Game Lobby"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),
         "noWinner": MessageLookupByLibrary.simpleMessage("No Winner"),
         "playerAlreadyInRoom": MessageLookupByLibrary.simpleMessage(
@@ -59,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Room creation failed. Please try another room id."),
         "roomFull": MessageLookupByLibrary.simpleMessage(
             "Room is full. Please try joining to another room."),
+        "roomId": MessageLookupByLibrary.simpleMessage("Room ID:"),
         "roomJoinFailed": MessageLookupByLibrary.simpleMessage(
             "Could not join the room. Please make sure you entered the correct room id."),
         "roomNotActive": MessageLookupByLibrary.simpleMessage(
@@ -72,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "scoreTableLabel": MessageLookupByLibrary.simpleMessage("Scoreboard"),
         "selectLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "startGame": MessageLookupByLibrary.simpleMessage("Start Game"),
         "winnerLabel": MessageLookupByLibrary.simpleMessage("Winner"),
         "wordAlreadyUsed": MessageLookupByLibrary.simpleMessage(
             "Word is already used. Try another word.")

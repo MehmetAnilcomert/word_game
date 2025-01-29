@@ -29,7 +29,7 @@ class GameScreen extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               GameBloc(context, timerBloc: context.read<TimerBloc>())
-                ..add(GameEvent.StartGame(roomId))
+                ..add(GameEvent.StartGame(roomId: roomId))
                 ..add(GameEvent.ListenToGameUpdates(roomId)),
         )
       ],
