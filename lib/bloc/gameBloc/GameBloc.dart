@@ -77,6 +77,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       await gameRepository.updateRoom(event.roomId, {'players': players});
 
       emit(RoomJoined(roomId: event.roomId, playerName: event.playerName));
+      emit(InLobby(players: players));
     } catch (e) {
       emit(RoomJoinFailed(errorMessage: e.toString()));
     }
@@ -88,7 +89,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final roomData = roomDoc.data() as Map<String, dynamic>;
       final playerCount = roomData['players']?.length ?? 0;
 
-      if (playerCount <= 1) {
+      if (playerCount <= 0) {
         emit(GameStartFailed(errorMessage: S.current.notEnoughPlayer));
         emit(InLobby(players: roomData['players']?.cast<String>() ?? []));
         return;

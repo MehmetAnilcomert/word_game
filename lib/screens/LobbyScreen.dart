@@ -133,6 +133,7 @@ class LobbyScreen extends StatelessWidget {
                   Expanded(
                     child: BlocBuilder<GameBloc, GameState>(
                       builder: (context, state) {
+                        print(state);
                         if (state is InLobby) {
                           return buildPlayerList(context, state.players);
                         } else {
