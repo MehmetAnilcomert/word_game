@@ -76,8 +76,8 @@ class GameTimerError extends GameState {
 
 class InLobby extends GameState {
   final List<String> players;
-
-  InLobby({required this.players});
+  final String? errorMessage;
+  InLobby({this.errorMessage, required this.players});
 }
 
 class RoomCancelled extends GameState {}

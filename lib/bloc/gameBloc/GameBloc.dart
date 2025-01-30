@@ -96,7 +96,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
         // Check if there are enough players to start the game
         if (playerCount <= 1) {
-          emit(GameStartFailed(errorMessage: S.current.notEnoughPlayer));
+          final players = List<String>.from(roomData['players'] ?? []);
+          emit(InLobby(
+              players: players, errorMessage: S.current.notEnoughPlayer));
           return;
         }
 
@@ -112,7 +114,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
       }
     } catch (e) {
-      emit(GameStartFailed(errorMessage: e.toString()));
+      final roomData = await gameRepository.getRoomData(event.roomId);
+      final players = List<String>.from(roomData!['players'] ?? []);
+      emit(InLobby(players: players, errorMessage: e.toString()));
+      return;
     }
   }
 
