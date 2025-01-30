@@ -84,6 +84,8 @@ class InLobby extends GameState {
 
 class RoomCancelled extends GameState {}
 
+class RoomLeaved extends GameState {}
+
 class GameStartFailed extends GameState {
   final String errorMessage;
 

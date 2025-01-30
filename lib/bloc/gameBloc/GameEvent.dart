@@ -48,3 +48,9 @@ class EndGame extends GameEvent {
   final String roomId;
   EndGame(this.roomId);
 }
+
+class LeaveRoom extends GameEvent {
+  final String roomId;
+  final String playerName;
+  LeaveRoom({required this.roomId, required this.playerName});
+}

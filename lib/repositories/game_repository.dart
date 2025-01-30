@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/timerBloc/TimerState.dart';
 import 'package:rxdart/rxdart.dart';
@@ -104,5 +105,11 @@ class GameRepository {
 
   Future<void> endGame(String roomId) async {
     await updateRoom(roomId, {'isActive': false});
+  }
+
+  Future<void> leaveRoom(String roomId, String playername) async {
+    await updateRoom(roomId, {
+      'players': FieldValue.arrayRemove([playername])
+    });
   }
 }

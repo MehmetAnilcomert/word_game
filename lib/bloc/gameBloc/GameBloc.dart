@@ -25,6 +25,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<SubmitWord>(_onSubmitWord);
     on<EndGame>(_onEndGame);
     on<CancelRoom>(_onCancelRoom);
+    on<LeaveRoom>(_onLeaveRoom);
   }
 
   Future<void> _onCreateRoom(CreateRoom event, Emitter<GameState> emit) async {
@@ -154,6 +155,20 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     } catch (e) {
       emit(GameOver([])); // If an error occurs, just end the game
+    }
+  }
+
+  Future<void> _onLeaveRoom(LeaveRoom event, Emitter<GameState> emit) async {
+    try {
+      print('Leaving room bloc içi');
+      await gameRepository.leaveRoom(event.roomId, event.playerName);
+
+      emit(RoomLeaved()); // If the player leaves the room, return to the home
+    } catch (e) {
+      final gameData = await gameRepository.getRoomData(event.roomId);
+      emit(InLobby(
+        players: gameData?['players']?.cast<String>() ?? [],
+      )); //If there is an error when leaving the room, return to the lobby again
     }
   }
 

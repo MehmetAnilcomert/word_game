@@ -35,7 +35,7 @@ class LobbyScreen extends StatelessWidget {
               ),
             ),
           );
-        } else if (state is RoomCancelled) {
+        } else if (state is RoomCancelled || state is RoomLeaved) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -80,6 +80,9 @@ class LobbyScreen extends StatelessWidget {
                               context
                                   .read<GameBloc>()
                                   .add(CancelRoom(roomId: roomId));
+                            } else {
+                              context.read<GameBloc>().add(LeaveRoom(
+                                  roomId: roomId, playerName: playerName));
                             }
                           }
                         },
