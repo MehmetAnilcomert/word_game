@@ -161,7 +161,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         word: event.word,
       );
     } catch (e) {
-      emit(WordSubmissionError(errorMessage: e.toString()));
+      final roomDoc = await gameRepository.getRoomData(event.roomId);
+      emit(GameInProgress(roomDoc!.data() as Map<String, dynamic>,
+          errorMessage: e.toString()));
     }
   }
 

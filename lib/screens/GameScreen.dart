@@ -35,10 +35,10 @@ class GameScreen extends StatelessWidget {
       ],
       child: BlocConsumer<GameBloc, GameState>(
         listener: (context, state) {
-          if (state is WordSubmissionError) {
+          if (state is GameInProgress && state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage),
+                content: Text(state.errorMessage!),
                 backgroundColor: Colors.red,
                 duration: Duration(seconds: 2),
               ),

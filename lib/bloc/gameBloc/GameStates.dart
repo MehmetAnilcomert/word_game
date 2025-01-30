@@ -39,7 +39,8 @@ class RoomCreationFailed extends GameState {
 
 class GameInProgress extends GameState {
   final Map<String, dynamic> data;
-  GameInProgress(this.data);
+  final String? errorMessage;
+  GameInProgress(this.data, {this.errorMessage});
 }
 
 class GameOver extends GameState {
