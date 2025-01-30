@@ -74,12 +74,6 @@ class GameTimerError extends GameState {
   GameTimerError({required this.errorMessage});
 }
 
-class WordSubmissionError extends GameState {
-  final String errorMessage;
-
-  WordSubmissionError({required this.errorMessage});
-}
-
 class InLobby extends GameState {
   final List<String> players;
 

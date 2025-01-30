@@ -8,7 +8,7 @@ class CreateRoom extends GameEvent {
   final int maxPlayers;
 
   CreateRoom(
-      {this.maxPlayers = 4,
+      {this.maxPlayers = 2,
       required this.endTime,
       required this.playerName,
       required this.roomId});
