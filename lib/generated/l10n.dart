@@ -459,6 +459,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Get Ready!`
+  String get getReady {
+    return Intl.message(
+      'Get Ready!',
+      name: 'getReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Game starting`
+  String get gameStarting {
+    return Intl.message(
+      'Game starting',
+      name: 'gameStarting',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

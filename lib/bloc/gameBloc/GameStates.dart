@@ -47,13 +47,22 @@ class GameOver extends GameState {
   GameOver(this.data);
 }
 
+class GameStarting extends GameState {
+  final int countdown;
+
+  GameStarting(this.countdown);
+}
+
+class GameError extends GameState {
+  final String message;
+
+  GameError(this.message);
+}
+
 class GameTimerRunning extends GameState {
   final int remainingTime; // Kalan süre
 
   GameTimerRunning(this.remainingTime);
-
-  @override
-  List<Object?> get props => [remainingTime];
 }
 
 class GameTimerFinished extends GameState {}
@@ -62,9 +71,6 @@ class GameTimerError extends GameState {
   final String errorMessage;
 
   GameTimerError({required this.errorMessage});
-
-  @override
-  List<Object?> get props => [errorMessage];
 }
 
 class WordSubmissionError extends GameState {
@@ -77,9 +83,6 @@ class InLobby extends GameState {
   final List<String> players;
 
   InLobby({required this.players});
-
-  @override
-  List<Object> get props => [players];
 }
 
 class RoomCancelled extends GameState {}

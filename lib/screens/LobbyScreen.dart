@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
-import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
-import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/screens/GameScreen.dart';
 import 'package:word_game/screens/HomeScreen.dart';
-import 'package:word_game/widgets/lobby_widgets/exit_dialog.dart';
 import 'package:word_game/widgets/lobby_widgets/player_list.dart';
+import 'package:word_game/widgets/lobby_widgets/room_info.dart';
 import 'package:word_game/widgets/lobby_widgets/start_button.dart';
+import 'package:word_game/widgets/lobby_widgets/lobby_header.dart';
 
 class LobbyScreen extends StatelessWidget {
   final String roomId;
@@ -38,119 +37,54 @@ class LobbyScreen extends StatelessWidget {
         } else if (state is RoomCancelled || state is RoomLeaved) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (context) => HomeScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => HomeScreen()),
           );
-        } else if (state is GameStartFailed) {
+        } else if (state is GameStartFailed || state is GameError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage),
+              content: Text(state is GameStartFailed
+                  ? state.errorMessage
+                  : (state as GameError).message),
               backgroundColor: Colors.red,
             ),
           );
         }
       },
-      child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Colors.blue[300]!, Colors.purple[300]!],
-            ),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
+      child: BlocBuilder<GameBloc, GameState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.blue[300]!, Colors.purple[300]!],
+                ),
+              ),
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                        onPressed: () async {
-                          bool shouldExit = await showExitDialog(context);
-                          if (shouldExit) {
-                            if (isLeader) {
-                              context
-                                  .read<GameBloc>()
-                                  .add(CancelRoom(roomId: roomId));
-                            } else {
-                              context.read<GameBloc>().add(LeaveRoom(
-                                  roomId: roomId, playerName: playerName));
-                            }
-                          }
-                        },
-                      ),
+                      buildHeaderLobby(context, isLeader, roomId, playerName),
+                      SizedBox(height: 20),
+                      buildRoomInfo(context, roomId),
+                      SizedBox(height: 20),
                       Expanded(
-                        child: Text(
-                          S.of(context).lobbyTitle,
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
+                        child: state is InLobby
+                            ? buildPlayerList(context, state.players)
+                            : Center(child: CircularProgressIndicator()),
                       ),
-                      SizedBox(width: 50), // To center the title text
+                      if (isLeader && state is InLobby)
+                        buildStartButton(context, roomId),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        S.of(context).roomId,
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white.withOpacity(0.97),
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        '$roomId',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              offset: Offset(4.0, 4.0),
-                              blurRadius: 8.0,
-                              color: Colors.black.withOpacity(0.9),
-                            ),
-                          ],
-                          letterSpacing: 1.5,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Expanded(
-                    child: BlocBuilder<GameBloc, GameState>(
-                      builder: (context, state) {
-                        print(state);
-                        if (state is InLobby) {
-                          return buildPlayerList(context, state.players);
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
-                  ),
-                  if (isLeader) buildStartButton(context, roomId),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

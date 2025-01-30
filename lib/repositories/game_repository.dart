@@ -1,8 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:word_game/bloc/gameBloc/GameEvent.dart';
-import 'package:word_game/bloc/gameBloc/GameStates.dart';
-import 'package:word_game/bloc/timerBloc/TimerState.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/utils/game_utils.dart';
 
@@ -33,6 +29,7 @@ class GameRepository {
       'endTime': endTime,
       'maxPlayers': maxPlayers,
       'players': [playerName],
+      'createdAt': FieldValue.serverTimestamp(),
     });
   }
 
@@ -45,31 +42,13 @@ class GameRepository {
   }
 
   Stream<DocumentSnapshot> listenToGameUpdates(String roomId) {
-    return firestore.collection('games').doc(roomId).snapshots();
-  }
-
-  Stream<GameState> getGameStateStream(String roomId) {
     return firestore
         .collection('games')
         .doc(roomId)
         .snapshots()
-        .map((snapshot) {
-      if (snapshot.exists) {
-        return GameInProgress(snapshot.data()! as Map<String, dynamic>);
-      } else {
-        return GameOver([]);
-      }
+        .handleError((error) {
+      throw error;
     });
-  }
-
-  Stream<GameState> getGameStateWithTimer(
-      String roomId, Stream<TimerState> timerStream) {
-    return Rx.merge([
-      getGameStateStream(roomId),
-      timerStream.where((state) => state is TimerEnded).map((_) {
-        return GameOver([]);
-      })
-    ]);
   }
 
   Future<void> submitWord({
@@ -89,10 +68,14 @@ class GameRepository {
     if (!GameUtils.isWordValid(word, letters)) {
       throw S.current.invalidWordLetters;
     }
-    if (!GameUtils.isWordUsed(word, globalUsedWords)) {
+
+    if (globalUsedWords.contains(word)) {
       throw S.current.wordAlreadyUsed;
     }
-    usedWords[playerName] = (usedWords[playerName] ?? [])..add(word);
+
+    final playerWords = (usedWords[playerName] ?? []) as List;
+    playerWords.add(word);
+    usedWords[playerName] = playerWords;
     globalUsedWords.add(word);
     scores[playerName] = (scores[playerName] ?? 0) + word.length;
 
@@ -107,9 +90,9 @@ class GameRepository {
     await updateRoom(roomId, {'isActive': false});
   }
 
-  Future<void> leaveRoom(String roomId, String playername) async {
+  Future<void> leaveRoom(String roomId, String playerName) async {
     await updateRoom(roomId, {
-      'players': FieldValue.arrayRemove([playername])
+      'players': FieldValue.arrayRemove([playerName])
     });
   }
 }

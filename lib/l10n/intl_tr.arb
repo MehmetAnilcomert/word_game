@@ -40,6 +40,8 @@
     "exitLobbyMessage": "Oyun lobisinden çıkmak istediğinizden emin misiniz?",
     "confirm": "Onayla",
     "cancel": "İptal",
-    "notEnoughPlayer": "Oyunu başlatmak için yeterli oyuncu yok."
+    "notEnoughPlayer": "Oyunu başlatmak için yeterli oyuncu yok.",
+    "getReady": "Hazırlanın!",
+    "gameStarting": "Oyun başlıyor"
   }
   

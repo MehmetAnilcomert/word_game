@@ -40,6 +40,8 @@
     "exitLobbyMessage": "Are you sure you want to exit the game lobby?",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "notEnoughPlayer": "Not enough players to start the game."
+    "notEnoughPlayer": "Not enough players to start the game.",
+    "getReady": "Get Ready!",
+    "gameStarting": "Game starting"
   }
   

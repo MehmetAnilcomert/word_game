@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/game_repo_cubit.dart';
 import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
-import 'package:word_game/bloc/timerBloc/TimerEvent.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/repositories/game_repository.dart';
 import 'package:word_game/utils/game_utils.dart';
@@ -26,6 +26,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<EndGame>(_onEndGame);
     on<CancelRoom>(_onCancelRoom);
     on<LeaveRoom>(_onLeaveRoom);
+    on<_UpdateGameState>(_onUpdateGameState);
   }
 
   Future<void> _onCreateRoom(CreateRoom event, Emitter<GameState> emit) async {
@@ -51,7 +52,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       emit(RoomCreated(roomId: event.roomId, playerName: event.playerName));
       emit(InLobby(players: [event.playerName]));
-    } catch (_) {
+      add(ListenToGameUpdates(event.roomId));
+    } catch (e) {
       emit(RoomCreationFailed(errorMessage: S.current.roomCreationFailed));
     }
   }
@@ -79,62 +81,88 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       emit(RoomJoined(roomId: event.roomId, playerName: event.playerName));
       emit(InLobby(players: players));
+      add(ListenToGameUpdates(event.roomId));
     } catch (e) {
       emit(RoomJoinFailed(errorMessage: e.toString()));
     }
   }
 
   Future<void> _onStartGame(StartGame event, Emitter<GameState> emit) async {
-    final roomDoc = await gameRepository.getRoomData(event.roomId);
-    if (roomDoc != null && roomDoc.exists) {
-      final roomData = roomDoc.data() as Map<String, dynamic>;
-      final playerCount = roomData['players']?.length ?? 0;
+    try {
+      final roomDoc = await gameRepository.getRoomData(event.roomId);
+      if (roomDoc != null && roomDoc.exists) {
+        final roomData = roomDoc.data() as Map<String, dynamic>;
+        final playerCount = roomData['players']?.length ?? 0;
 
-      if (playerCount <= 0) {
-        emit(GameStartFailed(errorMessage: S.current.notEnoughPlayer));
-        emit(InLobby(players: roomData['players']?.cast<String>() ?? []));
-        return;
+        if (playerCount <= 0) {
+          emit(GameStartFailed(errorMessage: S.current.notEnoughPlayer));
+          return;
+        }
+
+        await gameRepository.updateRoom(event.roomId, {
+          'isStarted': true,
+        });
+
+        final updatedDoc = await gameRepository.getRoomData(event.roomId);
+        if (updatedDoc != null && updatedDoc.exists) {
+          final updatedData = updatedDoc.data() as Map<String, dynamic>;
+          emit(GameInProgress(updatedData));
+        }
       }
-
-      await gameRepository.updateRoom(event.roomId, {'isStarted': true});
-      emit(GameInProgress(roomData));
-
-      final endTime = roomData['endTime'] as int;
-      final remainingTime = (endTime - DateTime.now().millisecondsSinceEpoch)
-          .clamp(0, double.infinity)
-          .toInt();
-
-      if (remainingTime > 0) {
-        timerBloc?.add(StartTimer(remainingTime));
-      } else {
-        add(EndGame(event.roomId));
-      }
+    } catch (e) {
+      emit(GameStartFailed(errorMessage: e.toString()));
     }
   }
 
-  void _onListenToGameUpdates(
+  void _onUpdateGameState(_UpdateGameState event, Emitter<GameState> emit) {
+    if (!event.snapshot.exists) {
+      emit(GameOver([]));
+      return;
+    }
+
+    final data = event.snapshot.data() as Map<String, dynamic>;
+
+    if (!data['isActive']) {
+      emit(GameOver([]));
+      return;
+    }
+
+    final isStarted = data['isStarted'] ?? false;
+    if (isStarted) {
+      emit(GameInProgress(data));
+    } else {
+      final players = List<String>.from(data['players'] ?? []);
+
+      emit(InLobby(players: players));
+    }
+  }
+
+  Future<void> _onListenToGameUpdates(
       ListenToGameUpdates event, Emitter<GameState> emit) async {
     await gameSubscription?.cancel();
 
-    await emit.forEach(
-      gameRepository.getGameStateStream(event.roomId),
-      onData: (state) => state,
+    return emit.forEach<DocumentSnapshot>(
+      gameRepository.listenToGameUpdates(event.roomId),
+      onData: (snapshot) {
+        add(_UpdateGameState(snapshot));
+        return state;
+      },
+      onError: (error, stackTrace) {
+        return GameError(error.toString());
+      },
     );
-
-    if (timerBloc != null) {
-      await emit.forEach(
-        gameRepository.getGameStateWithTimer(event.roomId, timerBloc!.stream),
-        onData: (state) => state,
-      );
-    }
   }
 
   Future<void> _onSubmitWord(SubmitWord event, Emitter<GameState> emit) async {
-    await gameRepository.submitWord(
-      roomId: event.roomId,
-      playerName: event.playerName,
-      word: event.word,
-    );
+    try {
+      await gameRepository.submitWord(
+        roomId: event.roomId,
+        playerName: event.playerName,
+        word: event.word,
+      );
+    } catch (e) {
+      emit(WordSubmissionError(errorMessage: e.toString()));
+    }
   }
 
   Future<void> _onCancelRoom(CancelRoom event, Emitter<GameState> emit) async {
@@ -150,32 +178,26 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         final scores = Map<String, int>.from(data['scores'] ?? {});
         final sortedScores = scores.entries.toList()
           ..sort((a, b) => b.value.compareTo(a.value));
-        // {maxPlayers: 4, scores: {}, players: [gefd], usedWords: {}, endTime: 1738176940400, isStarted: true, globalUsedWords: [], isActive: true, letters: [M, Z, L, O, Z]}
-        emit(GameOver(sortedScores)); // End the game with the result data
+        emit(GameOver(sortedScores));
       }
     } catch (e) {
-      emit(GameOver([])); // If an error occurs, just end the game
+      emit(GameOver([]));
     }
   }
 
   Future<void> _onLeaveRoom(LeaveRoom event, Emitter<GameState> emit) async {
-    try {
-      print('Leaving room bloc içi');
-      await gameRepository.leaveRoom(event.roomId, event.playerName);
-
-      emit(RoomLeaved()); // If the player leaves the room, return to the home
-    } catch (e) {
-      final gameData = await gameRepository.getRoomData(event.roomId);
-      emit(InLobby(
-        players: gameData?['players']?.cast<String>() ?? [],
-      )); //If there is an error when leaving the room, return to the lobby again
-    }
+    await gameRepository.leaveRoom(event.roomId, event.playerName);
+    emit(RoomLeaved());
   }
 
   @override
   Future<void> close() async {
     await gameSubscription?.cancel();
-    await timerBloc?.close();
     return super.close();
   }
+}
+
+class _UpdateGameState extends GameEvent {
+  final DocumentSnapshot snapshot;
+  _UpdateGameState(this.snapshot);
 }

@@ -46,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Oyun zaten başladı. Katılamazsınız."),
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Oyun Devam Ediyor"),
+        "gameStarting": MessageLookupByLibrary.simpleMessage("Oyun başlıyor"),
+        "getReady": MessageLookupByLibrary.simpleMessage("Hazırlanın!"),
         "goHome": MessageLookupByLibrary.simpleMessage("Ana Sayfaya Dön"),
         "hurryUp": MessageLookupByLibrary.simpleMessage("Acele Et!"),
         "invalidWordLetters": MessageLookupByLibrary.simpleMessage(

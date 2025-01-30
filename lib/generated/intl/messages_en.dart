@@ -45,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Game has already started. You can not join."),
         "gameScreenTitle":
             MessageLookupByLibrary.simpleMessage("Game in Progress"),
+        "gameStarting": MessageLookupByLibrary.simpleMessage("Game starting"),
+        "getReady": MessageLookupByLibrary.simpleMessage("Get Ready!"),
         "goHome": MessageLookupByLibrary.simpleMessage("Go Home"),
         "hurryUp": MessageLookupByLibrary.simpleMessage("Hurry Up!"),
         "invalidWordLetters": MessageLookupByLibrary.simpleMessage(
