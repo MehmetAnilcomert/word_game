@@ -39,6 +39,7 @@
     "exitLobbyTitle": "Lobi Odasından Çık",
     "exitLobbyMessage": "Oyun lobisinden çıkmak istediğinizden emin misiniz?",
     "confirm": "Onayla",
-    "cancel": "İptal"
+    "cancel": "İptal",
+    "notEnoughPlayer": "Oyunu başlatmak için yeterli oyuncu yok."
   }
   

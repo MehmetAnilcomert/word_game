@@ -54,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "lobbyTitle": MessageLookupByLibrary.simpleMessage("Game Lobby"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),
         "noWinner": MessageLookupByLibrary.simpleMessage("No Winner"),
+        "notEnoughPlayer": MessageLookupByLibrary.simpleMessage(
+            "Not enough players to start the game."),
         "playerAlreadyInRoom": MessageLookupByLibrary.simpleMessage(
             "Playername is already using in the room. Please try another player id."),
         "playerWordRepeated": MessageLookupByLibrary.simpleMessage(

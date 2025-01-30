@@ -39,6 +39,7 @@
     "exitLobbyTitle": "Exit Game Lobby",
     "exitLobbyMessage": "Are you sure you want to exit the game lobby?",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "notEnoughPlayer": "Not enough players to start the game."
   }
   

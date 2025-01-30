@@ -56,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "newGameButton":
             MessageLookupByLibrary.simpleMessage("Yeni Oyun Başlat"),
         "noWinner": MessageLookupByLibrary.simpleMessage("Kazanan Yok"),
+        "notEnoughPlayer": MessageLookupByLibrary.simpleMessage(
+            "Oyunu başlatmak için yeterli oyuncu yok."),
         "playerAlreadyInRoom": MessageLookupByLibrary.simpleMessage(
             "Oyuncu adı kullanılıyor. Lütfen başka bir oyuncu adı deneyin."),
         "playerWordRepeated": MessageLookupByLibrary.simpleMessage(

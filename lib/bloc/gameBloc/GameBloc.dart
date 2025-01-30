@@ -86,6 +86,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final roomDoc = await gameRepository.getRoomData(event.roomId);
     if (roomDoc != null && roomDoc.exists) {
       final roomData = roomDoc.data() as Map<String, dynamic>;
+      final playerCount = roomData['players']?.length ?? 0;
+
+      if (playerCount <= 1) {
+        emit(GameStartFailed(errorMessage: S.current.notEnoughPlayer));
+        emit(InLobby(players: roomData['players']?.cast<String>() ?? []));
+        return;
+      }
+
       await gameRepository.updateRoom(event.roomId, {'isStarted': true});
       emit(GameInProgress(roomData));
 

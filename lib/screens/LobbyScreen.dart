@@ -42,6 +42,13 @@ class LobbyScreen extends StatelessWidget {
               builder: (context) => HomeScreen(),
             ),
           );
+        } else if (state is GameStartFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       child: Scaffold(

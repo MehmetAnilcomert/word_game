@@ -449,6 +449,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Not enough players to start the game.`
+  String get notEnoughPlayer {
+    return Intl.message(
+      'Not enough players to start the game.',
+      name: 'notEnoughPlayer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
