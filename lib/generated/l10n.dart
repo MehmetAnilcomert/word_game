@@ -409,6 +409,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Exit Game Lobby`
+  String get exitLobbyTitle {
+    return Intl.message(
+      'Exit Game Lobby',
+      name: 'exitLobbyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to exit the game lobby?`
+  String get exitLobbyMessage {
+    return Intl.message(
+      'Are you sure you want to exit the game lobby?',
+      name: 'exitLobbyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

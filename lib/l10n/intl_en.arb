@@ -35,6 +35,10 @@
     "enterPlayerNumber":"Enter Number of Players",
     "lobbyTitle": "Game Lobby",
     "startGame": "Start Game",
-    "roomId": "Room ID:"
+    "roomId": "Room ID:",
+    "exitLobbyTitle": "Exit Game Lobby",
+    "exitLobbyMessage": "Are you sure you want to exit the game lobby?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
   

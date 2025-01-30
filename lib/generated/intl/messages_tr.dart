@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle":
             MessageLookupByLibrary.simpleMessage("Kelime Mücadelesi Oyunu"),
+        "cancel": MessageLookupByLibrary.simpleMessage("İptal"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Onayla"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Oda Oluştur"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("Oyunu Bitir"),
         "enterEndTime":
@@ -34,6 +36,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Oyuncu Sayısını Girin"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Oda ID\'si Girin"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Bir kelime girin"),
+        "exitLobbyMessage": MessageLookupByLibrary.simpleMessage(
+            "Oyun lobisinden çıkmak istediğinizden emin misiniz?"),
+        "exitLobbyTitle":
+            MessageLookupByLibrary.simpleMessage("Lobi Odasından Çık"),
         "fillAllFields": MessageLookupByLibrary.simpleMessage(
             "Lütfen tüm alanları doldurun"),
         "gameAlreadyStarted": MessageLookupByLibrary.simpleMessage(

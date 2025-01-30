@@ -35,6 +35,10 @@
     "enterPlayerNumber":"Oyuncu Sayısını Girin",
     "lobbyTitle": "Lobi odası",
     "startGame": "Oyunu Başlat",
-    "roomId": "Oda ismi:"
+    "roomId": "Oda ismi:",
+    "exitLobbyTitle": "Lobi Odasından Çık",
+    "exitLobbyMessage": "Oyun lobisinden çıkmak istediğinizden emin misiniz?",
+    "confirm": "Onayla",
+    "cancel": "İptal"
   }
   

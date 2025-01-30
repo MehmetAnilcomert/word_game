@@ -5,6 +5,8 @@ import 'package:word_game/bloc/gameBloc/GameEvent.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/screens/GameScreen.dart';
+import 'package:word_game/screens/HomeScreen.dart'; // HomeScreen import edilmelidir
+import 'package:word_game/widgets/lobby_widgets/exit_dialog.dart';
 import 'package:word_game/widgets/lobby_widgets/player_list.dart';
 import 'package:word_game/widgets/lobby_widgets/start_button.dart';
 
@@ -33,6 +35,13 @@ class LobbyScreen extends StatelessWidget {
               ),
             ),
           );
+        } else if (state is RoomCancelled) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -50,17 +59,37 @@ class LobbyScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    S.of(context).lobbyTitle,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        onPressed: () async {
+                          bool shouldExit = await showExitDialog(context);
+                          if (shouldExit) {
+                            if (isLeader) {
+                              context
+                                  .read<GameBloc>()
+                                  .add(CancelRoom(roomId: roomId));
+                            }
+                          }
+                        },
+                      ),
+                      Text(
+                        S.of(context).lobbyTitle,
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                   SizedBox(height: 20),
                   Text(
-                    '${S.of(context).roomId}: $roomId',
+                    '${S.of(context).roomId} $roomId',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),

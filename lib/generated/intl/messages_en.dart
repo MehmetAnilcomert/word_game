@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("Word Challenge Game"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Create Room"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("End Game"),
         "enterEndTime": MessageLookupByLibrary.simpleMessage(
@@ -33,6 +35,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter Number of Players"),
         "enterRoomId": MessageLookupByLibrary.simpleMessage("Enter Room ID"),
         "enterWord": MessageLookupByLibrary.simpleMessage("Enter a word"),
+        "exitLobbyMessage": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to exit the game lobby?"),
+        "exitLobbyTitle":
+            MessageLookupByLibrary.simpleMessage("Exit Game Lobby"),
         "fillAllFields":
             MessageLookupByLibrary.simpleMessage("Please fill all fields"),
         "gameAlreadyStarted": MessageLookupByLibrary.simpleMessage(

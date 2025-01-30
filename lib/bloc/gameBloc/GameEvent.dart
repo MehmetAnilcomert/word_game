@@ -26,6 +26,11 @@ class StartGame extends GameEvent {
   StartGame({required this.roomId});
 }
 
+class CancelRoom extends GameEvent {
+  final String roomId;
+  CancelRoom({required this.roomId});
+}
+
 class ListenToGameUpdates extends GameEvent {
   final String roomId;
   ListenToGameUpdates(this.roomId);

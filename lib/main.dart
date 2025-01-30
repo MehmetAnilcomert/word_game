@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:word_game/bloc/gameBloc/GameBloc.dart';
-import 'package:provider/provider.dart';
+
 import 'package:word_game/bloc/game_repo_cubit.dart';
 import 'package:word_game/bloc/language_bloc.dart';
 import 'package:word_game/generated/l10n.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => GameRepositoryCubit()),
         BlocProvider<LanguageCubit>(

@@ -81,3 +81,5 @@ class InLobby extends GameState {
   @override
   List<Object> get props => [players];
 }
+
+class RoomCancelled extends GameState {}

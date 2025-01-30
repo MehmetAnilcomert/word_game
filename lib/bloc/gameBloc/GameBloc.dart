@@ -24,6 +24,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<ListenToGameUpdates>(_onListenToGameUpdates);
     on<SubmitWord>(_onSubmitWord);
     on<EndGame>(_onEndGame);
+    on<CancelRoom>(_onCancelRoom);
   }
 
   Future<void> _onCreateRoom(CreateRoom event, Emitter<GameState> emit) async {
@@ -124,6 +125,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       playerName: event.playerName,
       word: event.word,
     );
+  }
+
+  Future<void> _onCancelRoom(CancelRoom event, Emitter<GameState> emit) async {
+    await gameRepository.endGame(event.roomId);
+    emit(RoomCancelled());
   }
 
   Future<void> _onEndGame(EndGame event, Emitter<GameState> emit) async {
