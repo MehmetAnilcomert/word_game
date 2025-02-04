@@ -4,12 +4,14 @@ import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/bloc/room_cubit.dart';
 import 'package:word_game/generated/l10n.dart';
+import 'package:word_game/modals/lang_options.dart';
 import 'package:word_game/screens/HomeScreen.dart';
 import 'package:word_game/screens/LobbyScreen.dart';
 import 'package:word_game/widgets/room_widgets/action_button.dart';
 import 'package:word_game/widgets/room_widgets/build_number.dart';
 import 'package:word_game/widgets/room_widgets/header.dart';
 import 'package:word_game/widgets/room_widgets/input_widget.dart';
+import 'package:word_game/widgets/room_widgets/lang_dropdown.dart';
 
 class RoomScreen extends StatelessWidget {
   final bool isCreateRoom;
@@ -147,6 +149,19 @@ class RoomScreen extends StatelessWidget {
                                 .read<RoomCubit>()
                                 .updateLetterNumber(value.toInt()),
                           ),
+                          SizedBox(height: 20),
+                          buildLanguageDropdown(
+                            label: S.of(context).language,
+                            selectedValue:
+                                roomState.lang, // Örneğin "tr" veya "en"
+                            options: LanguageOptions.languageOptions,
+                            onChanged: (value) {
+                              if (value != null) {
+                                // Cubit veya state güncelleme işlemini burada yap.
+                                context.read<RoomCubit>().updateLang(value);
+                              }
+                            },
+                          )
                         ],
                       )
                     : SizedBox(),
@@ -159,7 +174,8 @@ class RoomScreen extends StatelessWidget {
                     roomState.roomID,
                     roomState.endTime,
                     roomState.playerNumber,
-                    roomState.letterNumber),
+                    roomState.letterNumber,
+                    roomState.lang),
               ],
             ),
           ),

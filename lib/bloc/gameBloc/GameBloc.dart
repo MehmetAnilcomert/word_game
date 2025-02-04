@@ -37,7 +37,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         return;
       }
 
-      print("Letter: ${event.letterNumber}");
       final letters = GameUtils.generateRandomLetters(event.letterNumber);
 
       await gameRepository.createRoom(
@@ -46,6 +45,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         letters: letters,
         endTime: event.endTime,
         maxPlayers: event.maxPlayers,
+        lang: event.lang,
       );
 
       emit(RoomCreated(roomId: event.roomId, playerName: event.playerName));

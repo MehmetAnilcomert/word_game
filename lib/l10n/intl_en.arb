@@ -43,6 +43,10 @@
     "notEnoughPlayer": "Not enough players to start the game.",
     "getReady": "Get Ready!",
     "gameStarting": "Game starting",
-    "enterLetterNumber": "Enter Number of Letters"
+    "enterLetterNumber": "Enter Number of Letters",
+    "wordNotValid": "Word is not valid. Please try another word.",
+    "english": "English",
+    "turkish": "Turkish",
+    "language": "Language"
   }
   

@@ -1,5 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:word_game/modals/lang_options.dart';
+
+enum lang { en, tr }
 
 class RoomState {
   final String playerName;
@@ -7,6 +10,7 @@ class RoomState {
   final int endTime;
   final int playerNumber;
   final int letterNumber;
+  final String lang;
 
   RoomState({
     this.playerName = '',
@@ -14,6 +18,7 @@ class RoomState {
     this.endTime = 1,
     this.playerNumber = 4,
     this.letterNumber = 6,
+    this.lang = 'tr',
   });
 
   RoomState copyWith({
@@ -22,6 +27,7 @@ class RoomState {
     int? endTime,
     int? playerNumber,
     int? letterNumber,
+    String? lang,
   }) {
     return RoomState(
       playerName: playerName ?? this.playerName,
@@ -29,6 +35,7 @@ class RoomState {
       endTime: endTime ?? this.endTime,
       playerNumber: playerNumber ?? this.playerNumber,
       letterNumber: letterNumber ?? this.letterNumber,
+      lang: lang ?? this.lang,
     );
   }
 }
@@ -58,6 +65,12 @@ class RoomCubit extends Cubit<RoomState> {
   void updateLetterNumber(int number) {
     print("Letter in cubit: $number");
     emit(state.copyWith(letterNumber: number));
+  }
+
+  void updateLang(String value) {
+    print(
+        "Letter in cubit: ${value}, ${LanguageOptions.languageOptions[value]!}");
+    emit(state.copyWith(lang: value));
   }
 
   @override

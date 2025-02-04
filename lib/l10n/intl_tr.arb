@@ -43,6 +43,10 @@
     "notEnoughPlayer": "Oyunu başlatmak için yeterli oyuncu yok.",
     "getReady": "Hazırlanın!",
     "gameStarting": "Oyun başlıyor",
-    "enterLetterNumber": "Harf Sayısını Girin"
+    "enterLetterNumber": "Harf Sayısını Girin",
+    "wordNotValid": "Kelime geçerli değil. Lütfen başka bir kelime deneyin.",
+    "english": "İngilizce",
+    "turkish": "Türkçe",
+    "language": "Dil"
   }
   

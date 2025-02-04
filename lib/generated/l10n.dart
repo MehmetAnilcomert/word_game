@@ -489,6 +489,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Word is not valid. Please try another word.`
+  String get wordNotValid {
+    return Intl.message(
+      'Word is not valid. Please try another word.',
+      name: 'wordNotValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message(
+      'English',
+      name: 'english',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Turkish`
+  String get turkish {
+    return Intl.message(
+      'Turkish',
+      name: 'turkish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

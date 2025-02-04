@@ -7,10 +7,12 @@ class CreateRoom extends GameEvent {
   final int endTime;
   final int maxPlayers;
   final int letterNumber;
+  final String lang;
 
   CreateRoom(
       {this.letterNumber = 6,
       this.maxPlayers = 2,
+      required this.lang,
       required this.endTime,
       required this.playerName,
       required this.roomId});

@@ -18,6 +18,7 @@ class GameRepository {
     required List<String> letters,
     required int endTime,
     required int maxPlayers,
+    required String lang,
   }) async {
     await firestore.collection('games').doc(roomId).set({
       'letters': letters,
@@ -30,6 +31,7 @@ class GameRepository {
       'maxPlayers': maxPlayers,
       'players': [playerName],
       'createdAt': FieldValue.serverTimestamp(),
+      'lang': lang,
     });
   }
 
@@ -64,11 +66,13 @@ class GameRepository {
     final usedWords = Map<String, dynamic>.from(data['usedWords'] ?? {});
     final globalUsedWords = List<String>.from(data['globalUsedWords'] ?? []);
     final scores = Map<String, int>.from(data['scores'] ?? {});
+    final lang = data['lang'] ?? 'en';
 
-    if (!GameUtils.isWordValid(word, letters)) {
+    if (!GameUtils.isWordHavingValidChars(word, letters)) {
       throw S.current.invalidWordLetters;
+    } else if (!await GameUtils.isWordValid(word, lang)) {
+      throw S.current.wordNotValid;
     }
-
     if (globalUsedWords.contains(word)) {
       throw S.current.wordAlreadyUsed;
     }

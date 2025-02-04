@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "createRoomButton": MessageLookupByLibrary.simpleMessage("Create Room"),
         "endGameButton": MessageLookupByLibrary.simpleMessage("End Game"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "enterEndTime": MessageLookupByLibrary.simpleMessage(
             "Enter Game Duration (in minutes)"),
         "enterLetterNumber":
@@ -54,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidWordLetters": MessageLookupByLibrary.simpleMessage(
             "Word is not valid. Use the given letters."),
         "joinRoomButton": MessageLookupByLibrary.simpleMessage("Join Room"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
         "lettersLabel": MessageLookupByLibrary.simpleMessage("Letters"),
         "lobbyTitle": MessageLookupByLibrary.simpleMessage("Game Lobby"),
         "newGameButton": MessageLookupByLibrary.simpleMessage("Start New Game"),
@@ -87,8 +89,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Select Language"),
         "startGame": MessageLookupByLibrary.simpleMessage("Start Game"),
+        "turkish": MessageLookupByLibrary.simpleMessage("Turkish"),
         "winnerLabel": MessageLookupByLibrary.simpleMessage("Winner"),
         "wordAlreadyUsed": MessageLookupByLibrary.simpleMessage(
-            "Word is already used. Try another word.")
+            "Word is already used. Try another word."),
+        "wordNotValid": MessageLookupByLibrary.simpleMessage(
+            "Word is not valid. Please try another word.")
       };
 }

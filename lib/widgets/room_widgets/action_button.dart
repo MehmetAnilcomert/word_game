@@ -13,12 +13,13 @@ Widget buildActionButton(
     String roomId,
     int endTime,
     int playerNumber,
-    int letterNumber) {
+    int letterNumber,
+    String lang) {
   return ElevatedButton(
     onPressed: state is RoomCreating || state is RoomJoining
         ? null
         : () => _handleAction(context, isCreateRoom, playerName, roomId,
-            endTime, playerNumber, letterNumber),
+            endTime, playerNumber, letterNumber, lang),
     child: state is RoomCreating || state is RoomJoining
         ? CircularProgressIndicator(color: Colors.white)
         : Text(
@@ -36,8 +37,15 @@ Widget buildActionButton(
   );
 }
 
-void _handleAction(BuildContext context, bool isCreateRoom, String playerName,
-    String roomId, int endTime, int playerNumber, int letterNumber) {
+void _handleAction(
+    BuildContext context,
+    bool isCreateRoom,
+    String playerName,
+    String roomId,
+    int endTime,
+    int playerNumber,
+    int letterNumber,
+    String lang) {
   if (playerName.isEmpty || roomId.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -54,6 +62,7 @@ void _handleAction(BuildContext context, bool isCreateRoom, String playerName,
           endTime: endTime,
           maxPlayers: playerNumber,
           letterNumber: letterNumber,
+          lang: lang,
         ));
   } else {
     context
