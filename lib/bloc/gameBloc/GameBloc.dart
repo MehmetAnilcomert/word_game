@@ -8,7 +8,7 @@ import 'package:word_game/bloc/game_repo_cubit.dart';
 import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
 import 'package:word_game/generated/l10n.dart';
 import 'package:word_game/repositories/game_repository.dart';
-import 'package:word_game/utils/game_utils.dart';
+import 'package:word_game/utils/letter_utils.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   final GameRepository gameRepository;
@@ -37,7 +37,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         return;
       }
 
-      final letters = GameUtils.generateRandomLetters(event.letterNumber);
+      final letters =
+          LetterGenerator.generateRandomLetters(event.letterNumber, event.lang);
 
       await gameRepository.createRoom(
         roomId: event.roomId,
@@ -99,7 +100,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           return;
         }
 
-        // Firestore'dan gelen oyun süresi dakika cinsinden mi? (kontrol)
         if (!roomData.containsKey('endTime') || roomData['endTime'] == null) {
           throw Exception("Oyun süresi (endTime) bulunamadı!");
         }
