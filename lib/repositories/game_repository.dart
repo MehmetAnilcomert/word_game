@@ -66,7 +66,7 @@ class GameRepository {
     final usedWords = Map<String, dynamic>.from(data['usedWords'] ?? {});
     final globalUsedWords = List<String>.from(data['globalUsedWords'] ?? []);
     final scores = Map<String, int>.from(data['scores'] ?? {});
-    final lang = data['lang'] ?? 'en';
+    final lang = data['lang'];
 
     if (!GameUtils.isWordHavingValidChars(word, letters)) {
       throw S.current.invalidWordLetters;

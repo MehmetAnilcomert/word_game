@@ -48,6 +48,8 @@ class GameUtils {
   static Future<bool> isWordValid(String word, String lang) async {
     if (lang == 'en') {
       return await _isEnglishWordValid(word);
+    } else if (lang == 'tr') {
+      throw ArgumentError('Language not supported: $lang');
     } else {
       throw ArgumentError('Language not supported: $lang');
     }
