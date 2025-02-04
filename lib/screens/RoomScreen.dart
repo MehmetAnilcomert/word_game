@@ -104,19 +104,15 @@ class RoomScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 buildInputField(
-                  controller: TextEditingController(text: roomState.playerName),
+                  controller: context.read<RoomCubit>().playerNameController,
                   label: S.of(context).enterPlayerName,
                   icon: Icons.person,
-                  onChanged: (value) =>
-                      context.read<RoomCubit>().updatePlayerName(value),
                 ),
                 SizedBox(height: 20),
                 buildInputField(
-                  controller: TextEditingController(text: roomState.roomID),
+                  controller: context.read<RoomCubit>().roomIDController,
                   label: S.of(context).enterRoomId,
                   icon: Icons.meeting_room,
-                  onChanged: (value) =>
-                      context.read<RoomCubit>().updateRoomID(value),
                 ),
                 SizedBox(height: 20),
                 isCreateRoom

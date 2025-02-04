@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 class RoomState {
   final String playerName;
@@ -10,7 +11,7 @@ class RoomState {
     this.playerName = '',
     this.roomID = '',
     this.endTime = 1,
-    this.playerNumber = 2,
+    this.playerNumber = 4,
   });
 
   RoomState copyWith({
@@ -29,14 +30,17 @@ class RoomState {
 }
 
 class RoomCubit extends Cubit<RoomState> {
-  RoomCubit() : super(RoomState());
+  final TextEditingController playerNameController = TextEditingController();
+  final TextEditingController roomIDController = TextEditingController();
 
-  void updatePlayerName(String name) {
-    emit(state.copyWith(playerName: name));
-  }
+  RoomCubit() : super(RoomState()) {
+    playerNameController.addListener(() {
+      emit(state.copyWith(playerName: playerNameController.text));
+    });
 
-  void updateRoomID(String id) {
-    emit(state.copyWith(roomID: id));
+    roomIDController.addListener(() {
+      emit(state.copyWith(roomID: roomIDController.text));
+    });
   }
 
   void updateEndTime(int time) {
@@ -45,5 +49,12 @@ class RoomCubit extends Cubit<RoomState> {
 
   void updatePlayerNumber(int number) {
     emit(state.copyWith(playerNumber: number));
+  }
+
+  @override
+  Future<void> close() {
+    playerNameController.dispose();
+    roomIDController.dispose();
+    return super.close();
   }
 }
