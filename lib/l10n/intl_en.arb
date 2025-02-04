@@ -42,6 +42,7 @@
     "cancel": "Cancel",
     "notEnoughPlayer": "Not enough players to start the game.",
     "getReady": "Get Ready!",
-    "gameStarting": "Game starting"
+    "gameStarting": "Game starting",
+    "enterLetterNumber": "Enter Number of Letters"
   }
   

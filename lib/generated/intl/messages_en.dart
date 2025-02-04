@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "endGameButton": MessageLookupByLibrary.simpleMessage("End Game"),
         "enterEndTime": MessageLookupByLibrary.simpleMessage(
             "Enter Game Duration (in minutes)"),
+        "enterLetterNumber":
+            MessageLookupByLibrary.simpleMessage("Enter Number of Letters"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Enter Player Name"),
         "enterPlayerNumber":

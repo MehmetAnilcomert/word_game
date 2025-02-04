@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "endGameButton": MessageLookupByLibrary.simpleMessage("Oyunu Bitir"),
         "enterEndTime":
             MessageLookupByLibrary.simpleMessage("Oyun Süresini Girin (dk)"),
+        "enterLetterNumber":
+            MessageLookupByLibrary.simpleMessage("Harf Sayısını Girin"),
         "enterPlayerName":
             MessageLookupByLibrary.simpleMessage("Oyuncu Adı Girin"),
         "enterPlayerNumber":

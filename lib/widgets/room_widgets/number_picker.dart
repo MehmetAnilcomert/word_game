@@ -36,7 +36,7 @@ class _IntegerNumberSelectorState extends State<IntegerNumberSelector> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: Colors.grey.shade900),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -137,19 +137,29 @@ class RoomScreen extends StatelessWidget {
                                 .read<RoomCubit>()
                                 .updatePlayerNumber(value.toInt()),
                           ),
+                          SizedBox(height: 20),
+                          buildNumberSelector(
+                            label: S.of(context).enterLetterNumber,
+                            icon: Icons.question_mark,
+                            minValue: 6,
+                            maxValue: 12,
+                            onChanged: (value) => context
+                                .read<RoomCubit>()
+                                .updateLetterNumber(value.toInt()),
+                          ),
                         ],
                       )
                     : SizedBox(),
                 SizedBox(height: 40),
                 buildActionButton(
-                  context,
-                  state,
-                  isCreateRoom,
-                  roomState.playerName,
-                  roomState.roomID,
-                  roomState.endTime,
-                  roomState.playerNumber,
-                ),
+                    context,
+                    state,
+                    isCreateRoom,
+                    roomState.playerName,
+                    roomState.roomID,
+                    roomState.endTime,
+                    roomState.playerNumber,
+                    roomState.letterNumber),
               ],
             ),
           ),

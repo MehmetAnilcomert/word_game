@@ -479,6 +479,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Enter Number of Letters`
+  String get enterLetterNumber {
+    return Intl.message(
+      'Enter Number of Letters',
+      name: 'enterLetterNumber',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
