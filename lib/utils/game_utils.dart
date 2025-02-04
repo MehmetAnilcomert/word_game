@@ -49,7 +49,7 @@ class GameUtils {
     if (lang == 'en') {
       return await _isEnglishWordValid(word);
     } else if (lang == 'tr') {
-      throw ArgumentError('Language not supported: $lang');
+      return await _isTurkishWordValid(word);
     } else {
       throw ArgumentError('Language not supported: $lang');
     }
@@ -67,6 +67,38 @@ class GameUtils {
       }
     } catch (e) {
       print("Error checking word: $e");
+      return false;
+    }
+  }
+
+  static Future<bool> _isTurkishWordValid(String word) async {
+    final url = 'https://sozluk.gov.tr/gts?ara=$word';
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          // Gerçek bir tarayıcıya benzetmek için User-Agent ekleniyor
+          // Adding User-Agent to mimic a real browser, to prevent 403 error
+          "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+        },
+      );
+      if (response.statusCode == 200) {
+        // TDK'nın endpoint'i, kelime bulunduğunda JSON formatında sonuç döner.
+        // The TDK endpoint returns the result in JSON format when the word is found.
+        final dynamic jsonResponse = jsonDecode(response.body);
+        // Sözlük endpointinin yapısı gereği eğer dönen veri liste biçiminde ve boş değilse, kelime geçerli sayılır.
+        // If the returned data is in list format and not empty due to endpoint structure, the word is considered valid.
+        if (jsonResponse is List && jsonResponse.isNotEmpty) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error checking Turkish word: $e");
       return false;
     }
   }

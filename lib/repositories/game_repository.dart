@@ -68,6 +68,7 @@ class GameRepository {
     final scores = Map<String, int>.from(data['scores'] ?? {});
     final lang = data['lang'];
 
+    print("Checking word gamerepo: $word");
     if (!GameUtils.isWordHavingValidChars(word, letters)) {
       throw S.current.invalidWordLetters;
     } else if (!await GameUtils.isWordValid(word, lang)) {
