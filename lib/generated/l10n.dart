@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Word Challenge Game`
+  /// `Word Arena`
   String get appTitle {
     return Intl.message(
-      'Word Challenge Game',
+      'Word Arena',
       name: 'appTitle',
       desc: '',
       args: [],
