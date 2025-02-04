@@ -9,14 +9,15 @@ Widget buildActionButton(
     BuildContext context,
     GameState state,
     bool isCreateRoom,
-    TextEditingController playerNameController,
-    TextEditingController roomIdController,
-    int endTimeController) {
+    String playerName,
+    String roomId,
+    int endTime,
+    int playerNumber) {
   return ElevatedButton(
     onPressed: state is RoomCreating || state is RoomJoining
         ? null
-        : () => _handleAction(context, isCreateRoom, playerNameController,
-            roomIdController, endTimeController),
+        : () => _handleAction(
+            context, isCreateRoom, playerName, roomId, endTime, playerNumber),
     child: state is RoomCreating || state is RoomJoining
         ? CircularProgressIndicator(color: Colors.white)
         : Text(
@@ -34,22 +35,13 @@ Widget buildActionButton(
   );
 }
 
-void _handleAction(
-    BuildContext context,
-    bool isCreateRoom,
-    TextEditingController playerNameController,
-    TextEditingController roomIdController,
-    int endTimeController) {
-  final playerName = playerNameController.text;
-  final roomId = roomIdController.text;
-  final endTime = endTimeController.toString();
-
+void _handleAction(BuildContext context, bool isCreateRoom, String playerName,
+    String roomId, int endTime, int playerNumber) {
   if (playerName.isEmpty || roomId.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(S.of(context).fillAllFields),
-        backgroundColor: Colors.red,
-      ),
+          content: Text(S.of(context).fillAllFields),
+          backgroundColor: Colors.red),
     );
     return;
   }
@@ -58,12 +50,12 @@ void _handleAction(
     context.read<GameBloc>().add(CreateRoom(
           roomId: roomId,
           playerName: playerName,
-          endTime: endTime.isEmpty ? 1 : int.parse(endTime),
+          endTime: endTime,
+          maxPlayers: playerNumber,
         ));
   } else {
-    context.read<GameBloc>().add(JoinRoom(
-          roomId: roomId,
-          playerName: playerName,
-        ));
+    context
+        .read<GameBloc>()
+        .add(JoinRoom(roomId: roomId, playerName: playerName));
   }
 }

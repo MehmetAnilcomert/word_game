@@ -38,15 +38,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
 
       final letters = GameUtils.generateRandomLetters(5);
-      final endTime = DateTime.now()
-          .add(Duration(minutes: event.endTime))
-          .millisecondsSinceEpoch;
 
       await gameRepository.createRoom(
         roomId: event.roomId,
         playerName: event.playerName,
         letters: letters,
-        endTime: endTime,
+        endTime: event.endTime,
         maxPlayers: event.maxPlayers,
       );
 
@@ -94,7 +91,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         final roomData = roomDoc.data() as Map<String, dynamic>;
         final playerCount = roomData['players']?.length ?? 0;
 
-        // Check if there are enough players to start the game
         if (playerCount <= 1) {
           final players = List<String>.from(roomData['players'] ?? []);
           emit(InLobby(
@@ -102,11 +98,37 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           return;
         }
 
-        // Update the room data to start the game
+        // Firestore'dan gelen oyun süresi dakika cinsinden mi? (kontrol)
+        if (!roomData.containsKey('endTime') || roomData['endTime'] == null) {
+          throw Exception("Oyun süresi (endTime) bulunamadı!");
+        }
+
+        final int gameDuration = roomData['endTime'];
+
+        // Eğer endTime zaten kaydedilmişse, tekrar hesaplama
+        // If the end time is already saved, no need to recalculate
+        if (roomData.containsKey('isStarted') &&
+            roomData['isStarted'] == true) {
+          final int existingEndTime = roomData['endTime'];
+          emit(GameInProgress({...roomData, 'endTime': existingEndTime}));
+          return;
+        }
+
+        // Oyun yeni başlıyorsa endTime hesaplanır.
+        // If the game is starting for the first time, calculate the end time
+        final int computedEndTime = DateTime.now()
+            .add(Duration(minutes: gameDuration))
+            .millisecondsSinceEpoch;
+
+        // Odayı "başlatıldı" olarak işaretleyip, hesaplanan endTime'i güncelle
+        // Mark the room as "started" and update the computed end time
         await gameRepository.updateRoom(event.roomId, {
           'isStarted': true,
+          'endTime': computedEndTime,
         });
 
+        // Güncellenmiş veriyi tekrar al
+        // Get the updated data again
         final updatedDoc = await gameRepository.getRoomData(event.roomId);
         if (updatedDoc != null && updatedDoc.exists) {
           final updatedData = updatedDoc.data() as Map<String, dynamic>;
@@ -115,9 +137,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     } catch (e) {
       final roomData = await gameRepository.getRoomData(event.roomId);
-      final players = List<String>.from(roomData!['players'] ?? []);
+      final players = List<String>.from(roomData?['players'] ?? []);
       emit(InLobby(players: players, errorMessage: e.toString()));
-      return;
     }
   }
 

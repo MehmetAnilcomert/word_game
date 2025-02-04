@@ -5,10 +5,12 @@ Widget buildInputField({
   required String label,
   required IconData icon,
   TextInputType? keyboardType,
+  void Function(String)? onChanged,
 }) {
   return TextField(
     keyboardType: keyboardType,
     controller: controller,
+    onChanged: onChanged,
     decoration: InputDecoration(
       labelText: label,
       prefixIcon: Icon(icon),
