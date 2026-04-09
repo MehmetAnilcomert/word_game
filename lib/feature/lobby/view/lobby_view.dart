@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:word_game/feature/game/view/view_model/game_view_model.dart';
-import 'package:word_game/feature/game/view/view_model/game_view_model_event.dart';
-import 'package:word_game/feature/game/view/view_model/game_view_model_state.dart';
+import 'package:word_game/feature/game/view_model/game_view_model.dart';
+import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
+import 'package:word_game/feature/game/view_model/game_view_model_state.dart';
 
 import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/lobby/view/mixin/lobby_view_mixin.dart';
@@ -45,7 +45,7 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           if (state is GameInProgress) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<dynamic>(
                 builder: (context) => GameView(
                   roomId: widget.roomId,
                   playerName: widget.playerName,
@@ -55,7 +55,7 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           } else if (state is RoomCancelled || state is RoomLeaved) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
+              MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
             );
           } else if (state is InLobby && state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(

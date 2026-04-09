@@ -61,7 +61,7 @@ class LeaveRoomEvent extends GameEvent {
   LeaveRoomEvent({required this.roomId, required this.playerName});
 }
 
-class _UpdateGameStateEvent extends GameEvent {
+class UpdateGameStateEvent extends GameEvent {
   final DocumentSnapshot snapshot;
-  _UpdateGameStateEvent(this.snapshot);
+  UpdateGameStateEvent(this.snapshot);
 }

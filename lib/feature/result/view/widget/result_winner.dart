@@ -29,7 +29,7 @@ class _ResultWinner extends StatelessWidget {
                   color: context.appColors.goldColor),
             ),
             const SizedBox(height: 8),
-            const Icon(
+            Icon(
               Icons.emoji_events,
               color: context.appColors.goldColor,
               size: 64,

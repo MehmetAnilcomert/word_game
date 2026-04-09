@@ -15,7 +15,7 @@ class _RoomHeader extends StatelessWidget {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
+              MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
               (route) => false,
             );
           },

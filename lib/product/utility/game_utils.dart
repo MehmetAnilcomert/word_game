@@ -30,7 +30,7 @@ class GameUtils {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        final List<dynamic> jsonResponse = jsonDecode(response.body);
+        final jsonResponse = jsonDecode(response.body) as List<dynamic>;
         return jsonResponse.isNotEmpty;
       } else {
         return false;

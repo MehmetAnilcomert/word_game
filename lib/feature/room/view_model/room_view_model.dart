@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:word_game/product/state/base/base_view_model.dart';
-import 'package:word_game/product/model/lang_options.dart';
 
 class RoomState {
   final String playerName;

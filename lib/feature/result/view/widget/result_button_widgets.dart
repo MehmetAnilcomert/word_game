@@ -10,7 +10,7 @@ class _ResultButtons extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<dynamic>(
                   builder: (context) => const RoomView(isCreateRoom: true)),
             );
           },
@@ -24,7 +24,7 @@ class _ResultButtons extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<dynamic>(
                   builder: (context) => const RoomView(isCreateRoom: false)),
             );
           },
@@ -38,7 +38,7 @@ class _ResultButtons extends StatelessWidget {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
+              MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
               (route) => false,
             );
           },

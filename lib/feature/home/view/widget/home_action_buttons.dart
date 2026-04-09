@@ -10,7 +10,7 @@ class _HomeActionButtons extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<dynamic>(
                 builder: (context) => const RoomView(isCreateRoom: true),
               ),
             );
@@ -25,7 +25,7 @@ class _HomeActionButtons extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<dynamic>(
                 builder: (context) => const RoomView(isCreateRoom: false),
               ),
             );

@@ -23,9 +23,9 @@ class GameService {
   }) async {
     await firestore.collection('games').doc(roomId).set({
       'letters': letters,
-      'scores': {},
-      'usedWords': {},
-      'globalUsedWords': [],
+      'scores': <String, int>{},
+      'usedWords': <String, List<dynamic>>{},
+      'globalUsedWords': <String>[],
       'isActive': true,
       'isStarted': false,
       'endTime': endTime,
@@ -49,8 +49,8 @@ class GameService {
         .collection('games')
         .doc(roomId)
         .snapshots()
-        .handleError((error) {
-      throw error;
+        .handleError((dynamic error) {
+      throw Exception(error.toString());
     });
   }
 
@@ -63,11 +63,11 @@ class GameService {
     if (!doc.exists) return;
 
     final data = doc.data()!;
-    final letters = List<String>.from(data['letters']);
-    final usedWords = Map<String, dynamic>.from(data['usedWords'] ?? {});
-    final globalUsedWords = List<String>.from(data['globalUsedWords'] ?? []);
-    final scores = Map<String, int>.from(data['scores'] ?? {});
-    final lang = data['lang'];
+    final letters = List<String>.from((data['letters'] as List<dynamic>?) ?? []);
+    final usedWords = Map<String, dynamic>.from((data['usedWords'] as Map<dynamic, dynamic>?) ?? {});
+    final globalUsedWords = List<String>.from((data['globalUsedWords'] as List<dynamic>?) ?? []);
+    final scores = Map<String, int>.from((data['scores'] as Map<dynamic, dynamic>?) ?? {});
+    final lang = data['lang'] as String;
 
     if (!GameUtils.isWordHavingValidChars(word, letters)) {
       throw LocaleKeys.invalidWordLetters.tr();
@@ -78,7 +78,7 @@ class GameService {
       throw LocaleKeys.wordAlreadyUsed.tr();
     }
 
-    final playerWords = (usedWords[playerName] ?? []) as List;
+    final playerWords = (usedWords[playerName] as List<dynamic>?) ?? <dynamic>[];
     playerWords.add(word);
     usedWords[playerName] = playerWords;
     globalUsedWords.add(word);

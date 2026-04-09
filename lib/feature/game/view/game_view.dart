@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:word_game/feature/game/view/mixin/game_view_mixin.dart';
-import 'package:word_game/feature/game/view/view_model/game_view_model.dart';
-import 'package:word_game/feature/game/view/view_model/game_view_model_event.dart';
-import 'package:word_game/feature/game/view/view_model/game_view_model_state.dart' as game_state;
-import 'package:word_game/feature/game/view/view_model/timer_view_model.dart';
-import 'package:word_game/feature/game/view/view_model/timer_view_model_event.dart';
-import 'package:word_game/feature/game/view/view_model/timer_view_model_state.dart' as timer_state;
+import 'package:word_game/feature/game/view_model/game_view_model.dart';
+import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
+import 'package:word_game/feature/game/view_model/game_view_model_state.dart' as game_state;
+import 'package:word_game/feature/game/view_model/timer_view_model.dart';
+import 'package:word_game/feature/game/view_model/timer_view_model_state.dart' as timer_state;
 import 'package:word_game/feature/result/view/result_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
@@ -58,7 +57,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
           if (state is game_state.GameOver) {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<dynamic>(
                 builder: (context) => ResultView(
                   data: state.data,
                   currentUser: widget.playerName,
@@ -73,10 +72,10 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
         },
         builder: (context, state) {
           if (state is game_state.GameInProgress) {
-            final letters = List<String>.from(state.data['letters']);
-            final scores = Map<String, int>.from(state.data['scores'] ?? {});
+            final letters = List<String>.from((state.data['letters'] as List<dynamic>?) ?? []);
+            final scores = Map<String, int>.from((state.data['scores'] as Map<dynamic, dynamic>?) ?? {});
             final usedWords =
-                Map<String, List<dynamic>>.from(state.data['usedWords'] ?? {});
+                Map<String, List<dynamic>>.from((state.data['usedWords'] as Map<dynamic, dynamic>?) ?? {});
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
@@ -126,7 +125,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                                   decoration: BoxDecoration(
                                     color: timerState.remainingTime <= 10
                                         ? context.colorScheme.error.withOpacity(0.8)
-                                        : context.colorScheme.scaffoldBackgroundColor.withOpacity(0.8),
+                                        : Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(

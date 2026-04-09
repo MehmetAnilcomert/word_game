@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/feature/game/view/game_view.dart';
-import 'package:word_game/feature/game/view/view_model/timer_view_model.dart';
-import 'package:word_game/feature/game/view/view_model/timer_view_model_event.dart';
+import 'package:word_game/feature/game/view_model/timer_view_model.dart';
+import 'package:word_game/feature/game/view_model/timer_view_model_event.dart';
 
 mixin GameViewMixin on State<GameView> {
   @override

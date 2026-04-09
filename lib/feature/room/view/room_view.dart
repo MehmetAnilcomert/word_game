@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:word_game/feature/game/view/view_model/game_view_model.dart';
-import 'package:word_game/feature/game/view/view_model/game_view_model_state.dart' as game_state;
+import 'package:word_game/feature/game/view_model/game_view_model.dart';
+import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
+import 'package:word_game/feature/game/view_model/game_view_model_state.dart' as game_state;
 
 import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/room/view/mixin/room_view_mixin.dart';
@@ -37,7 +38,7 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
         onWillPop: () async {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const HomeView()),
+            MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
             (route) => false,
           );
           return false;
@@ -48,7 +49,7 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
               final roomViewModel = context.read<RoomViewModel>().state;
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<dynamic>(
                   builder: (context) => LobbyView(
                     roomId: roomViewModel.roomID,
                     playerName: roomViewModel.playerName,
