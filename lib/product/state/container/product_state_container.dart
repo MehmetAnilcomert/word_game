@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
-import 'package:word_game/product/service/game_service.dart';
+import 'package:word_game/product/service/interface/i_game_service.dart';
+import 'package:word_game/product/service/firebase/firebase_game_service.dart';
 
 /// A container class for managing product state instances.
 /// This class utilizes the GetIt package for dependency injection.
@@ -11,8 +12,8 @@ final class ProductContainer {
 
   /// Sets up the necessary dependencies for the product state container.
   static void setUp() {
-    _getIt.registerLazySingleton<GameService>(
-      () => GameService(firestore: FirebaseFirestore.instance),
+    _getIt.registerLazySingleton<IGameService>(
+      () => FirebaseGameService(firestore: FirebaseFirestore.instance),
     );
   }
 

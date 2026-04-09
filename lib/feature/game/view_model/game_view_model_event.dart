@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:word_game/feature/game/model/game_room.dart';
 
 abstract class GameEvent {}
 
@@ -62,6 +62,6 @@ class LeaveRoomEvent extends GameEvent {
 }
 
 class UpdateGameStateEvent extends GameEvent {
-  final DocumentSnapshot snapshot;
-  UpdateGameStateEvent(this.snapshot);
+  final GameRoom? room;
+  UpdateGameStateEvent(this.room);
 }
