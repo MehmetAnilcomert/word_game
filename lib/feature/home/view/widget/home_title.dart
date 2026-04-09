@@ -13,7 +13,7 @@ class _HomeTitle extends StatelessWidget {
         color: context.colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: context.appColors.cardShadow,
             blurRadius: 10,
             spreadRadius: 5,
           ),

@@ -26,12 +26,12 @@ class _ResultWinner extends StatelessWidget {
               style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: context.appColors.warningColor),
+                  color: context.appColors.goldColor),
             ),
             const SizedBox(height: 8),
             const Icon(
               Icons.emoji_events,
-              color: Colors.amber,
+              color: context.appColors.goldColor,
               size: 64,
             ),
           ],

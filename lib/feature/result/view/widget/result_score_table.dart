@@ -56,15 +56,15 @@ class _ResultScoreTable extends StatelessWidget {
     switch (index) {
       case 0:
         icon = Icons.looks_one;
-        color = Colors.amber;
+        color = context.appColors.goldColor;
         break;
       case 1:
         icon = Icons.looks_two;
-        color = Colors.grey[400]!;
+        color = context.appColors.silverColor;
         break;
       case 2:
         icon = Icons.looks_3;
-        color = Colors.brown[300]!;
+        color = context.appColors.bronzeColor;
         break;
       default:
         icon = Icons.emoji_events;

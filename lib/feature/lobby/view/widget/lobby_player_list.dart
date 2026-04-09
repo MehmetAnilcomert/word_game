@@ -34,7 +34,7 @@ class _PlayerList extends StatelessWidget {
               isLeaderPlayer
                   ? FontAwesomeIcons.crown
                   : _animalIcons[index % _animalIcons.length],
-              color: isLeaderPlayer ? Colors.amber : null,
+              color: isLeaderPlayer ? context.appColors.goldColor : null,
               size: 32,
             ),
             title: Text(
@@ -44,7 +44,7 @@ class _PlayerList extends StatelessWidget {
                       isLeaderPlayer ? FontWeight.bold : FontWeight.normal),
             ),
             trailing:
-                isLeaderPlayer ? const Icon(Icons.star, color: Colors.amber) : null,
+                isLeaderPlayer ? Icon(Icons.star, color: context.appColors.goldColor) : null,
           ),
         );
       },

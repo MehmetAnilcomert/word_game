@@ -29,7 +29,7 @@ class _GameWordInputState extends State<_GameWordInput> {
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: context.appColors.cardShadow,
             blurRadius: 10,
             spreadRadius: 5,
           ),

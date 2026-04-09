@@ -23,11 +23,7 @@ class _ResultConfetti extends StatelessWidget {
             emissionFrequency: 0.05,
             numberOfParticles: 50,
             gravity: 0.1,
-            colors: const [
-              Colors.amber,
-              Colors.yellow,
-              Colors.orangeAccent,
-            ],
+            colors: context.appColors.goldConfetti,
           ),
         );
 
@@ -42,11 +38,7 @@ class _ResultConfetti extends StatelessWidget {
             emissionFrequency: 0.04,
             numberOfParticles: 40,
             gravity: 0.1,
-            colors: const [
-              Colors.grey,
-              Colors.white70,
-              Colors.blueGrey,
-            ],
+            colors: context.appColors.silverConfetti,
           ),
         );
 
@@ -61,11 +53,7 @@ class _ResultConfetti extends StatelessWidget {
             emissionFrequency: 0.03,
             numberOfParticles: 30,
             gravity: 0.2,
-            colors: const [
-              Colors.brown,
-              Colors.orange,
-              Colors.deepOrange,
-            ],
+            colors: context.appColors.bronzeConfetti,
           ),
         );
 
@@ -80,11 +68,7 @@ class _ResultConfetti extends StatelessWidget {
             emissionFrequency: 0.02,
             numberOfParticles: 20,
             gravity: 0.1,
-            colors: const [
-              Colors.blue,
-              Colors.green,
-              Colors.purple,
-            ],
+            colors: context.appColors.defaultConfetti,
           ),
         );
     }

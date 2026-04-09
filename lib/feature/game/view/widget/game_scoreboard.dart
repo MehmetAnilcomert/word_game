@@ -17,7 +17,7 @@ class _GameScoreboard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: context.appColors.cardShadow,
               blurRadius: 10,
               spreadRadius: 5,
             ),

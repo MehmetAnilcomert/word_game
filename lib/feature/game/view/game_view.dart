@@ -127,13 +127,12 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                                       horizontal: 12, vertical: 6),
                                   decoration: BoxDecoration(
                                     color: timerState.remainingTime <= 10
-                                        ? context.colorScheme.error
-                                            .withOpacity(0.8)
-                                        : Colors.black.withOpacity(0.8),
+                                        ? context.colorScheme.error.withOpacity(0.8)
+                                        : context.colorScheme.scaffoldBackgroundColor.withOpacity(0.8),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.3),
+                                        color: context.appColors.cardShadow,
                                         blurRadius: 4,
                                         offset: const Offset(2, 2),
                                       ),
