@@ -47,9 +47,11 @@ class _LanguageToggle extends StatelessWidget {
         onPressed: () {
           final currentLocale = context.locale;
           if (currentLocale.languageCode == Locales.en.locale.languageCode) {
-            ProductLocalization.updateLang(context: context, locale: Locales.tr);
+            ProductLocalization.updateLang(
+                context: context, locale: Locales.tr);
           } else {
-            ProductLocalization.updateLang(context: context, locale: Locales.en);
+            ProductLocalization.updateLang(
+                context: context, locale: Locales.en);
           }
         },
         child: Padding(

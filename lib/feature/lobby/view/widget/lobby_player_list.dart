@@ -43,8 +43,9 @@ class _PlayerList extends StatelessWidget {
                   fontWeight:
                       isLeaderPlayer ? FontWeight.bold : FontWeight.normal),
             ),
-            trailing:
-                isLeaderPlayer ? Icon(Icons.star, color: context.appColors.goldColor) : null,
+            trailing: isLeaderPlayer
+                ? Icon(Icons.star, color: context.appColors.goldColor)
+                : null,
           ),
         );
       },

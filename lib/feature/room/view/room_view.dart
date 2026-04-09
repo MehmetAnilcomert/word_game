@@ -4,7 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:word_game/feature/game/view_model/game_view_model.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
-import 'package:word_game/feature/game/view_model/game_view_model_state.dart' as game_state;
+import 'package:word_game/feature/game/view_model/game_view_model_state.dart'
+    as game_state;
 
 import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/room/view/mixin/room_view_mixin.dart';
@@ -45,7 +46,8 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
         },
         child: BlocConsumer<GameViewModel, game_state.GameViewModelState>(
           listener: (context, state) {
-            if (state is game_state.RoomCreated || state is game_state.RoomJoined) {
+            if (state is game_state.RoomCreated ||
+                state is game_state.RoomJoined) {
               final roomViewModel = context.read<RoomViewModel>().state;
               Navigator.pushReplacement(
                 context,
@@ -57,7 +59,8 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                   ),
                 ),
               );
-            } else if (state is game_state.RoomCreationFailed || state is game_state.RoomJoinFailed) {
+            } else if (state is game_state.RoomCreationFailed ||
+                state is game_state.RoomJoinFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state is game_state.RoomCreationFailed
@@ -84,7 +87,8 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                         Expanded(
                           child: Center(
                             child: SingleChildScrollView(
-                              child: _RoomFormContent(isCreateRoom: widget.isCreateRoom),
+                              child: _RoomFormContent(
+                                  isCreateRoom: widget.isCreateRoom),
                             ),
                           ),
                         ),

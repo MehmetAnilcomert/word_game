@@ -12,8 +12,7 @@ class ProductPadding extends EdgeInsets {
       : super.symmetric(horizontal: 10);
   const ProductPadding.symmetricVerticalNormal()
       : super.symmetric(vertical: 20);
-  const ProductPadding.symmetricVerticalSmall()
-      : super.symmetric(vertical: 10);
+  const ProductPadding.symmetricVerticalSmall() : super.symmetric(vertical: 10);
 
   const ProductPadding.onlyTopNormal() : super.only(top: 20);
   const ProductPadding.onlyBottomNormal() : super.only(bottom: 20);

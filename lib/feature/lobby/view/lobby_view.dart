@@ -39,7 +39,8 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameViewModel()..add(ListenToGameUpdatesEvent(widget.roomId)),
+      create: (context) =>
+          GameViewModel()..add(ListenToGameUpdatesEvent(widget.roomId)),
       child: BlocListener<GameViewModel, GameViewModelState>(
         listener: (context, state) {
           if (state is GameInProgress) {
@@ -55,7 +56,8 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           } else if (state is RoomCancelled || state is RoomLeaved) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
+              MaterialPageRoute<dynamic>(
+                  builder: (context) => const HomeView()),
             );
           } else if (state is InLobby && state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -87,9 +89,13 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
                             final shouldExit = await showExitDialog();
                             if (shouldExit) {
                               if (widget.isLeader) {
-                                context.read<GameViewModel>().add(CancelRoomEvent(roomId: widget.roomId));
+                                context.read<GameViewModel>().add(
+                                    CancelRoomEvent(roomId: widget.roomId));
                               } else {
-                                context.read<GameViewModel>().add(LeaveRoomEvent(roomId: widget.roomId, playerName: widget.playerName));
+                                context.read<GameViewModel>().add(
+                                    LeaveRoomEvent(
+                                        roomId: widget.roomId,
+                                        playerName: widget.playerName));
                               }
                             }
                           },
@@ -100,7 +106,8 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
                         Expanded(
                           child: state is InLobby
                               ? _PlayerList(players: state.players)
-                              : const Center(child: CircularProgressIndicator()),
+                              : const Center(
+                                  child: CircularProgressIndicator()),
                         ),
                         if (widget.isLeader && state is InLobby)
                           _StartButton(roomId: widget.roomId),

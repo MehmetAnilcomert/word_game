@@ -1,5 +1,6 @@
 class ResultUtil {
-  static int findRank(List<MapEntry<String, int>> sortedScores, String currentUser) {
+  static int findRank(
+      List<MapEntry<String, int>> sortedScores, String currentUser) {
     if (sortedScores.isNotEmpty && sortedScores[0].key == currentUser) {
       return 1;
     } else if (sortedScores.length > 1 && sortedScores[1].key == currentUser) {

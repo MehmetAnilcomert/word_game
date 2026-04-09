@@ -1,9 +1,9 @@
 part of '../game_view.dart';
 
 class _GameEndButton extends StatelessWidget {
-  final String roomId;
-
   const _GameEndButton({required this.roomId});
+
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {

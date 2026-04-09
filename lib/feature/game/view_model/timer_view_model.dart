@@ -16,7 +16,9 @@ class TimerViewModel extends Bloc<TimerEvent, TimerViewModelState> {
   void _onStartTimer(StartTimerEvent event, Emitter<TimerViewModelState> emit) {
     _timer?.cancel();
 
-    _totalGameTime = ((event.endTime - DateTime.now().millisecondsSinceEpoch) / 1000).floor();
+    _totalGameTime =
+        ((event.endTime - DateTime.now().millisecondsSinceEpoch) / 1000)
+            .floor();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (isClosed) {
@@ -43,7 +45,8 @@ class TimerViewModel extends Bloc<TimerEvent, TimerViewModelState> {
     });
   }
 
-  void _onUpdateTimer(UpdateTimerEvent event, Emitter<TimerViewModelState> emit) {
+  void _onUpdateTimer(
+      UpdateTimerEvent event, Emitter<TimerViewModelState> emit) {
     emit(TimerRunning(
       remainingTime: event.remainingTime,
       isFlashing: event.isFlashing,

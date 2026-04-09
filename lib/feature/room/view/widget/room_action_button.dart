@@ -11,19 +11,20 @@ class _RoomActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameViewModel, game_state.GameViewModelState>(builder: (context, gameState) {
-      final isLoading = gameState is game_state.RoomCreating || gameState is game_state.RoomJoining;
+    return BlocBuilder<GameViewModel, game_state.GameViewModelState>(
+        builder: (context, gameState) {
+      final isLoading = gameState is game_state.RoomCreating ||
+          gameState is game_state.RoomJoining;
       return ElevatedButton(
-        onPressed: isLoading
-            ? null
-            : () => _handleAction(context),
+        onPressed: isLoading ? null : () => _handleAction(context),
         style: ElevatedButton.styleFrom(
           foregroundColor: isCreateRoom
               ? context.appColors.successColor
               : context.colorScheme.primary,
           backgroundColor: context.colorScheme.surface,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
         child: isLoading
             ? CircularProgressIndicator(color: context.colorScheme.surface)
@@ -57,9 +58,8 @@ class _RoomActionButton extends StatelessWidget {
             lang: roomState.lang,
           ));
     } else {
-      context
-          .read<GameViewModel>()
-          .add(JoinRoomEvent(roomId: roomState.roomID, playerName: roomState.playerName));
+      context.read<GameViewModel>().add(JoinRoomEvent(
+          roomId: roomState.roomID, playerName: roomState.playerName));
     }
   }
 }

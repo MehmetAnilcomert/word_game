@@ -6,7 +6,7 @@ mixin RoomViewMixin on State<RoomView> {
   void initState() {
     super.initState();
   }
-  
+
   void onNavigateBack() {
     Navigator.of(context).pop();
   }

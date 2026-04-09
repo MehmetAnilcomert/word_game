@@ -20,7 +20,8 @@ class _RoomFormContent extends StatelessWidget {
               children: [
                 _buildInputField(
                   context: context,
-                  controller: context.read<RoomViewModel>().playerNameController,
+                  controller:
+                      context.read<RoomViewModel>().playerNameController,
                   label: LocaleKeys.enterPlayerName.tr(),
                   icon: Icons.person,
                 ),

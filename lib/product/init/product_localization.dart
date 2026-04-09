@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:word_game/product/utility/constants/enums/locales.dart';
 
 @immutable
+
 /// A class that sets up localization for the application using EasyLocalization.
 class ProductLocalization extends EasyLocalization {
   /// Initializes localization settings for the application.

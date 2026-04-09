@@ -34,9 +34,8 @@ class _GameLetters extends StatelessWidget {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: letters
-                .map((letter) => _LetterTile(letter: letter))
-                .toList(),
+            children:
+                letters.map((letter) => _LetterTile(letter: letter)).toList(),
           ),
         ],
       ),

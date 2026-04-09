@@ -89,7 +89,7 @@ class FirebaseGameService implements IGameService {
 
     final playerWords = List<String>.from(room.usedWords[playerName] ?? []);
     playerWords.add(word);
-    
+
     final updatedUsedWords = Map<String, List<String>>.from(room.usedWords);
     updatedUsedWords[playerName] = playerWords;
 

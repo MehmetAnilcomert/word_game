@@ -83,5 +83,4 @@ class DefaultFirebaseOptions {
     authDomain: 'my-multiplayer-word-game.firebaseapp.com',
     storageBucket: 'my-multiplayer-word-game.firebasestorage.app',
   );
-
 }

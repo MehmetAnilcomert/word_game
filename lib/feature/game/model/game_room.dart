@@ -1,4 +1,4 @@
-﻿import 'package:equatable/equatable.dart';
+import 'package:equatable/equatable.dart';
 
 /// App model representing a Game Room instance.
 class GameRoom extends Equatable {
@@ -33,9 +33,7 @@ class GameRoom extends Equatable {
       usedWords: (json['usedWords'] as Map<String, dynamic>?)?.map(
             (key, dynamic value) => MapEntry(
               key,
-              (value as List<dynamic>)
-                  .map((dynamic e) => e as String)
-                  .toList(),
+              (value as List<dynamic>).map((dynamic e) => e as String).toList(),
             ),
           ) ??
           const {},

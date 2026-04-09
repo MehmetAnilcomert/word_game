@@ -42,7 +42,8 @@ class SubmitWordEvent extends GameEvent {
   final String playerName;
   final String word;
 
-  SubmitWordEvent({required this.roomId, required this.playerName, required this.word});
+  SubmitWordEvent(
+      {required this.roomId, required this.playerName, required this.word});
 }
 
 class EndGameEvent extends GameEvent {

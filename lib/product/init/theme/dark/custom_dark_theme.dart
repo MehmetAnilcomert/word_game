@@ -17,9 +17,21 @@ class CustomDarkTheme {
             silverColor: Colors.grey[500]!,
             bronzeColor: Colors.brown[400]!,
             cardShadow: Colors.black.withOpacity(0.3),
-            goldConfetti: const [Colors.amber, Colors.yellow, Colors.orangeAccent],
-            silverConfetti: const [Colors.grey, Colors.white70, Colors.blueGrey],
-            bronzeConfetti: const [Colors.brown, Colors.orange, Colors.deepOrange],
+            goldConfetti: const [
+              Colors.amber,
+              Colors.yellow,
+              Colors.orangeAccent
+            ],
+            silverConfetti: const [
+              Colors.grey,
+              Colors.white70,
+              Colors.blueGrey
+            ],
+            bronzeConfetti: const [
+              Colors.brown,
+              Colors.orange,
+              Colors.deepOrange
+            ],
             defaultConfetti: const [Colors.blue, Colors.green, Colors.purple],
           ),
         ],
