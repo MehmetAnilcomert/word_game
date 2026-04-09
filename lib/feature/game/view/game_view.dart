@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:word_game/bloc/gameBloc/GameBloc.dart';
-import 'package:word_game/bloc/gameBloc/GameEvent.dart';
-import 'package:word_game/bloc/gameBloc/GameStates.dart';
-import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
-import 'package:word_game/bloc/timerBloc/TimerState.dart';
 import 'package:word_game/feature/game/view/mixin/game_view_mixin.dart';
+import 'package:word_game/feature/game/view/view_model/game_view_model.dart';
+import 'package:word_game/feature/game/view/view_model/game_view_model_event.dart';
+import 'package:word_game/feature/game/view/view_model/game_view_model_state.dart' as game_state;
+import 'package:word_game/feature/game/view/view_model/timer_view_model.dart';
+import 'package:word_game/feature/game/view/view_model/timer_view_model_event.dart';
+import 'package:word_game/feature/game/view/view_model/timer_view_model_state.dart' as timer_state;
 import 'package:word_game/feature/result/view/result_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
@@ -35,18 +36,17 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => TimerBloc(),
+          create: (context) => TimerViewModel(),
         ),
         BlocProvider(
-          create: (context) =>
-              GameBloc(context, timerBloc: context.read<TimerBloc>())
-                ..add(StartGame(roomId: widget.roomId))
-                ..add(ListenToGameUpdates(widget.roomId)),
+          create: (context) => GameViewModel()
+            ..add(StartGameEvent(roomId: widget.roomId))
+            ..add(ListenToGameUpdatesEvent(widget.roomId)),
         )
       ],
-      child: BlocConsumer<GameBloc, GameState>(
+      child: BlocConsumer<GameViewModel, game_state.GameViewModelState>(
         listener: (context, state) {
-          if (state is GameInProgress && state.errorMessage != null) {
+          if (state is game_state.GameInProgress && state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.errorMessage!),
@@ -55,7 +55,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
               ),
             );
           }
-          if (state is GameOver) {
+          if (state is game_state.GameOver) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -66,13 +66,13 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
               ),
             );
           }
-          if (state is GameInProgress) {
+          if (state is game_state.GameInProgress) {
             final endTime = state.data['endTime'] as int;
             startTimer(context, endTime);
           }
         },
         builder: (context, state) {
-          if (state is GameInProgress) {
+          if (state is game_state.GameInProgress) {
             final letters = List<String>.from(state.data['letters']);
             final scores = Map<String, int>.from(state.data['scores'] ?? {});
             final usedWords =
@@ -90,8 +90,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                           const _GameAppBar(),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Column(
                                 children: [
                                   _GameLetters(letters: letters),
@@ -108,13 +107,12 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                           ),
                         ],
                       ),
-                      // Timer indicator (top right corner)
                       Positioned(
                         top: 15,
                         right: 10,
-                        child: BlocBuilder<TimerBloc, TimerState>(
+                        child: BlocBuilder<TimerViewModel, timer_state.TimerViewModelState>(
                           builder: (context, timerState) {
-                            if (timerState is TimerRunning) {
+                            if (timerState is timer_state.TimerRunning) {
                               return AnimatedOpacity(
                                 opacity: timerState.isFlashing
                                     ? (timerState.remainingTime % 2 == 0
@@ -141,17 +139,17 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                                   child: Text(
                                     formatTime(timerState.remainingTime),
                                     style: TextStyle(
-                                      color: context.colorScheme.onError,
+                                      color: context.colorScheme.onSurface,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               );
-                            } else if (timerState is TimerEnded) {
+                            } else if (timerState is timer_state.TimerEnded) {
                               context
-                                  .read<GameBloc>()
-                                  .add(EndGame(widget.roomId));
+                                  .read<GameViewModel>()
+                                  .add(EndGameEvent(widget.roomId));
                             }
                             return const SizedBox.shrink();
                           },
@@ -171,8 +169,8 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
               ),
               child: Center(
                 child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      context.colorScheme.onPrimary),
                 ),
               ),
             ),

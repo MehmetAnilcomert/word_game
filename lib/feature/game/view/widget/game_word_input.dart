@@ -39,9 +39,10 @@ class _GameWordInputState extends State<_GameWordInput> {
         controller: _controller,
         onSubmitted: (word) {
           if (word.trim().isNotEmpty) {
-            context
-                .read<GameBloc>()
-                .add(SubmitWord(widget.roomId, widget.playerName, word));
+            context.read<GameViewModel>().add(SubmitWordEvent(
+                  roomId: widget.roomId,
+                  playerName: widget.playerName,
+                  word: word));
             _controller.clear();
           }
         },

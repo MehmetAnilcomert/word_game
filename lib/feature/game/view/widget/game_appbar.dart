@@ -7,16 +7,16 @@ class _GameAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: BlocBuilder<TimerBloc, TimerState>(
+      child: BlocBuilder<TimerViewModel, timer_state.TimerViewModelState>(
         builder: (context, state) {
-          String title = state is TimerRunning && state.isNearingEnd
+          String title = state is timer_state.TimerRunning && state.isNearingEnd
               ? LocaleKeys.hurryUp.tr()
               : LocaleKeys.gameScreenTitle.tr();
 
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              state is TimerRunning && state.isNearingEnd
+              state is timer_state.TimerRunning && state.isNearingEnd
                   ? Row(
                       children: [
                         Text(

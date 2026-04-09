@@ -9,7 +9,7 @@ class _GameEndButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        context.read<GameBloc>().add(EndGame(roomId));
+        context.read<GameViewModel>().add(EndGameEvent(roomId));
       },
       style: ElevatedButton.styleFrom(
         foregroundColor: context.colorScheme.error,

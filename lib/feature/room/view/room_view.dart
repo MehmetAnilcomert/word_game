@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:word_game/bloc/gameBloc/GameBloc.dart';
-import 'package:word_game/bloc/gameBloc/GameEvent.dart';
-import 'package:word_game/bloc/gameBloc/GameStates.dart';
+import 'package:word_game/feature/game/view/view_model/game_view_model.dart';
+import 'package:word_game/feature/game/view/view_model/game_view_model_state.dart' as game_state;
 
 import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/room/view/mixin/room_view_mixin.dart';
@@ -43,9 +42,9 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
           );
           return false;
         },
-        child: BlocConsumer<GameBloc, GameState>(
+        child: BlocConsumer<GameViewModel, game_state.GameViewModelState>(
           listener: (context, state) {
-            if (state is RoomCreated || state is RoomJoined) {
+            if (state is game_state.RoomCreated || state is game_state.RoomJoined) {
               final roomViewModel = context.read<RoomViewModel>().state;
               Navigator.pushReplacement(
                 context,
@@ -57,12 +56,12 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                   ),
                 ),
               );
-            } else if (state is RoomCreationFailed || state is RoomJoinFailed) {
+            } else if (state is game_state.RoomCreationFailed || state is game_state.RoomJoinFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state is RoomCreationFailed
+                  content: Text(state is game_state.RoomCreationFailed
                       ? state.errorMessage
-                      : (state as RoomJoinFailed).errorMessage),
+                      : (state as game_state.RoomJoinFailed).errorMessage),
                   backgroundColor: context.colorScheme.error,
                 ),
               );

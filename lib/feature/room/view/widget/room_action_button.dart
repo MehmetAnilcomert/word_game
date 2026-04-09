@@ -11,8 +11,8 @@ class _RoomActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameBloc, GameState>(builder: (context, gameState) {
-      final isLoading = gameState is RoomCreating || gameState is RoomJoining;
+    return BlocBuilder<GameViewModel, game_state.GameViewModelState>(builder: (context, gameState) {
+      final isLoading = gameState is game_state.RoomCreating || gameState is game_state.RoomJoining;
       return ElevatedButton(
         onPressed: isLoading
             ? null
@@ -48,7 +48,7 @@ class _RoomActionButton extends StatelessWidget {
     }
 
     if (isCreateRoom) {
-      context.read<GameBloc>().add(CreateRoom(
+      context.read<GameViewModel>().add(CreateRoomEvent(
             roomId: roomState.roomID,
             playerName: roomState.playerName,
             endTime: roomState.endTime,
@@ -58,8 +58,8 @@ class _RoomActionButton extends StatelessWidget {
           ));
     } else {
       context
-          .read<GameBloc>()
-          .add(JoinRoom(roomId: roomState.roomID, playerName: roomState.playerName));
+          .read<GameViewModel>()
+          .add(JoinRoomEvent(roomId: roomState.roomID, playerName: roomState.playerName));
     }
   }
 }

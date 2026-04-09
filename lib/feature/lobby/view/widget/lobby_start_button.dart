@@ -15,7 +15,7 @@ class _StartButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        context.read<GameBloc>().add(StartGame(roomId: roomId));
+        context.read<GameViewModel>().add(StartGameEvent(roomId: roomId));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
