@@ -1,30 +1,31 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-
 import 'package:word_game/feature/game/view_model/game_view_model.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_state.dart'
     as game_state;
-
 import 'package:word_game/feature/home/view/home_view.dart';
+import 'package:word_game/feature/lobby/view/lobby_view.dart';
 import 'package:word_game/feature/room/view/mixin/room_view_mixin.dart';
 import 'package:word_game/feature/room/view_model/room_view_model.dart';
-import 'package:word_game/feature/lobby/view/lobby_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
-import 'package:word_game/product/utility/constants/enums/locales.dart';
 import 'package:word_game/product/state/base/base_state.dart';
+import 'package:word_game/product/utility/constants/enums/locales.dart';
 
+part 'widget/room_action_button.dart';
+part 'widget/room_form_content.dart';
 part 'widget/room_header.dart';
 part 'widget/room_number_picker.dart';
-part 'widget/room_form_content.dart';
-part 'widget/room_action_button.dart';
 
+/// Screen for creating or joining a game room.
 class RoomView extends StatefulWidget {
-  final bool isCreateRoom;
+  /// Initializes a [RoomView].
+  const RoomView({required this.isCreateRoom, super.key});
 
-  const RoomView({super.key, required this.isCreateRoom});
+  /// Whether this view is for creating a new room (true) or joining one (false).
+  final bool isCreateRoom;
 
   @override
   State<RoomView> createState() => _RoomViewState();
@@ -35,14 +36,15 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => RoomViewModel(),
-      child: WillPopScope(
-        onWillPop: () async {
-          Navigator.pushAndRemoveUntil(
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, dynamic result) async {
+          if (didPop) return;
+          await Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
             (route) => false,
           );
-          return false;
         },
         child: BlocConsumer<GameViewModel, game_state.GameViewModelState>(
           listener: (context, state) {
@@ -63,9 +65,11 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                 state is game_state.RoomJoinFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state is game_state.RoomCreationFailed
-                      ? state.errorMessage
-                      : (state as game_state.RoomJoinFailed).errorMessage),
+                  content: Text(
+                    state is game_state.RoomCreationFailed
+                        ? state.errorMessage
+                        : (state as game_state.RoomJoinFailed).errorMessage,
+                  ),
                   backgroundColor: context.colorScheme.error,
                 ),
               );
@@ -79,7 +83,7 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                 ),
                 child: SafeArea(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -88,7 +92,8 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                           child: Center(
                             child: SingleChildScrollView(
                               child: _RoomFormContent(
-                                  isCreateRoom: widget.isCreateRoom),
+                                isCreateRoom: widget.isCreateRoom,
+                              ),
                             ),
                           ),
                         ),

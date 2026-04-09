@@ -1,9 +1,9 @@
 part of '../room_view.dart';
 
 class _RoomHeader extends StatelessWidget {
-  final bool isCreateRoom;
 
   const _RoomHeader({required this.isCreateRoom});
+  final bool isCreateRoom;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class _RoomHeader extends StatelessWidget {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute<dynamic>(
-                  builder: (context) => const HomeView()),
+                  builder: (context) => const HomeView(),),
               (route) => false,
             );
           },

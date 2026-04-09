@@ -16,9 +16,9 @@ final List<IconData> _animalIcons = [
 ];
 
 class _PlayerList extends StatelessWidget {
-  final List<String> players;
 
   const _PlayerList({required this.players});
+  final List<String> players;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _PlayerList extends StatelessWidget {
               players[index],
               style: TextStyle(
                   fontWeight:
-                      isLeaderPlayer ? FontWeight.bold : FontWeight.normal),
+                      isLeaderPlayer ? FontWeight.bold : FontWeight.normal,),
             ),
             trailing: isLeaderPlayer
                 ? Icon(Icons.star, color: context.appColors.goldColor)

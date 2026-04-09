@@ -13,6 +13,7 @@ import 'package:word_game/feature/result/view/result_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
+import 'package:word_game/product/utility/padding/product_padding.dart';
 
 part 'widget/game_appbar.dart';
 part 'widget/game_end_button.dart';

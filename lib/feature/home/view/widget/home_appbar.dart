@@ -48,14 +48,14 @@ class _LanguageToggle extends StatelessWidget {
           final currentLocale = context.locale;
           if (currentLocale.languageCode == Locales.en.locale.languageCode) {
             ProductLocalization.updateLang(
-                context: context, locale: Locales.tr);
+                context: context, locale: Locales.tr,);
           } else {
             ProductLocalization.updateLang(
-                context: context, locale: Locales.en);
+                context: context, locale: Locales.en,);
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: CountryFlag.fromLanguageCode(
             context.locale.languageCode == 'en' ? 'EN' : 'TR',
             width: 50,

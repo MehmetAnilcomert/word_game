@@ -9,6 +9,9 @@ import 'package:word_game/product/state/container/product_state_container.dart';
 
 /// A class responsible for initializing product-level configurations before the app starts.
 final class ProductInitialize {
+  /// Initializes the product.
+  const ProductInitialize();
+
   /// Starts the application by initializing necessary configurations.
   Future<void> startApplication() async {
     WidgetsFlutterBinding.ensureInitialized();

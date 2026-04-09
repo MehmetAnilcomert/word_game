@@ -5,11 +5,13 @@ import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/service/interface/i_game_service.dart';
 import 'package:word_game/product/utility/game_utils.dart';
 
+/// Concrete implementation of [IGameService] using Firebase Firestore.
 class FirebaseGameService implements IGameService {
-  final FirebaseFirestore _firestore;
-
+  /// Initializes [FirebaseGameService] with a [FirebaseFirestore] instance.
   FirebaseGameService({required FirebaseFirestore firestore})
       : _firestore = firestore;
+
+  final FirebaseFirestore _firestore;
 
   @override
   Future<bool> doesRoomExist(String roomId) async {
@@ -79,22 +81,22 @@ class FirebaseGameService implements IGameService {
     final room = GameRoom.fromJson(doc.id, doc.data()!);
 
     if (!GameUtils.isWordHavingValidChars(word, room.letters)) {
-      throw LocaleKeys.invalidWordLetters.tr();
+      throw Exception(LocaleKeys.invalidWordLetters.tr());
     } else if (!await GameUtils.isWordValid(word, room.lang)) {
-      throw LocaleKeys.wordNotValid.tr();
+      throw Exception(LocaleKeys.wordNotValid.tr());
     }
     if (room.globalUsedWords.contains(word)) {
-      throw LocaleKeys.wordAlreadyUsed.tr();
+      throw Exception(LocaleKeys.wordAlreadyUsed.tr());
     }
 
-    final playerWords = List<String>.from(room.usedWords[playerName] ?? []);
-    playerWords.add(word);
+    final playerWords = List<String>.from(room.usedWords[playerName] ?? [])
+    ..add(word);
 
     final updatedUsedWords = Map<String, List<String>>.from(room.usedWords);
     updatedUsedWords[playerName] = playerWords;
 
-    final updatedGlobalUsedWords = List<String>.from(room.globalUsedWords);
-    updatedGlobalUsedWords.add(word);
+    final updatedGlobalUsedWords = List<String>.from(room.globalUsedWords)
+    ..add(word);
 
     final updatedScores = Map<String, int>.from(room.scores);
     updatedScores[playerName] = (updatedScores[playerName] ?? 0) + word.length;
@@ -114,7 +116,7 @@ class FirebaseGameService implements IGameService {
   @override
   Future<void> leaveRoom(String roomId, String playerName) async {
     await updateRoom(roomId, {
-      'players': FieldValue.arrayRemove([playerName])
+      'players': FieldValue.arrayRemove([playerName]),
     });
   }
 }

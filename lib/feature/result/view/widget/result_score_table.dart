@@ -1,9 +1,9 @@
 part of '../result_view.dart';
 
 class _ResultScoreTable extends StatelessWidget {
-  final List<MapEntry<String, int>> sortedScores;
 
   const _ResultScoreTable({required this.sortedScores});
+  final List<MapEntry<String, int>> sortedScores;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class _ResultScoreTable extends StatelessWidget {
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Text(
@@ -23,7 +23,7 @@ class _ResultScoreTable extends StatelessWidget {
               final index = entry.key;
               final score = entry.value;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Row(
                   children: [
                     _buildMedal(context, index),
@@ -32,13 +32,13 @@ class _ResultScoreTable extends StatelessWidget {
                       child: Text(
                         score.key,
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold,),
                       ),
                     ),
                     Text(
                       score.value.toString(),
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18, fontWeight: FontWeight.bold,),
                     ),
                   ],
                 ),
@@ -57,18 +57,15 @@ class _ResultScoreTable extends StatelessWidget {
       case 0:
         icon = Icons.looks_one;
         color = context.appColors.goldColor;
-        break;
       case 1:
         icon = Icons.looks_two;
         color = context.appColors.silverColor;
-        break;
       case 2:
         icon = Icons.looks_3;
         color = context.appColors.bronzeColor;
-        break;
       default:
         icon = Icons.emoji_events;
-        color = context.colorScheme.primary.withOpacity(0.6);
+        color = context.colorScheme.primary.withValues(alpha: 0.6);
     }
     return Icon(icon, color: color, size: 32);
   }

@@ -1,10 +1,11 @@
 part of '../game_view.dart';
 
 class _GameWordInput extends StatefulWidget {
-  final String roomId;
-  final String playerName;
 
   const _GameWordInput({required this.roomId, required this.playerName});
+
+  final String roomId;
+  final String playerName;
 
   @override
   State<_GameWordInput> createState() => _GameWordInputState();
@@ -25,7 +26,7 @@ class _GameWordInputState extends State<_GameWordInput> {
       margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: context.colorScheme.surface.withOpacity(0.9),
+        color: context.colorScheme.surface.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
@@ -42,7 +43,7 @@ class _GameWordInputState extends State<_GameWordInput> {
             context.read<GameViewModel>().add(SubmitWordEvent(
                 roomId: widget.roomId,
                 playerName: widget.playerName,
-                word: word));
+                word: word,),);
             _controller.clear();
           }
         },

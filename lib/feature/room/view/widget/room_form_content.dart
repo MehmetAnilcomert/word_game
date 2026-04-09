@@ -1,9 +1,9 @@
 part of '../room_view.dart';
 
 class _RoomFormContent extends StatelessWidget {
-  final bool isCreateRoom;
 
   const _RoomFormContent({required this.isCreateRoom});
+  final bool isCreateRoom;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class _RoomFormContent extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -33,8 +33,7 @@ class _RoomFormContent extends StatelessWidget {
                   icon: Icons.meeting_room,
                 ),
                 const SizedBox(height: 20),
-                isCreateRoom
-                    ? Column(
+                if (isCreateRoom) Column(
                         children: [
                           _IntegerNumberSelector(
                             label: LocaleKeys.enterEndTime.tr(),
@@ -43,7 +42,7 @@ class _RoomFormContent extends StatelessWidget {
                             maxValue: 10,
                             onChanged: (value) => context
                                 .read<RoomViewModel>()
-                                .updateEndTime(value.toInt()),
+                                .updateEndTime(value),
                           ),
                           const SizedBox(height: 20),
                           _IntegerNumberSelector(
@@ -53,7 +52,7 @@ class _RoomFormContent extends StatelessWidget {
                             maxValue: 10,
                             onChanged: (value) => context
                                 .read<RoomViewModel>()
-                                .updatePlayerNumber(value.toInt()),
+                                .updatePlayerNumber(value),
                           ),
                           const SizedBox(height: 20),
                           _IntegerNumberSelector(
@@ -63,7 +62,7 @@ class _RoomFormContent extends StatelessWidget {
                             maxValue: 12,
                             onChanged: (value) => context
                                 .read<RoomViewModel>()
-                                .updateLetterNumber(value.toInt()),
+                                .updateLetterNumber(value),
                           ),
                           const SizedBox(height: 20),
                           _buildLanguageDropdown(
@@ -75,10 +74,9 @@ class _RoomFormContent extends StatelessWidget {
                                 context.read<RoomViewModel>().updateLang(value);
                               }
                             },
-                          )
+                          ),
                         ],
-                      )
-                    : const SizedBox(),
+                      ) else const SizedBox(),
                 const SizedBox(height: 40),
                 _RoomActionButton(
                   isCreateRoom: isCreateRoom,
@@ -123,7 +121,7 @@ class _RoomFormContent extends StatelessWidget {
     required ValueChanged<String?> onChanged,
   }) {
     return DropdownButtonFormField<String>(
-      value: selectedValue,
+      initialValue: selectedValue,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: const Icon(Icons.language),

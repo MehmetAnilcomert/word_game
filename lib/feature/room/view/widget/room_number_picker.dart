@@ -1,11 +1,6 @@
 part of '../room_view.dart';
 
 class _IntegerNumberSelector extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final int minValue;
-  final int maxValue;
-  final void Function(int) onChanged;
 
   const _IntegerNumberSelector({
     required this.label,
@@ -14,6 +9,11 @@ class _IntegerNumberSelector extends StatelessWidget {
     required this.maxValue,
     required this.onChanged,
   });
+  final String label;
+  final IconData icon;
+  final int minValue;
+  final int maxValue;
+  final void Function(int) onChanged;
 
   @override
   Widget build(BuildContext context) {

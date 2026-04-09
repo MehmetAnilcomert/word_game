@@ -1,9 +1,9 @@
 part of '../lobby_view.dart';
 
 class _StartButton extends StatelessWidget {
-  final String roomId;
 
   const _StartButton({required this.roomId});
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {

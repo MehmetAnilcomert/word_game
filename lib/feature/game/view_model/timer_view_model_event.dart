@@ -1,20 +1,39 @@
-abstract class TimerEvent {}
-
-class StartTimerEvent extends TimerEvent {
-  final int endTime;
-  StartTimerEvent(this.endTime);
+/// Base class for all timer-related events.
+abstract class TimerEvent {
+  /// Initializes a [TimerEvent].
+  const TimerEvent();
 }
 
-class UpdateTimerEvent extends TimerEvent {
-  final int remainingTime;
-  final bool isFlashing;
-  final bool isNearingEnd;
+/// Event to start the game timer.
+class StartTimerEvent extends TimerEvent {
+  /// Initializes a [StartTimerEvent] with [endTime].
+  const StartTimerEvent(this.endTime);
 
-  UpdateTimerEvent({
+  /// The timestamp (in milliseconds since epoch) when the game should end.
+  final int endTime;
+}
+
+/// Event to update the timer status.
+class UpdateTimerEvent extends TimerEvent {
+  /// Initializes an [UpdateTimerEvent].
+  const UpdateTimerEvent({
     required this.remainingTime,
     required this.isFlashing,
     required this.isNearingEnd,
   });
+
+  /// Seconds remaining until the game ends.
+  final int remainingTime;
+
+  /// Whether the timer should flash (indicating critical time).
+  final bool isFlashing;
+
+  /// Whether the game is nearing its end.
+  final bool isNearingEnd;
 }
 
-class EndTimerEvent extends TimerEvent {}
+/// Event fired when the timer reaches zero.
+class EndTimerEvent extends TimerEvent {
+  /// Initializes an [EndTimerEvent].
+  const EndTimerEvent();
+}

@@ -6,18 +6,17 @@ class _GameAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const ProductPadding.allMedium(),
       child: BlocBuilder<TimerViewModel, timer_state.TimerViewModelState>(
         builder: (context, state) {
-          String title = state is timer_state.TimerRunning && state.isNearingEnd
+          final title = state is timer_state.TimerRunning && state.isNearingEnd
               ? LocaleKeys.hurryUp.tr()
               : LocaleKeys.gameScreenTitle.tr();
 
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              state is timer_state.TimerRunning && state.isNearingEnd
-                  ? Row(
+              if (state is timer_state.TimerRunning && state.isNearingEnd) Row(
                       children: [
                         Text(
                           title,
@@ -34,8 +33,7 @@ class _GameAppBar extends StatelessWidget {
                           size: 35,
                         ),
                       ],
-                    )
-                  : Text(
+                    ) else Text(
                       title,
                       style: TextStyle(
                         color: context.colorScheme.onPrimary,

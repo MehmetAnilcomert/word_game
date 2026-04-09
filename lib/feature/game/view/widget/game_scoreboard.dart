@@ -1,10 +1,11 @@
 part of '../game_view.dart';
 
 class _GameScoreboard extends StatelessWidget {
-  final Map<String, int> scores;
-  final Map<String, List<dynamic>> usedWords;
 
   const _GameScoreboard({required this.scores, required this.usedWords});
+
+  final Map<String, int> scores;
+  final Map<String, List<dynamic>> usedWords;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class _GameScoreboard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 20),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: context.colorScheme.surface.withOpacity(0.9),
+          color: context.colorScheme.surface.withValues(alpha: 0.9),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -39,7 +40,7 @@ class _GameScoreboard extends StatelessWidget {
                 children: scores.entries
                     .map((e) => _PlayerWordBoard(
                           words: (usedWords[e.key] ?? []).cast<String>(),
-                        ))
+                        ),)
                     .toList(),
               ),
             ),
@@ -51,9 +52,10 @@ class _GameScoreboard extends StatelessWidget {
 }
 
 class _PlayerWordBoard extends StatelessWidget {
-  final List<String> words;
 
   const _PlayerWordBoard({required this.words});
+
+  final List<String> words;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class _PlayerWordBoard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: context.colorScheme.primary.withOpacity(0.08),
+        color: context.colorScheme.primary.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -78,7 +80,7 @@ class _PlayerWordBoard extends StatelessWidget {
                         fontSize: 14,
                         color: context.colorScheme.onSurface,
                       ),
-                    ))
+                    ),)
                 .toList(),
           ),
         ],

@@ -14,7 +14,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
   /// and setting up event handlers.
   GameViewModel()
       : _gameService = ProductContainer.read<IGameService>(),
-        super(GameInitial()) {
+        super(const GameInitial()) {
     on<CreateRoomEvent>(_onCreateRoom);
     on<JoinRoomEvent>(_onJoinRoom);
     on<StartGameEvent>(_onStartGame);
@@ -33,10 +33,10 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     CreateRoomEvent event,
     Emitter<GameViewModelState> emit,
   ) async {
-    emit(RoomCreating());
+    emit(const RoomCreating());
     try {
       if (await _gameService.doesRoomExist(event.roomId)) {
-        emit(RoomCreationFailed(errorMessage: 'Room already exists'));
+        emit(const RoomCreationFailed(errorMessage: 'Room already exists'));
         return;
       }
 
@@ -133,7 +133,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     Emitter<GameViewModelState> emit,
   ) {
     if (event.room == null || !event.room!.isActive) {
-      emit(GameOver([]));
+      emit(const GameOver([]));
       return;
     }
 
@@ -157,7 +157,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       add(UpdateGameStateEvent(room));
     }, onError: (dynamic error) {
       // Handle error
-    });
+    },);
   }
 
   Future<void> _onSubmitWord(
@@ -187,7 +187,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     Emitter<GameViewModelState> emit,
   ) async {
     await _gameService.endGame(event.roomId);
-    emit(RoomCancelled());
+    emit(const RoomCancelled());
   }
 
   Future<void> _onEndGame(
@@ -202,7 +202,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
         emit(GameOver(sortedScores));
       }
     } catch (e) {
-      emit(GameOver([]));
+      emit(const GameOver([]));
     }
   }
 
@@ -211,7 +211,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     Emitter<GameViewModelState> emit,
   ) async {
     await _gameService.leaveRoom(event.roomId, event.playerName);
-    emit(RoomLeaved());
+    emit(const RoomLeaved());
   }
 
   @override

@@ -20,8 +20,15 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    lines_longer_than_80_chars: false  # Uncomment to disable the `lines_longer_than_80_chars` rule
+    eol_at_end_of_file: false  # Uncomment to disable the `eol_at_end_of_file` rule
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+analyzer:
+  exclude:
+    - lib/product/init/language/locale_keys.g.dart
+    - '**/*.g.dart'
