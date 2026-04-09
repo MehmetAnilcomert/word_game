@@ -10,7 +10,7 @@ class _GameLetters extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
+        color: context.colorScheme.surface.withOpacity(0.9),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -23,18 +23,20 @@ class _GameLetters extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'lettersLabel'.tr(),
+            LocaleKeys.lettersLabel.tr(),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.blue[700],
+              color: context.colorScheme.primary,
             ),
           ),
           const SizedBox(height: 10),
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: letters.map((letter) => _LetterTile(letter: letter)).toList(),
+            children: letters
+                .map((letter) => _LetterTile(letter: letter))
+                .toList(),
           ),
         ],
       ),
@@ -44,7 +46,7 @@ class _GameLetters extends StatelessWidget {
 
 class _LetterTile extends StatelessWidget {
   final String letter;
-  
+
   const _LetterTile({required this.letter});
 
   @override
@@ -53,14 +55,14 @@ class _LetterTile extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: Colors.blue[700],
+        color: context.colorScheme.primary,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
         child: Text(
           letter,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: context.colorScheme.onPrimary,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),

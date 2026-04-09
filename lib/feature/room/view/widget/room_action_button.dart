@@ -18,17 +18,19 @@ class _RoomActionButton extends StatelessWidget {
             ? null
             : () => _handleAction(context),
         style: ElevatedButton.styleFrom(
-          foregroundColor: isCreateRoom ? Colors.green : Colors.blue,
-          backgroundColor: Colors.white,
+          foregroundColor: isCreateRoom
+              ? context.appColors.successColor
+              : context.colorScheme.primary,
+          backgroundColor: context.colorScheme.surface,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
         child: isLoading
-            ? const CircularProgressIndicator(color: Colors.white)
+            ? CircularProgressIndicator(color: context.colorScheme.surface)
             : Text(
                 isCreateRoom
-                    ? 'createRoomButton'.tr()
-                    : 'joinRoomButton'.tr(),
+                    ? LocaleKeys.createRoomButton.tr()
+                    : LocaleKeys.joinRoomButton.tr(),
                 style: const TextStyle(fontSize: 18),
               ),
       );
@@ -39,8 +41,8 @@ class _RoomActionButton extends StatelessWidget {
     if (roomState.playerName.isEmpty || roomState.roomID.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text('fillAllFields'.tr()),
-            backgroundColor: Colors.red),
+            content: Text(LocaleKeys.fillAllFields.tr()),
+            backgroundColor: context.colorScheme.error),
       );
       return;
     }

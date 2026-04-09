@@ -1,12 +1,27 @@
-import 'package:get_it/get_it.dart';
-import 'package:word_game/product/service/game_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:word_game/bloc/gameBloc/GameBloc.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+/// A widget that initializes bloc state management for the application.
+class StateInitialize extends StatelessWidget {
+  /// Creates an instance of [StateInitialize] with the given [child].
+  const StateInitialize({
+    required this.child,
+    super.key,
+  });
 
-final locator = GetIt.instance;
+  /// The child widget to be wrapped with state management providers.
+  final Widget child;
 
-Future<void> setupLocator() async {
-  locator.registerLazySingleton<GameService>(
-    () => GameService(firestore: FirebaseFirestore.instance),
-  );
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GameBloc>(
+          create: (context) => GameBloc(context),
+        ),
+      ],
+      child: child,
+    );
+  }
 }

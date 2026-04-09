@@ -13,7 +13,7 @@ class _GameScoreboard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 20),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
+          color: context.colorScheme.surface.withOpacity(0.9),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -26,11 +26,11 @@ class _GameScoreboard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'scoreTableLabel'.tr(),
+              LocaleKeys.scoreTableLabel.tr(),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue[700],
+                color: context.colorScheme.primary,
               ),
             ),
             const SizedBox(height: 10),
@@ -38,8 +38,8 @@ class _GameScoreboard extends StatelessWidget {
               child: ListView(
                 children: scores.entries
                     .map((e) => _PlayerWordBoard(
-                        words: (usedWords[e.key] ?? []).cast<String>(),
-                      ))
+                          words: (usedWords[e.key] ?? []).cast<String>(),
+                        ))
                     .toList(),
               ),
             ),
@@ -61,7 +61,7 @@ class _PlayerWordBoard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: context.colorScheme.primary.withOpacity(0.08),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -76,7 +76,7 @@ class _PlayerWordBoard extends StatelessWidget {
                       word,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.blue[900],
+                        color: context.colorScheme.onSurface,
                       ),
                     ))
                 .toList(),

@@ -9,9 +9,11 @@ import 'package:word_game/bloc/gameBloc/GameStates.dart';
 import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/room/view/mixin/room_view_mixin.dart';
 import 'package:word_game/feature/room/view_model/room_view_model.dart';
-import 'package:word_game/product/model/lang_options.dart';
+import 'package:word_game/feature/lobby/view/lobby_view.dart';
+import 'package:word_game/product/init/language/locale_keys.g.dart';
+import 'package:word_game/product/init/theme/app_theme_extension.dart';
+import 'package:word_game/product/utility/constants/enums/locales.dart';
 import 'package:word_game/product/state/base/base_state.dart';
-import 'package:word_game/screens/LobbyScreen.dart';
 
 part 'widget/room_header.dart';
 part 'widget/room_number_picker.dart';
@@ -48,7 +50,7 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LobbyScreen(
+                  builder: (context) => LobbyView(
                     roomId: roomViewModel.roomID,
                     playerName: roomViewModel.playerName,
                     isLeader: widget.isCreateRoom,
@@ -61,7 +63,7 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
                   content: Text(state is RoomCreationFailed
                       ? state.errorMessage
                       : (state as RoomJoinFailed).errorMessage),
-                  backgroundColor: Colors.red,
+                  backgroundColor: context.colorScheme.error,
                 ),
               );
             }
@@ -70,11 +72,7 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.blue[300]!, Colors.purple[300]!],
-                  ),
+                  gradient: context.backgroundGradient,
                 ),
                 child: SafeArea(
                   child: Padding(

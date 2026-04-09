@@ -9,8 +9,10 @@ import 'package:word_game/bloc/gameBloc/GameStates.dart';
 
 import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/lobby/view/mixin/lobby_view_mixin.dart';
+import 'package:word_game/feature/game/view/game_view.dart';
+import 'package:word_game/product/init/language/locale_keys.g.dart';
+import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
-import 'package:word_game/screens/GameScreen.dart';
 
 part 'widget/lobby_header.dart';
 part 'widget/lobby_room_info.dart';
@@ -42,7 +44,7 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => GameScreen(
+              builder: (context) => GameView(
                 roomId: widget.roomId,
                 playerName: widget.playerName,
               ),
@@ -57,7 +59,7 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.errorMessage!),
-              backgroundColor: Colors.red,
+              backgroundColor: context.colorScheme.error,
             ),
           );
         }
@@ -67,11 +69,7 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           return Scaffold(
             body: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.blue[300]!, Colors.purple[300]!],
-                ),
+                gradient: context.backgroundGradient,
               ),
               child: SafeArea(
                 child: Padding(

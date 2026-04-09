@@ -19,14 +19,16 @@ class _RoomFormContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _buildInputField(
+                  context: context,
                   controller: context.read<RoomViewModel>().playerNameController,
-                  label: 'enterPlayerName'.tr(),
+                  label: LocaleKeys.enterPlayerName.tr(),
                   icon: Icons.person,
                 ),
                 const SizedBox(height: 20),
                 _buildInputField(
+                  context: context,
                   controller: context.read<RoomViewModel>().roomIDController,
-                  label: 'enterRoomId'.tr(),
+                  label: LocaleKeys.enterRoomId.tr(),
                   icon: Icons.meeting_room,
                 ),
                 const SizedBox(height: 20),
@@ -34,7 +36,7 @@ class _RoomFormContent extends StatelessWidget {
                     ? Column(
                         children: [
                           _IntegerNumberSelector(
-                            label: 'enterEndTime'.tr(),
+                            label: LocaleKeys.enterEndTime.tr(),
                             icon: Icons.timer,
                             minValue: 1,
                             maxValue: 10,
@@ -44,7 +46,7 @@ class _RoomFormContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           _IntegerNumberSelector(
-                            label: 'enterPlayerNumber'.tr(),
+                            label: LocaleKeys.enterPlayerNumber.tr(),
                             icon: Icons.person,
                             minValue: 2,
                             maxValue: 10,
@@ -54,7 +56,7 @@ class _RoomFormContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           _IntegerNumberSelector(
-                            label: 'enterLetterNumber'.tr(),
+                            label: LocaleKeys.enterLetterNumber.tr(),
                             icon: Icons.question_mark,
                             minValue: 6,
                             maxValue: 12,
@@ -64,9 +66,9 @@ class _RoomFormContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           _buildLanguageDropdown(
-                            label: 'language'.tr(),
+                            context: context,
+                            label: LocaleKeys.language.tr(),
                             selectedValue: roomState.lang,
-                            options: LanguageOptions.languageOptions,
                             onChanged: (value) {
                               if (value != null) {
                                 context.read<RoomViewModel>().updateLang(value);
@@ -90,6 +92,7 @@ class _RoomFormContent extends StatelessWidget {
   }
 
   Widget _buildInputField({
+    required BuildContext context,
     required TextEditingController controller,
     required String label,
     required IconData icon,
@@ -107,15 +110,15 @@ class _RoomFormContent extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: context.colorScheme.surface,
       ),
     );
   }
 
   Widget _buildLanguageDropdown({
+    required BuildContext context,
     required String label,
     required String selectedValue,
-    required Map<String, String> options,
     required ValueChanged<String?> onChanged,
   }) {
     return DropdownButtonFormField<String>(
@@ -127,12 +130,16 @@ class _RoomFormContent extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: context.colorScheme.surface,
       ),
-      items: options.entries.map((entry) {
+      items: Locales.values.map((locale) {
         return DropdownMenuItem<String>(
-          value: entry.key,
-          child: Text(entry.value),
+          value: locale.locale.languageCode,
+          child: Text(
+            locale == Locales.en
+                ? LocaleKeys.english.tr()
+                : LocaleKeys.turkish.tr(),
+          ),
         );
       }).toList(),
       onChanged: onChanged,

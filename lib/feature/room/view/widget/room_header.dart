@@ -11,7 +11,7 @@ class _RoomHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: context.colorScheme.onPrimary),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
@@ -21,14 +21,16 @@ class _RoomHeader extends StatelessWidget {
           },
         ),
         Text(
-          isCreateRoom ? 'roomScreenTitleCreate'.tr() : 'roomScreenTitleJoin'.tr(),
-          style: const TextStyle(
+          isCreateRoom
+              ? LocaleKeys.roomScreenTitleCreate.tr()
+              : LocaleKeys.roomScreenTitleJoin.tr(),
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: context.colorScheme.onPrimary,
           ),
         ),
-        const SizedBox(width: 48), // To balance the back button
+        const SizedBox(width: 48),
       ],
     );
   }

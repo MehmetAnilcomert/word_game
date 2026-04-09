@@ -10,8 +10,8 @@ class _GameAppBar extends StatelessWidget {
       child: BlocBuilder<TimerBloc, TimerState>(
         builder: (context, state) {
           String title = state is TimerRunning && state.isNearingEnd
-              ? 'hurryUp'.tr()
-              : 'gameScreenTitle'.tr();
+              ? LocaleKeys.hurryUp.tr()
+              : LocaleKeys.gameScreenTitle.tr();
 
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -21,27 +21,27 @@ class _GameAppBar extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: context.colorScheme.onPrimary,
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Icon(
+                        Icon(
                           Icons.warning_amber_rounded,
-                          color: Colors.red,
+                          color: context.colorScheme.error,
                           size: 35,
                         ),
                       ],
-                    ) // Hurry up Widget
+                    )
                   : Text(
                       title,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: context.colorScheme.onPrimary,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                      ), // Normal Widget style
+                      ),
                     ),
             ],
           );

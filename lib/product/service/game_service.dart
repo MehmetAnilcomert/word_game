@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/utility/game_utils.dart';
 
 class GameService {
@@ -69,12 +70,12 @@ class GameService {
     final lang = data['lang'];
 
     if (!GameUtils.isWordHavingValidChars(word, letters)) {
-      throw 'invalidWordLetters'.tr();
+      throw LocaleKeys.invalidWordLetters.tr();
     } else if (!await GameUtils.isWordValid(word, lang)) {
-      throw 'wordNotValid'.tr();
+      throw LocaleKeys.wordNotValid.tr();
     }
     if (globalUsedWords.contains(word)) {
-      throw 'wordAlreadyUsed'.tr();
+      throw LocaleKeys.wordAlreadyUsed.tr();
     }
 
     final playerWords = (usedWords[playerName] ?? []) as List;

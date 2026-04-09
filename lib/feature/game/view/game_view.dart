@@ -9,6 +9,8 @@ import 'package:word_game/bloc/timerBloc/TimerBloc.dart';
 import 'package:word_game/bloc/timerBloc/TimerState.dart';
 import 'package:word_game/feature/game/view/mixin/game_view_mixin.dart';
 import 'package:word_game/feature/result/view/result_view.dart';
+import 'package:word_game/product/init/language/locale_keys.g.dart';
+import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
 
 part 'widget/game_appbar.dart';
@@ -48,13 +50,12 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.errorMessage!),
-                backgroundColor: Colors.red,
+                backgroundColor: context.colorScheme.error,
                 duration: const Duration(seconds: 2),
               ),
             );
           }
           if (state is GameOver) {
-            // Navigate to result screen when the game is over
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -79,11 +80,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.blue[300]!, Colors.purple[300]!],
-                  ),
+                  gradient: context.backgroundGradient,
                 ),
                 child: SafeArea(
                   child: Stack(
@@ -130,7 +127,8 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                                       horizontal: 12, vertical: 6),
                                   decoration: BoxDecoration(
                                     color: timerState.remainingTime <= 10
-                                        ? Colors.red.withOpacity(0.8)
+                                        ? context.colorScheme.error
+                                            .withOpacity(0.8)
                                         : Colors.black.withOpacity(0.8),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
@@ -143,8 +141,8 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                                   ),
                                   child: Text(
                                     formatTime(timerState.remainingTime),
-                                    style: const TextStyle(
-                                      color: Colors.white,
+                                    style: TextStyle(
+                                      color: context.colorScheme.onError,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -156,7 +154,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                                   .read<GameBloc>()
                                   .add(EndGame(widget.roomId));
                             }
-                            return const SizedBox.shrink(); // If timer is not active, return empty widget
+                            return const SizedBox.shrink();
                           },
                         ),
                       ),
@@ -170,15 +168,12 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
           return Scaffold(
             body: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.blue[300]!, Colors.purple[300]!],
-                ),
+                gradient: context.backgroundGradient,
               ),
-              child: const Center(
+              child: Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(context.colorScheme.onPrimary),
                 ),
               ),
             ),

@@ -15,7 +15,7 @@ class _ResultScoreTable extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'scoreTableLabel'.tr(),
+              LocaleKeys.scoreTableLabel.tr(),
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -26,18 +26,19 @@ class _ResultScoreTable extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   children: [
-                    _buildMedal(index),
+                    _buildMedal(context, index),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(
                         score.key,
-                        style:
-                            const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(
                       score.value.toString(),
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -49,7 +50,7 @@ class _ResultScoreTable extends StatelessWidget {
     );
   }
 
-  Widget _buildMedal(int index) {
+  Widget _buildMedal(BuildContext context, int index) {
     IconData icon;
     Color color;
     switch (index) {
@@ -67,7 +68,7 @@ class _ResultScoreTable extends StatelessWidget {
         break;
       default:
         icon = Icons.emoji_events;
-        color = Colors.blue[300]!;
+        color = context.colorScheme.primary.withOpacity(0.6);
     }
     return Icon(icon, color: color, size: 32);
   }

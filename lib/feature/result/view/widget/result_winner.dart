@@ -15,18 +15,18 @@ class _ResultWinner extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'winnerLabel'.tr(),
+              LocaleKeys.winnerLabel.tr(),
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
               sortedScores.isNotEmpty
                   ? sortedScores.first.key
-                  : 'noWinner'.tr(),
-              style: const TextStyle(
+                  : LocaleKeys.noWinner.tr(),
+              style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.orange),
+                  color: context.appColors.warningColor),
             ),
             const SizedBox(height: 8),
             const Icon(

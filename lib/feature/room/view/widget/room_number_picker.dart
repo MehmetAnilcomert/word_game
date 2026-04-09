@@ -19,7 +19,7 @@ class _IntegerNumberSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: Colors.blue),
+        Icon(icon, color: context.colorScheme.primary),
         const SizedBox(width: 10),
         Expanded(child: Text(label, style: const TextStyle(fontSize: 16))),
         DropdownButton<int>(

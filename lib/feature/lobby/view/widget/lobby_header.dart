@@ -18,14 +18,17 @@ class _LobbyHeader extends StatelessWidget {
     return Row(
       children: [
         IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: context.colorScheme.onPrimary),
           onPressed: onExit,
         ),
         Expanded(
           child: Text(
-            'lobbyTitle'.tr(),
-            style: const TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            LocaleKeys.lobbyTitle.tr(),
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: context.colorScheme.onPrimary,
+            ),
             textAlign: TextAlign.center,
           ),
         ),

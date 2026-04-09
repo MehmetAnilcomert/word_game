@@ -11,9 +11,9 @@ class _HomeAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'appTitle'.tr(),
-            style: const TextStyle(
-              color: Colors.white,
+            LocaleKeys.appTitle.tr(),
+            style: TextStyle(
+              color: context.colorScheme.onPrimary,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -32,7 +32,7 @@ class _LanguageToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0),
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(30),
       ),
       child: ElevatedButton(
@@ -46,10 +46,10 @@ class _LanguageToggle extends StatelessWidget {
         ),
         onPressed: () {
           final currentLocale = context.locale;
-          if (currentLocale.languageCode == 'en') {
-            context.setLocale(const Locale('tr'));
+          if (currentLocale.languageCode == Locales.en.locale.languageCode) {
+            ProductLocalization.updateLang(context: context, locale: Locales.tr);
           } else {
-            context.setLocale(const Locale('en'));
+            ProductLocalization.updateLang(context: context, locale: Locales.en);
           }
         },
         child: Padding(

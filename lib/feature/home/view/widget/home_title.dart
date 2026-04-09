@@ -10,7 +10,7 @@ class _HomeTitle extends StatelessWidget {
       height: 200,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: context.colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -21,9 +21,9 @@ class _HomeTitle extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'appTitle'.tr(),
+          LocaleKeys.appTitle.tr(),
           style: TextStyle(
-            color: Colors.blue[700],
+            color: context.colorScheme.primary,
             fontSize: 28,
             fontWeight: FontWeight.bold,
           ),

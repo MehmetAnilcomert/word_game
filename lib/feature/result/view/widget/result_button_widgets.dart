@@ -6,6 +6,7 @@ class _ResultButtons extends StatelessWidget {
     return Column(
       children: [
         _buildButton(
+          context: context,
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -14,11 +15,12 @@ class _ResultButtons extends StatelessWidget {
             );
           },
           icon: Icons.play_arrow,
-          label: 'newGameButton'.tr(),
-          color: Colors.green,
+          label: LocaleKeys.newGameButton.tr(),
+          color: context.appColors.successColor,
         ),
         const SizedBox(height: 12),
         _buildButton(
+          context: context,
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -27,11 +29,12 @@ class _ResultButtons extends StatelessWidget {
             );
           },
           icon: Icons.refresh,
-          label: 'reJoinButton'.tr(),
-          color: Colors.orange,
+          label: LocaleKeys.reJoinButton.tr(),
+          color: context.appColors.warningColor,
         ),
         const SizedBox(height: 12),
         _buildButton(
+          context: context,
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
@@ -40,14 +43,15 @@ class _ResultButtons extends StatelessWidget {
             );
           },
           icon: Icons.home,
-          label: 'goHome'.tr(),
-          color: Colors.blue,
+          label: LocaleKeys.goHome.tr(),
+          color: context.colorScheme.primary,
         ),
       ],
     );
   }
 
   Widget _buildButton({
+    required BuildContext context,
     required VoidCallback onPressed,
     required IconData icon,
     required String label,
@@ -59,7 +63,7 @@ class _ResultButtons extends StatelessWidget {
       label: Text(label),
       style: ElevatedButton.styleFrom(
         foregroundColor: color,
-        backgroundColor: Colors.white,
+        backgroundColor: context.colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),

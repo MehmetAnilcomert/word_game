@@ -7,6 +7,8 @@ import 'package:word_game/feature/home/view/home_view.dart';
 import 'package:word_game/feature/room/view/room_view.dart';
 import 'package:word_game/feature/result/view/mixin/result_view_mixin.dart';
 import 'package:word_game/feature/result/view_model/result_view_model.dart';
+import 'package:word_game/product/init/language/locale_keys.g.dart';
+import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
 import 'package:word_game/product/utility/result_util.dart';
 
@@ -32,7 +34,6 @@ class _ResultViewState extends BaseState<ResultView> with ResultViewMixin {
   void initState() {
     super.initState();
     _resultViewModel = ResultViewModel();
-    // Start the animation when screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final rank = ResultUtil.findRank(widget.data, widget.currentUser);
       _resultViewModel.startConfetti(rank);
@@ -46,11 +47,7 @@ class _ResultViewState extends BaseState<ResultView> with ResultViewMixin {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Colors.blue[300]!, Colors.purple[300]!],
-            ),
+            gradient: context.backgroundGradient,
           ),
           child: SafeArea(
             child: Stack(
@@ -62,11 +59,11 @@ class _ResultViewState extends BaseState<ResultView> with ResultViewMixin {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'resultScreenTitle'.tr(),
-                        style: const TextStyle(
+                        LocaleKeys.resultScreenTitle.tr(),
+                        style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: context.colorScheme.onPrimary,
                         ),
                         textAlign: TextAlign.center,
                       ),

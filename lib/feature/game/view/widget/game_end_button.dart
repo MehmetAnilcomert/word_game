@@ -12,13 +12,13 @@ class _GameEndButton extends StatelessWidget {
         context.read<GameBloc>().add(EndGame(roomId));
       },
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.red,
-        backgroundColor: Colors.white,
+        foregroundColor: context.colorScheme.error,
+        backgroundColor: context.colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
       child: Text(
-        'endGameButton'.tr(),
+        LocaleKeys.endGameButton.tr(),
         style: const TextStyle(fontSize: 18),
       ),
     );

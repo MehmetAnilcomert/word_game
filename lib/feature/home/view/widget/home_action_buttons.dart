@@ -11,12 +11,12 @@ class _HomeActionButtons extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RoomScreen(isCreateRoom: true),
+                builder: (context) => const RoomView(isCreateRoom: true),
               ),
             );
           },
-          label: 'createRoomButton'.tr(),
-          color: Colors.green,
+          label: LocaleKeys.createRoomButton.tr(),
+          color: context.appColors.successColor,
           icon: Icons.add_circle_outline,
         ),
         const SizedBox(height: 20),
@@ -26,12 +26,12 @@ class _HomeActionButtons extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RoomScreen(isCreateRoom: false),
+                builder: (context) => const RoomView(isCreateRoom: false),
               ),
             );
           },
-          label: 'joinRoomButton'.tr(),
-          color: Colors.orange,
+          label: LocaleKeys.joinRoomButton.tr(),
+          color: context.appColors.warningColor,
           icon: Icons.group_add_outlined,
         ),
       ],
@@ -51,7 +51,7 @@ class _HomeActionButtons extends StatelessWidget {
       label: Text(label, style: const TextStyle(fontSize: 18)),
       style: ElevatedButton.styleFrom(
         foregroundColor: color,
-        backgroundColor: Colors.white,
+        backgroundColor: context.colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         minimumSize: const Size(250, 60),

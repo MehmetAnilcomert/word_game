@@ -10,16 +10,16 @@ class _RoomInfo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: context.colorScheme.surface.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'roomId'.tr(),
-            style: const TextStyle(
-              color: Colors.white,
+            LocaleKeys.roomId.tr(),
+            style: TextStyle(
+              color: context.colorScheme.onPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
@@ -27,8 +27,8 @@ class _RoomInfo extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             roomId,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.colorScheme.onPrimary,
               fontSize: 24,
               fontWeight: FontWeight.bold,
               letterSpacing: 2,

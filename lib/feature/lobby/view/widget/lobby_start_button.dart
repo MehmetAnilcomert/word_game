@@ -9,7 +9,7 @@ class _StartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.green,
+        foregroundColor: context.appColors.successColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -20,7 +20,7 @@ class _StartButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         child: Text(
-          'startGame'.tr(),
+          LocaleKeys.startGame.tr(),
           style: const TextStyle(fontSize: 18),
         ),
       ),
