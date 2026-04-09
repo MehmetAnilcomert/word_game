@@ -1,18 +1,18 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:word_game/feature/game/model/game_room.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_state.dart';
-import 'package:word_game/product/service/game_service.dart';
+import 'package:word_game/product/service/interface/i_game_service.dart';
 import 'package:word_game/product/state/container/product_state_container.dart';
 import 'package:word_game/product/utility/letter_utils.dart';
 
 class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
-  final GameService _gameService;
-  StreamSubscription<DocumentSnapshot>? _gameSubscription;
+  final IGameService _gameService;
+  StreamSubscription<GameRoom?>? _gameSubscription;
 
   GameViewModel()
-      : _gameService = ProductContainer.read<GameService>(),
+      : _gameService = ProductContainer.read<IGameService>(),
         super(GameInitial()) {
     on<CreateRoomEvent>(_onCreateRoom);
     on<JoinRoomEvent>(_onJoinRoom);
@@ -55,21 +55,15 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
   Future<void> _onJoinRoom(JoinRoomEvent event, Emitter<GameViewModelState> emit) async {
     emit(RoomJoining(roomId: event.roomId, playerName: event.playerName));
     try {
-      final roomSnapshot = await _gameService.getRoomData(event.roomId);
-      if (roomSnapshot == null || !roomSnapshot.exists) {
-        throw "Room not found";
-      }
+      final room = await _gameService.getRoomData(event.roomId);
+      if (room == null) throw "Room not found";
 
-      final roomData = roomSnapshot.data()! as Map<String, dynamic>;
-      final players = List<String>.from((roomData['players'] as List<dynamic>?) ?? []);
-      final maxPlayers = roomData['maxPlayers'] as int;
+      if (room.isStarted) throw "Game already started";
+      if (!room.isActive) throw "Room not active";
+      if (room.players.length >= room.maxPlayers) throw "Room full";
+      if (room.players.contains(event.playerName)) throw "Player already in room";
 
-      if (roomData['isStarted'] == true) throw "Game already started";
-      if (roomData['isActive'] == false) throw "Room not active";
-      if (players.length >= maxPlayers) throw "Room full";
-      if (players.contains(event.playerName)) throw "Player already in room";
-
-      players.add(event.playerName);
+      final players = List<String>.from(room.players)..add(event.playerName);
       await _gameService.updateRoom(event.roomId, {'players': players});
 
       emit(RoomJoined(roomId: event.roomId, playerName: event.playerName));
@@ -82,23 +76,19 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
 
   Future<void> _onStartGame(StartGameEvent event, Emitter<GameViewModelState> emit) async {
     try {
-      final roomDoc = await _gameService.getRoomData(event.roomId);
-      if (roomDoc != null && roomDoc.exists) {
-        final roomData = roomDoc.data() as Map<String, dynamic>;
-        final playerCount = (roomData['players'] as List<dynamic>?)?.length ?? 0;
-
-        if (playerCount <= 1) {
-          final players = List<String>.from((roomData['players'] as List<dynamic>?) ?? []);
-          emit(InLobby(players: players, errorMessage: "Not enough players"));
+      final room = await _gameService.getRoomData(event.roomId);
+      if (room != null) {
+        if (room.players.length <= 1) {
+          emit(InLobby(players: room.players, errorMessage: "Not enough players"));
           return;
         }
 
-        if (roomData.containsKey('isStarted') && roomData['isStarted'] == true) {
-          emit(GameInProgress(roomData));
+        if (room.isStarted) {
+          emit(GameInProgress(room));
           return;
         }
 
-        final int gameDuration = (roomData['endTime'] as int?) ?? 1; // Default to 1 min if missing
+        final int gameDuration = room.endTime == 0 ? 1 : room.endTime; // Default to 1 min if missing or 0
         final int computedEndTime = DateTime.now()
             .add(Duration(minutes: gameDuration))
             .millisecondsSinceEpoch;
@@ -108,10 +98,9 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
           'endTime': computedEndTime,
         });
 
-        final updatedDoc = await _gameService.getRoomData(event.roomId);
-        if (updatedDoc != null && updatedDoc.exists) {
-          final updatedData = updatedDoc.data() as Map<String, dynamic>;
-          emit(GameInProgress(updatedData));
+        final updatedRoom = await _gameService.getRoomData(event.roomId);
+        if (updatedRoom != null) {
+          emit(GameInProgress(updatedRoom));
         }
       }
     } catch (e) {
@@ -120,24 +109,17 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
   }
 
   void _onUpdateGameState(UpdateGameStateEvent event, Emitter<GameViewModelState> emit) {
-    if (!event.snapshot.exists) {
+    if (event.room == null || !event.room!.isActive) {
       emit(GameOver([]));
       return;
     }
 
-    final data = event.snapshot.data() as Map<String, dynamic>;
+    final room = event.room!;
 
-    if (data['isActive'] == false) {
-      emit(GameOver([]));
-      return;
-    }
-
-    final isStarted = data['isStarted'] as bool? ?? false;
-    if (isStarted == true) {
-      emit(GameInProgress(data));
+    if (room.isStarted) {
+      emit(GameInProgress(room));
     } else {
-      final players = List<String>.from((data['players'] as List<dynamic>?) ?? []);
-      emit(InLobby(players: players));
+      emit(InLobby(players: room.players));
     }
   }
 
@@ -145,10 +127,10 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       ListenToGameUpdatesEvent event, Emitter<GameViewModelState> emit) async {
     await _gameSubscription?.cancel();
 
-    _gameSubscription = _gameService.listenToGameUpdates(event.roomId).listen((snapshot) {
-       add(UpdateGameStateEvent(snapshot));
+    _gameSubscription = _gameService.listenToGameUpdates(event.roomId).listen((room) {
+       add(UpdateGameStateEvent(room));
     }, onError: (error) {
-       // emit(GameError(error.toString())); // Bloc can't emit from async listener like this easily without specialized handle
+       // print(error.toString());
     });
   }
 
@@ -161,7 +143,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       );
     } catch (e) {
       if (state is GameInProgress) {
-         emit(GameInProgress((state as GameInProgress).data, errorMessage: e.toString()));
+         emit(GameInProgress((state as GameInProgress).room, errorMessage: e.toString()));
       }
     }
   }
@@ -173,11 +155,9 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
 
   Future<void> _onEndGame(EndGameEvent event, Emitter<GameViewModelState> emit) async {
     try {
-      final gameData = await _gameService.getRoomData(event.roomId);
-      if (gameData != null && gameData.exists) {
-        final data = gameData.data() as Map<String, dynamic>;
-        final scores = Map<String, int>.from((data['scores'] as Map<dynamic, dynamic>?) ?? {});
-        final sortedScores = scores.entries.toList()
+      final room = await _gameService.getRoomData(event.roomId);
+      if (room != null) {
+        final sortedScores = room.scores.entries.toList()
           ..sort((a, b) => b.value.compareTo(a.value));
         emit(GameOver(sortedScores));
       }

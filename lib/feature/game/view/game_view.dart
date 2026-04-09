@@ -66,16 +66,15 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
             );
           }
           if (state is game_state.GameInProgress) {
-            final endTime = state.data['endTime'] as int;
+            final endTime = state.room.endTime;
             startTimer(context, endTime);
           }
         },
         builder: (context, state) {
           if (state is game_state.GameInProgress) {
-            final letters = List<String>.from((state.data['letters'] as List<dynamic>?) ?? []);
-            final scores = Map<String, int>.from((state.data['scores'] as Map<dynamic, dynamic>?) ?? {});
-            final usedWords =
-                Map<String, List<dynamic>>.from((state.data['usedWords'] as Map<dynamic, dynamic>?) ?? {});
+              final letters = state.room.letters;
+              final scores = state.room.scores;
+              final usedWords = state.room.usedWords;
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(

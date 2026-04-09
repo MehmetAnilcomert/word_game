@@ -1,3 +1,5 @@
+import 'package:word_game/feature/game/model/game_room.dart';
+
 abstract class GameViewModelState {}
 
 class GameInitial extends GameViewModelState {}
@@ -37,9 +39,9 @@ class RoomCreationFailed extends GameViewModelState {
 }
 
 class GameInProgress extends GameViewModelState {
-  final Map<String, dynamic> data;
+  final GameRoom room;
   final String? errorMessage;
-  GameInProgress(this.data, {this.errorMessage});
+  GameInProgress(this.room, {this.errorMessage});
 }
 
 class GameOver extends GameViewModelState {
