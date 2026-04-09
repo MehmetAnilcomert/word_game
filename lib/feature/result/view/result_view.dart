@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:confetti/confetti.dart';
+
+import 'package:word_game/feature/home/view/home_view.dart';
+import 'package:word_game/feature/room/view/room_view.dart';
+import 'package:word_game/feature/result/view/mixin/result_view_mixin.dart';
+import 'package:word_game/feature/result/view_model/result_view_model.dart';
+import 'package:word_game/product/state/base/base_state.dart';
+import 'package:word_game/product/utility/result_util.dart';
+
+part 'widget/result_build_animation.dart';
+part 'widget/result_button_widgets.dart';
+part 'widget/result_score_table.dart';
+part 'widget/result_winner.dart';
+
+class ResultView extends StatefulWidget {
+  final List<MapEntry<String, int>> data;
+  final String currentUser;
+
+  const ResultView({super.key, required this.data, required this.currentUser});
+
+  @override
+  State<ResultView> createState() => _ResultViewState();
+}
+
+class _ResultViewState extends BaseState<ResultView> with ResultViewMixin {
+  late final ResultViewModel _resultViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _resultViewModel = ResultViewModel();
+    // Start the animation when screen is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final rank = ResultUtil.findRank(widget.data, widget.currentUser);
+      _resultViewModel.startConfetti(rank);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: _resultViewModel,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.blue[300]!, Colors.purple[300]!],
+            ),
+          ),
+          child: SafeArea(
+            child: Stack(
+              children: [
+                // Main content
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'resultScreenTitle'.tr(),
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 20),
+                      _ResultWinner(sortedScores: widget.data),
+                      const SizedBox(height: 20),
+                      _ResultScoreTable(sortedScores: widget.data),
+                      const Spacer(),
+                      _ResultButtons(),
+                    ],
+                  ),
+                ),
+                // Confetti animation
+                BlocBuilder<ResultViewModel, RankPosition?>(
+                  builder: (context, position) {
+                    if (position == null) return const SizedBox.shrink();
+                    return _ResultConfetti(
+                      position: position,
+                      controller: _resultViewModel.confettiController,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
