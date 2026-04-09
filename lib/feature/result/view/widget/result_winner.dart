@@ -1,9 +1,9 @@
 part of '../result_view.dart';
 
 class _ResultWinner extends StatelessWidget {
-  final List<MapEntry<String, int>> sortedScores;
 
   const _ResultWinner({required this.sortedScores});
+  final List<MapEntry<String, int>> sortedScores;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class _ResultWinner extends StatelessWidget {
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Text(
@@ -26,7 +26,7 @@ class _ResultWinner extends StatelessWidget {
               style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: context.appColors.goldColor),
+                  color: context.appColors.goldColor,),
             ),
             const SizedBox(height: 8),
             Icon(

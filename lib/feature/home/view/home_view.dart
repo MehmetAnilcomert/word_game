@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:country_flags/country_flags.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 import 'package:word_game/feature/home/view/mixin/home_view_mixin.dart';
 import 'package:word_game/feature/room/view/room_view.dart';
@@ -11,11 +11,13 @@ import 'package:word_game/product/state/base/base_state.dart';
 import 'package:word_game/product/utility/constants/enums/locales.dart';
 import 'package:word_game/product/utility/padding/product_padding.dart';
 
-part 'widget/home_appbar.dart';
 part 'widget/home_action_buttons.dart';
+part 'widget/home_appbar.dart';
 part 'widget/home_title.dart';
 
+/// The main landing screen of the application.
 class HomeView extends StatefulWidget {
+  /// Initializes a [HomeView].
   const HomeView({super.key});
 
   @override

@@ -1,29 +1,41 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-
 import 'package:word_game/feature/game/view/mixin/game_view_mixin.dart';
 import 'package:word_game/feature/game/view_model/game_view_model.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
-import 'package:word_game/feature/game/view_model/game_view_model_state.dart' as game_state;
+import 'package:word_game/feature/game/view_model/game_view_model_state.dart'
+    as game_state;
 import 'package:word_game/feature/game/view_model/timer_view_model.dart';
-import 'package:word_game/feature/game/view_model/timer_view_model_state.dart' as timer_state;
+import 'package:word_game/feature/game/view_model/timer_view_model_state.dart'
+    as timer_state;
 import 'package:word_game/feature/result/view/result_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
+import 'package:word_game/product/utility/padding/product_padding.dart';
 
 part 'widget/game_appbar.dart';
+part 'widget/game_end_button.dart';
 part 'widget/game_letters.dart';
 part 'widget/game_scoreboard.dart';
 part 'widget/game_word_input.dart';
-part 'widget/game_end_button.dart';
 
+/// [GameView] is the main game screen where players can see letters,
+/// scores, and input words.
 class GameView extends StatefulWidget {
-  final String roomId;
-  final String playerName;
+  /// Creates a [GameView] with the given [roomId] and [playerName].
+  const GameView({
+    required this.roomId,
+    required this.playerName,
+    super.key,
+  });
 
-  const GameView({super.key, required this.roomId, required this.playerName});
+  /// The unique identifier for the game room.
+  final String roomId;
+
+  /// The name of the current player.
+  final String playerName;
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -41,11 +53,12 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
           create: (context) => GameViewModel()
             ..add(StartGameEvent(roomId: widget.roomId))
             ..add(ListenToGameUpdatesEvent(widget.roomId)),
-        )
+        ),
       ],
       child: BlocConsumer<GameViewModel, game_state.GameViewModelState>(
         listener: (context, state) {
-          if (state is game_state.GameInProgress && state.errorMessage != null) {
+          if (state is game_state.GameInProgress &&
+              state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.errorMessage!),
@@ -72,9 +85,9 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
         },
         builder: (context, state) {
           if (state is game_state.GameInProgress) {
-              final letters = state.room.letters;
-              final scores = state.room.scores;
-              final usedWords = state.room.usedWords;
+            final letters = state.room.letters;
+            final scores = state.room.scores;
+            final usedWords = state.room.usedWords;
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
@@ -88,16 +101,21 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                           const _GameAppBar(),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
                               child: Column(
                                 children: [
                                   _GameLetters(letters: letters),
                                   const SizedBox(height: 20),
                                   _GameScoreboard(
-                                      scores: scores, usedWords: usedWords),
+                                    scores: scores,
+                                    usedWords: usedWords,
+                                  ),
                                   _GameWordInput(
-                                      roomId: widget.roomId,
-                                      playerName: widget.playerName),
+                                    roomId: widget.roomId,
+                                    playerName: widget.playerName,
+                                  ),
                                   _GameEndButton(roomId: widget.roomId),
                                 ],
                               ),
@@ -108,23 +126,29 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
                       Positioned(
                         top: 15,
                         right: 10,
-                        child: BlocBuilder<TimerViewModel, timer_state.TimerViewModelState>(
+                        child: BlocBuilder<TimerViewModel,
+                            timer_state.TimerViewModelState>(
                           builder: (context, timerState) {
                             if (timerState is timer_state.TimerRunning) {
                               return AnimatedOpacity(
                                 opacity: timerState.isFlashing
-                                    ? (timerState.remainingTime % 2 == 0
+                                    ? (timerState.remainingTime.isEven
                                         ? 1.0
                                         : 0.5)
                                     : 1.0,
                                 duration: const Duration(milliseconds: 500),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 6),
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: timerState.remainingTime <= 10
-                                        ? context.colorScheme.error.withOpacity(0.8)
-                                        : Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+                                        ? context.colorScheme.error
+                                            .withValues(alpha: 0.8)
+                                        : Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                            .withValues(alpha: 0.8),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(
@@ -168,7 +192,8 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
               child: Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
-                      context.colorScheme.onPrimary),
+                    context.colorScheme.onPrimary,
+                  ),
                 ),
               ),
             ),

@@ -1,13 +1,13 @@
 part of '../result_view.dart';
 
 class _ResultConfetti extends StatelessWidget {
-  final RankPosition position;
-  final ConfettiController controller;
 
   const _ResultConfetti({
     required this.position,
     required this.controller,
   });
+  final RankPosition position;
+  final ConfettiController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,6 @@ class _ResultConfetti extends StatelessWidget {
 
       case RankPosition.third:
         return Align(
-          alignment: Alignment.center,
           child: ConfettiWidget(
             confettiController: controller,
             blastDirectionality: BlastDirectionality.explosive,
@@ -52,7 +51,6 @@ class _ResultConfetti extends StatelessWidget {
             minBlastForce: 1,
             emissionFrequency: 0.03,
             numberOfParticles: 30,
-            gravity: 0.2,
             colors: context.appColors.bronzeConfetti,
           ),
         );
@@ -65,7 +63,6 @@ class _ResultConfetti extends StatelessWidget {
             blastDirection: -3.14159 / 2,
             maxBlastForce: 2,
             minBlastForce: 1,
-            emissionFrequency: 0.02,
             numberOfParticles: 20,
             gravity: 0.1,
             colors: context.appColors.defaultConfetti,

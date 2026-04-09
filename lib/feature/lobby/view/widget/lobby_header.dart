@@ -1,10 +1,6 @@
 part of '../lobby_view.dart';
 
 class _LobbyHeader extends StatelessWidget {
-  final bool isLeader;
-  final String roomId;
-  final String playerName;
-  final Future<void> Function() onExit;
 
   const _LobbyHeader({
     required this.isLeader,
@@ -12,6 +8,10 @@ class _LobbyHeader extends StatelessWidget {
     required this.playerName,
     required this.onExit,
   });
+  final bool isLeader;
+  final String roomId;
+  final String playerName;
+  final Future<void> Function() onExit;
 
   @override
   Widget build(BuildContext context) {

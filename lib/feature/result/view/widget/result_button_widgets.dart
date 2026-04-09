@@ -11,7 +11,7 @@ class _ResultButtons extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<dynamic>(
-                  builder: (context) => const RoomView(isCreateRoom: true)),
+                  builder: (context) => const RoomView(isCreateRoom: true),),
             );
           },
           icon: Icons.play_arrow,
@@ -25,7 +25,7 @@ class _ResultButtons extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<dynamic>(
-                  builder: (context) => const RoomView(isCreateRoom: false)),
+                  builder: (context) => const RoomView(isCreateRoom: false),),
             );
           },
           icon: Icons.refresh,
@@ -38,7 +38,8 @@ class _ResultButtons extends StatelessWidget {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute<dynamic>(builder: (context) => const HomeView()),
+              MaterialPageRoute<dynamic>(
+                  builder: (context) => const HomeView(),),
               (route) => false,
             );
           },

@@ -1,16 +1,16 @@
 part of '../lobby_view.dart';
 
 class _RoomInfo extends StatelessWidget {
-  final String roomId;
 
   const _RoomInfo({required this.roomId});
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
       decoration: BoxDecoration(
-        color: context.colorScheme.surface.withOpacity(0.2),
+        color: context.colorScheme.surface.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

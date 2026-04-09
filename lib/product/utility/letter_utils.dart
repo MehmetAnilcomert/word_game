@@ -1,22 +1,32 @@
 import 'dart:math';
 
-class LetterGenerator {
+/// Utility class for generating random letters for the game.
+final class LetterGenerator {
+  LetterGenerator._();
+
   static final Random _random = Random();
 
-  // İngilizce harfler
+  /// English vowels for generation.
   static const String englishVowels = 'AEIOU';
+
+  /// English consonants for generation.
   static const String englishConsonants = 'BCDFGHJKLMNPRSTVYZ';
 
-  // Türkçe için harfler
-  static const String turkishVowels = 'AEIİOÖUÜ';
-  static const String turkishConsonants = 'BCÇDFGĞHJKLMNPRSŞTVYZ';
+  /// Turkish vowels for generation.
+  static const String turkishVowels = 'AEIOÖUÜ';
 
-  /// Verilen dil parametresine göre (tr veya en) ve istenen uzunlukta,
-  /// en az 2 sesli ve 1 sessiz harf içeren, tekrar etmeyen harf listesi üretir.
+  /// Turkish consonants for generation.
+  static const String turkishConsonants = 'BCÇDFGHJKLMNPRSŞTVYZ';
+
+  /// Generates a list of unique random letters based on [lang] and [length].
+  ///
+  /// Ensures at least 2 vowels and 1 consonant are included.
+  /// Throws [ArgumentError] if [length] is less than 3.
   static List<String> generateRandomLetters(int length, String lang) {
     if (length < 3) {
       throw ArgumentError(
-          'Length must be at least 3 to include 2 vowels and 1 consonant.');
+        'Length must be at least 3 to include 2 vowels and 1 consonant.',
+      );
     }
 
     final String vowels;
@@ -30,22 +40,19 @@ class LetterGenerator {
       consonants = englishConsonants;
     }
 
-    Set<String> uniqueLetters = {};
+    final uniqueLetters = <String>{};
 
-    // En az 2 sesli harfi ekle
     while (uniqueLetters.length < 2) {
       uniqueLetters.add(vowels[_random.nextInt(vowels.length)]);
     }
 
-    // Eğer sessiz harf yoksa, bir tane ekle
-    if (!uniqueLetters.any((letter) => consonants.contains(letter))) {
+    if (!uniqueLetters.any(consonants.contains)) {
       uniqueLetters.add(consonants[_random.nextInt(consonants.length)]);
     }
 
-    // Toplam uzunluğa ulaşana kadar, %30 olasılıkla sesli, %70 olasılıkla sessiz harf seç.
     while (uniqueLetters.length < length) {
-      double probability = _random.nextDouble();
-      String letter;
+      final probability = _random.nextDouble();
+      final String letter;
       if (probability < 0.3) {
         letter = vowels[_random.nextInt(vowels.length)];
       } else {
@@ -54,8 +61,7 @@ class LetterGenerator {
       uniqueLetters.add(letter);
     }
 
-    List<String> letters = uniqueLetters.toList();
-    letters.shuffle();
+    final letters = uniqueLetters.toList()..shuffle();
     return letters;
   }
 }

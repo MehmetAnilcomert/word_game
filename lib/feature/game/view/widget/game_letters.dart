@@ -1,16 +1,17 @@
 part of '../game_view.dart';
 
 class _GameLetters extends StatelessWidget {
-  final List<String> letters;
 
   const _GameLetters({required this.letters});
+
+  final List<String> letters;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.colorScheme.surface.withOpacity(0.9),
+        color: context.colorScheme.surface.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -34,9 +35,8 @@ class _GameLetters extends StatelessWidget {
           Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: letters
-                .map((letter) => _LetterTile(letter: letter))
-                .toList(),
+            children:
+                letters.map((letter) => _LetterTile(letter: letter)).toList(),
           ),
         ],
       ),
@@ -45,9 +45,10 @@ class _GameLetters extends StatelessWidget {
 }
 
 class _LetterTile extends StatelessWidget {
-  final String letter;
 
   const _LetterTile({required this.letter});
+
+  final String letter;
 
   @override
   Widget build(BuildContext context) {

@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// [AppColorsExtension] is a custom theme extension for application-specific
+/// colors that are not covered by the default [ColorScheme].
 class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
-  final Color gradientStart;
-  final Color gradientEnd;
-  final Color successColor;
-  final Color warningColor;
-  final Color goldColor;
-  final Color silverColor;
-  final Color bronzeColor;
-  final Color cardShadow;
-  final List<Color> goldConfetti;
-  final List<Color> silverConfetti;
-  final List<Color> bronzeConfetti;
-  final List<Color> defaultConfetti;
-
+  /// Initializes [AppColorsExtension].
   const AppColorsExtension({
     required this.gradientStart,
     required this.gradientEnd,
@@ -28,6 +18,42 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.bronzeConfetti,
     required this.defaultConfetti,
   });
+
+  /// The start color of the background gradient.
+  final Color gradientStart;
+
+  /// The end color of the background gradient.
+  final Color gradientEnd;
+
+  /// Color used to represent success states.
+  final Color successColor;
+
+  /// Color used to represent warning states.
+  final Color warningColor;
+
+  /// Color representing gold (e.g., for 1st place).
+  final Color goldColor;
+
+  /// Color representing silver (e.g., for 2nd place).
+  final Color silverColor;
+
+  /// Color representing bronze (e.g., for 3rd place).
+  final Color bronzeColor;
+
+  /// Color used for card shadows.
+  final Color cardShadow;
+
+  /// List of colors used for gold-themed confetti animations.
+  final List<Color> goldConfetti;
+
+  /// List of colors used for silver-themed confetti animations.
+  final List<Color> silverConfetti;
+
+  /// List of colors used for bronze-themed confetti animations.
+  final List<Color> bronzeConfetti;
+
+  /// List of colors used for general confetti animations.
+  final List<Color> defaultConfetti;
 
   @override
   AppColorsExtension copyWith({
@@ -74,7 +100,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       silverColor: Color.lerp(silverColor, other.silverColor, t)!,
       bronzeColor: Color.lerp(bronzeColor, other.bronzeColor, t)!,
       cardShadow: Color.lerp(cardShadow, other.cardShadow, t)!,
-      goldConfetti: goldConfetti, // Not easily lerpable for lists, keep current
+      goldConfetti: goldConfetti,
       silverConfetti: silverConfetti,
       bronzeConfetti: bronzeConfetti,
       defaultConfetti: defaultConfetti,

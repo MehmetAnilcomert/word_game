@@ -6,8 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:word_game/product/state/container/product_state_container.dart';
 
 @immutable
+
 /// A class responsible for initializing product-level configurations before the app starts.
 final class ProductInitialize {
+  /// Initializes the product.
+  const ProductInitialize();
+
   /// Starts the application by initializing necessary configurations.
   Future<void> startApplication() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +21,7 @@ final class ProductInitialize {
   /// Initializes necessary configurations for the product.
   Future<void> _initialize() async {
     await EasyLocalization.ensureInitialized();
-    
+
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);

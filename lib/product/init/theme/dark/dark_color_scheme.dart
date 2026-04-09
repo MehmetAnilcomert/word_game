@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// Dark Color Scheme for Word Arena
+/// [DarkColorScheme] provides the dark theme color palette for Word Arena.
 final class DarkColorScheme {
+  /// Returns the default dark [ColorScheme].
   static ColorScheme darkScheme() {
     return ColorScheme.dark(
       primary: Colors.blue[800]!,
