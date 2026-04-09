@@ -1,34 +1,100 @@
-import 'package:equatable/equatable.dart';
+﻿import 'package:equatable/equatable.dart';
 
+/// App model representing a Game Room instance.
 class GameRoom extends Equatable {
-  final String id;
-  final List<String> letters;
-  final Map<String, int> scores;
-  final Map<String, List<String>> usedWords;
-  final List<String> globalUsedWords;
-  final bool isActive;
-  final bool isStarted;
-  final int endTime;
-  final int maxPlayers;
-  final List<String> players;
-  final DateTime? createdAt;
-  final String lang;
-
+  /// Required default constructor
   const GameRoom({
     required this.id,
+    required this.endTime,
+    required this.maxPlayers,
+    required this.lang,
     this.letters = const [],
     this.scores = const {},
     this.usedWords = const {},
     this.globalUsedWords = const [],
     this.isActive = true,
     this.isStarted = false,
-    required this.endTime,
-    required this.maxPlayers,
     this.players = const [],
     this.createdAt,
-    required this.lang,
   });
 
+  /// Factory constructor to parse data from a Map
+  factory GameRoom.fromJson(String id, Map<String, dynamic> json) {
+    return GameRoom(
+      id: id,
+      letters: (json['letters'] as List<dynamic>?)
+              ?.map((dynamic e) => e as String)
+              .toList() ??
+          const [],
+      scores: (json['scores'] as Map<String, dynamic>?)?.map(
+            (key, dynamic value) => MapEntry(key, value as int),
+          ) ??
+          const {},
+      usedWords: (json['usedWords'] as Map<String, dynamic>?)?.map(
+            (key, dynamic value) => MapEntry(
+              key,
+              (value as List<dynamic>)
+                  .map((dynamic e) => e as String)
+                  .toList(),
+            ),
+          ) ??
+          const {},
+      globalUsedWords: (json['globalUsedWords'] as List<dynamic>?)
+              ?.map((dynamic e) => e as String)
+              .toList() ??
+          const [],
+      isActive: (json['isActive'] as bool?) ?? true,
+      isStarted: (json['isStarted'] as bool?) ?? false,
+      endTime: (json['endTime'] as num?)?.toInt() ?? 0,
+      maxPlayers: (json['maxPlayers'] as num?)?.toInt() ?? 0,
+      players: (json['players'] as List<dynamic>?)
+              ?.map((dynamic e) => e as String)
+              .toList() ??
+          const [],
+      createdAt: json['createdAt'] != null
+          ? (json['createdAt'] as dynamic).toDate() as DateTime
+          : null,
+      lang: (json['lang'] as String?) ?? 'en',
+    );
+  }
+
+  /// The unique identifier of the game room.
+  final String id;
+
+  /// The list of letters available in this room.
+  final List<String> letters;
+
+  /// The scores mapped by player names.
+  final Map<String, int> scores;
+
+  /// The correctly guessed words mapped by player names.
+  final Map<String, List<String>> usedWords;
+
+  /// The correctly guessed words used across the room globally.
+  final List<String> globalUsedWords;
+
+  /// Whether the room is currently active.
+  final bool isActive;
+
+  /// Whether the game sequence has started.
+  final bool isStarted;
+
+  /// The time (in ms) when the game ends.
+  final int endTime;
+
+  /// Maximum allowed players in the room.
+  final int maxPlayers;
+
+  /// Valid participants connected to the room.
+  final List<String> players;
+
+  /// Game room creation timestamp.
+  final DateTime? createdAt;
+
+  /// The language specified for this room.
+  final String lang;
+
+  /// Creates a new object with the specified values.
   GameRoom copyWith({
     String? id,
     List<String>? letters,
@@ -45,42 +111,21 @@ class GameRoom extends Equatable {
   }) {
     return GameRoom(
       id: id ?? this.id,
+      endTime: endTime ?? this.endTime,
+      maxPlayers: maxPlayers ?? this.maxPlayers,
+      lang: lang ?? this.lang,
       letters: letters ?? this.letters,
       scores: scores ?? this.scores,
       usedWords: usedWords ?? this.usedWords,
       globalUsedWords: globalUsedWords ?? this.globalUsedWords,
       isActive: isActive ?? this.isActive,
       isStarted: isStarted ?? this.isStarted,
-      endTime: endTime ?? this.endTime,
-      maxPlayers: maxPlayers ?? this.maxPlayers,
       players: players ?? this.players,
       createdAt: createdAt ?? this.createdAt,
-      lang: lang ?? this.lang,
     );
   }
 
-  factory GameRoom.fromJson(String id, Map<String, dynamic> json) {
-    return GameRoom(
-      id: id,
-      letters: List<String>.from(json['letters'] ?? []),
-      scores: Map<String, int>.from(json['scores'] ?? {}),
-      usedWords: (json['usedWords'] as Map<String, dynamic>?)?.map(
-            (key, value) => MapEntry(key, List<String>.from(value)),
-          ) ??
-          {},
-      globalUsedWords: List<String>.from(json['globalUsedWords'] ?? []),
-      isActive: json['isActive'] ?? true,
-      isStarted: json['isStarted'] ?? false,
-      endTime: json['endTime'] ?? 0,
-      maxPlayers: json['maxPlayers'] ?? 0,
-      players: List<String>.from(json['players'] ?? []),
-      createdAt: json['createdAt'] != null
-          ? (json['createdAt'] as dynamic).toDate()
-          : null,
-      lang: json['lang'] ?? 'en',
-    );
-  }
-
+  /// Convert into valid Map instance.
   Map<String, dynamic> toJson() {
     return {
       'letters': letters,
