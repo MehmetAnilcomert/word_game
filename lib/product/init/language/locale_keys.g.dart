@@ -55,9 +55,11 @@ abstract class  LocaleKeys {
   static const selectedWordArena = 'selectedWordArena';
   static const wordleButton = 'wordleButton';
   static const wordleInfoTitle = 'wordleInfoTitle';
-  static const wordleInfoContent = 'wordleInfoContent';
+  static const wordleInfoDesc = 'wordleInfoDesc';
+  static const wordleInfoCorrect = 'wordleInfoCorrect';
+  static const wordleInfoPresent = 'wordleInfoPresent';
+  static const wordleInfoAbsent = 'wordleInfoAbsent';
   static const settingsTitle = 'settingsTitle';
-  static const start = 'start';
   static const winMessage = 'winMessage';
   static const loseMessage = 'loseMessage';
   static const targetWordLabel = 'targetWordLabel';

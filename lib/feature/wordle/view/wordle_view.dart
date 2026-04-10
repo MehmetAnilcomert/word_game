@@ -80,7 +80,6 @@ class _WordleViewState extends BaseState<WordleView>
                 child: Column(
                   children: [
                     _WordleHeader(
-                      showInfo: () => _showHowToPlay(context),
                       scoreScaleAnimation: scoreScaleAnimation,
                     ),
                     const SizedBox(height: 10),
@@ -153,22 +152,6 @@ class _WordleViewState extends BaseState<WordleView>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  void _showHowToPlay(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(LocaleKeys.wordleInfoTitle.tr()),
-        content: Text(LocaleKeys.wordleInfoContent.tr()),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(LocaleKeys.confirm.tr()),
-          ),
-        ],
       ),
     );
   }

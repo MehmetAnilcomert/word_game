@@ -130,7 +130,7 @@ class _WordleCreateViewState extends State<WordleCreateView> {
                                   minimumSize: const Size.fromHeight(50),
                                 ),
                                 child: Text(
-                                  LocaleKeys.start.tr(),
+                                  LocaleKeys.startGame.tr(),
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
