@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:word_game/product/service/wordle_manager.dart';
 import 'package:word_game/feature/wordle/view_model/wordle_state.dart';
-import 'package:word_game/feature/wordle/view_model/wordle_utils.dart';
 
 /// [WordleViewModel] manages the logic for the Wordle game.
 class WordleViewModel extends Cubit<WordleState> {
@@ -19,8 +19,8 @@ class WordleViewModel extends Cubit<WordleState> {
   static const String _scoreKey = 'wordle_total_score';
 
   /// Starts a new game with the current configuration.
-  void startNewGame() {
-    final targetWord = WordleUtils.getRandomWord(state.lang, state.wordLength);
+  Future<void> startNewGame() async {
+    final targetWord = await WordleManager.instance.getRandomWord(state.wordLength, state.lang);
     emit(state.copyWith(
       targetWord: targetWord,
       currentGuess: '',
@@ -30,6 +30,7 @@ class WordleViewModel extends Cubit<WordleState> {
   }
 
   /// Adds a letter to the current guess.
+
   void addLetter(String letter) {
     if (state.status != WordleGameStatus.playing) return;
     if (state.currentGuess.length < state.wordLength) {
@@ -66,7 +67,7 @@ class WordleViewModel extends Cubit<WordleState> {
     final wordUpper = word.toUpperCase();
 
     // Validate if word exists
-    final isValid = await WordleUtils.isValidWord(wordUpper, state.lang);
+    final isValid = await WordleManager.instance.isValidWord(wordUpper, state.lang);
     if (!isValid) {
       emit(state.copyWith(errorMessage: 'wordNotValid'));
       return;
