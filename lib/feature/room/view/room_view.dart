@@ -10,6 +10,7 @@ import 'package:word_game/feature/lobby/view/lobby_view.dart';
 import 'package:word_game/feature/room/view/mixin/room_view_mixin.dart';
 import 'package:word_game/feature/room/view_model/room_view_model.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
+import 'package:word_game/product/init/product_localization.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
 import 'package:word_game/product/utility/constants/enums/locales.dart';
@@ -34,10 +35,10 @@ class RoomView extends StatefulWidget {
 class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
   @override
   Widget build(BuildContext context) {
+    final initialLocale = ProductLocalization.getCurrentLanguageCode(context);
     return BlocProvider(
       create: (_) {
-        final currentLocale = EasyLocalization.of(context)?.locale.languageCode;
-        return RoomViewModel(initialLang: currentLocale);
+        return RoomViewModel(initialLang: initialLocale);
       },
       child: PopScope(
         canPop: false,

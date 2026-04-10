@@ -48,5 +48,15 @@
   "turkish": "Turkish",
   "language": "Language",
   "wordGameTitle": "Word Arena",
-  "selectedWordArena": "You have selected Word Arena"
+  "selectedWordArena": "You have selected Word Arena",
+  "wordleButton": "Wordle",
+  "wordleInfoTitle": "How to Play Wordle",
+  "wordleInfoContent": "Guess the hidden word in 6 tries.\n\n- GREEN: Letter is in the correct spot.\n- ORANGE: Letter is in the word but wrong spot.\n- GREY: Letter is not in the word.",
+  "settingsTitle": "Game Settings",
+  "applyRestart": "Apply & Restart",
+  "winMessage": "CONGRATULATIONS!",
+  "loseMessage": "GAME OVER",
+  "targetWordLabel": "The word was:",
+  "playAgain": "Play Again",
+  "totalScore": "Total Score"
 }

@@ -19,6 +19,21 @@ class _HomeActionButtons extends StatelessWidget {
           color: context.colorScheme.primary,
           icon: Icons.font_download,
         ),
+        const SizedBox(height: 20),
+        _buildActionButton(
+          context: context,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (context) => const WordleView(),
+              ),
+            );
+          },
+          label: LocaleKeys.wordleButton.tr(),
+          color: context.appColors.successColor,
+          icon: Icons.grid_on,
+        ),
       ],
     );
   }
