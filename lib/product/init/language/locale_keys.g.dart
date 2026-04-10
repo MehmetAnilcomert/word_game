@@ -1,7 +1,8 @@
-// DO NOT EDIT. This is code generated from easy_localization key generator.
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
 // ignore_for_file: constant_identifier_names
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const appTitle = 'appTitle';
   static const selectLanguageTitle = 'selectLanguageTitle';
   static const roomScreenTitle = 'roomScreenTitle';
@@ -50,4 +51,7 @@ abstract class LocaleKeys {
   static const english = 'english';
   static const turkish = 'turkish';
   static const language = 'language';
+  static const wordGameTitle = 'wordGameTitle';
+  static const selectedWordArena = 'selectedWordArena';
+
 }

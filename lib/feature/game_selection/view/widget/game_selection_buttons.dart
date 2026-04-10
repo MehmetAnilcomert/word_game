@@ -1,6 +1,8 @@
-part of '../home_view.dart';
+part of '../game_selection_view.dart';
 
-class _HomeActionButtons extends StatelessWidget {
+class _GameSelectionButtons extends StatelessWidget {
+  const _GameSelectionButtons();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -11,13 +13,28 @@ class _HomeActionButtons extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (context) => const GameSelectionView(),
+                builder: (context) => const RoomView(isCreateRoom: true),
               ),
             );
           },
-          label: LocaleKeys.wordGameTitle.tr(),
-          color: context.colorScheme.primary,
-          icon: Icons.font_download,
+          label: LocaleKeys.createRoomButton.tr(),
+          color: context.appColors.successColor,
+          icon: Icons.add_circle_outline,
+        ),
+        const SizedBox(height: 20),
+        _buildActionButton(
+          context: context,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (context) => const RoomView(isCreateRoom: false),
+              ),
+            );
+          },
+          label: LocaleKeys.joinRoomButton.tr(),
+          color: context.appColors.warningColor,
+          icon: Icons.group_add_outlined,
         ),
       ],
     );

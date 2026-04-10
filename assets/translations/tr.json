@@ -46,5 +46,7 @@
   "wordNotValid": "Kelime geçerli değil. Lütfen başka bir kelime deneyin.",
   "english": "İngilizce",
   "turkish": "Türkçe",
-  "language": "Dil"
+  "language": "Dil",
+  "wordGameTitle": "Kelime Arenası",
+  "selectedWordArena": "Kelime Arenasını Seçtiniz"
 }
