@@ -79,6 +79,15 @@ class _WordleViewState extends BaseState<WordleView>
                       showInfo: () => _showHowToPlay(context),
                       scoreScaleAnimation: scoreScaleAnimation,
                     ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Wordle',
+                      style: context.textTheme.headlineSmall?.copyWith(
+                        color: context.colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2,
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     _WordleGrid(
                       shakeAnimation: errorShakeAnimation,
