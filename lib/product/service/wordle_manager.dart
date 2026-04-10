@@ -60,3 +60,8 @@ class WordleManager {
     
     if (words.isEmpty) {
       final fallbackWords = langCode.startsWith('tr') ? ['BARDAK', 'KITAP'] : ['APPLE', 'BREAD'];
+      return fallbackWords.contains(word.toUpperCase());
+    }
+    return words.contains(word.toUpperCase());
+  }
+}

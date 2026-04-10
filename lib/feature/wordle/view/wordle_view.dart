@@ -83,7 +83,7 @@ class _WordleViewState extends BaseState<WordleView>
                     Text(
                       'Wordle',
                       style: context.textTheme.headlineSmall?.copyWith(
-                        color: context.colorScheme.onPrimary,
+                        color: context.colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 2,
                       ),
@@ -104,7 +104,7 @@ class _WordleViewState extends BaseState<WordleView>
                                     ? LocaleKeys.winMessage.tr()
                                     : LocaleKeys.loseMessage.tr()),
                                 style: context.textTheme.headlineMedium?.copyWith(
-                                  color: context.colorScheme.onPrimary,
+                                  color: context.colorScheme.onSurface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -112,7 +112,7 @@ class _WordleViewState extends BaseState<WordleView>
                               Text(
                                 '${LocaleKeys.targetWordLabel.tr()} ${state.targetWord}',
                                 style: context.textTheme.titleMedium?.copyWith(
-                                  color: context.colorScheme.onPrimary
+                                  color: context.colorScheme.onSurface
                                       .withValues(alpha: 0.8),
                                 ),
                               ),

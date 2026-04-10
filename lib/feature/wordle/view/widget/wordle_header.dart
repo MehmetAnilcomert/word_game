@@ -38,7 +38,7 @@ class _WordleHeader extends StatelessWidget {
             ),
             IconButton(
               onPressed: showInfo,
-              icon: Icon(Icons.help_outline, color: context.colorScheme.onPrimary, size: 30),
+              icon: Icon(Icons.help_outline, color: context.colorScheme.onSurface, size: 30),
             ),
           ],
         );

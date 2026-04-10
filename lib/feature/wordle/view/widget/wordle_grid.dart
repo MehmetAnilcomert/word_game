@@ -112,18 +112,18 @@ class _GridCell extends StatelessWidget {
         }
         break;
       case LetterStatus.absent:
-        color = Colors.grey[700]!;
-        textColor = Colors.white;
+        color = context.colorScheme.surfaceContainerHighest;
+        textColor = context.colorScheme.onSurfaceVariant;
         border = Border.all(color: Colors.transparent);
         break;
       case LetterStatus.present:
-        color = Colors.orange;
-        textColor = Colors.white;
+        color = context.colorScheme.tertiaryContainer;
+        textColor = context.colorScheme.onTertiaryContainer;
         border = Border.all(color: Colors.transparent);
         break;
       case LetterStatus.correct:
-        color = Colors.green;
-        textColor = Colors.white;
+        color = context.colorScheme.primaryContainer;
+        textColor = context.colorScheme.onPrimaryContainer;
         border = Border.all(color: Colors.transparent);
         break;
     }
