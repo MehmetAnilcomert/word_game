@@ -48,5 +48,18 @@
   "turkish": "Türkçe",
   "language": "Dil",
   "wordGameTitle": "Kelime Arenası",
-  "selectedWordArena": "Kelime Arenasını Seçtiniz"
+  "selectedWordArena": "Kelime Arenasını Seçtiniz",
+  "wordleButton": "Kelime Bul",
+  "wordleInfoTitle": "Kelime Bul Nasıl Oynanır?",
+  "wordleInfoDesc": "Gizli kelimeyi 6 denemede tahmin edin.",
+  "wordleInfoCorrect": "Harf doğru yerde.",
+  "wordleInfoPresent": "Harf kelimede var ama yanlış yerde.",
+  "wordleInfoAbsent": "Harf kelimede yok.",
+  "settingsTitle": "Oyun Ayarları",
+  "start": "Oyunu Başlat",
+  "winMessage": "TEBRİKLER!",
+  "loseMessage": "OYUN BİTTİ",
+  "targetWordLabel": "Kelime şuydu:",
+  "playAgain": "Yeniden Oyna",
+  "totalScore": "Toplam Puan"
 }

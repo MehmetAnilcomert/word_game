@@ -48,5 +48,17 @@
   "turkish": "Turkish",
   "language": "Language",
   "wordGameTitle": "Word Arena",
-  "selectedWordArena": "You have selected Word Arena"
+  "selectedWordArena": "You have selected Word Arena",
+  "wordleButton": "Wordle",
+  "wordleInfoTitle": "How to Play Wordle",
+  "wordleInfoDesc": "Guess the hidden word in 6 tries.",
+  "wordleInfoCorrect": "Letter is in the correct spot.",
+  "wordleInfoPresent": "Letter is in the word but wrong spot.",
+  "wordleInfoAbsent": "Letter is not in the word.",
+  "settingsTitle": "Game Settings",
+  "winMessage": "CONGRATULATIONS!",
+  "loseMessage": "GAME OVER",
+  "targetWordLabel": "The word was:",
+  "playAgain": "Play Again",
+  "totalScore": "Total Score"
 }

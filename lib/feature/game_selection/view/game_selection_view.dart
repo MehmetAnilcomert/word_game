@@ -10,6 +10,7 @@ part 'widget/game_selection_buttons.dart';
 
 /// Screen to select which game mode to play.
 class GameSelectionView extends StatefulWidget {
+  /// Initializes a [GameSelectionView].
   const GameSelectionView({super.key});
 
   @override

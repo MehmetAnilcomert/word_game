@@ -27,4 +27,8 @@ class ProductLocalization extends EasyLocalization {
     required Locales locale,
   }) =>
       context.setLocale(locale.locale);
+
+  /// Returns the current language code of the application.
+  static String getCurrentLanguageCode(BuildContext context) =>
+      EasyLocalization.of(context)?.locale.languageCode ?? Locales.en.locale.languageCode;
 }

@@ -22,6 +22,7 @@ linter:
   rules:
     lines_longer_than_80_chars: false  # Uncomment to disable the `lines_longer_than_80_chars` rule
     eol_at_end_of_file: false  # Uncomment to disable the `eol_at_end_of_file` rule
+    omit_local_variable_types: false  # Uncomment to disable the `omit_local_variable_types` rule
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
