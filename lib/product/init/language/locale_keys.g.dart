@@ -65,5 +65,6 @@ abstract class  LocaleKeys {
   static const targetWordLabel = 'targetWordLabel';
   static const playAgain = 'playAgain';
   static const totalScore = 'totalScore';
+  static const noInternetConnection = 'noInternetConnection';
 
 }

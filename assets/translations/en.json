@@ -60,5 +60,6 @@
   "loseMessage": "GAME OVER",
   "targetWordLabel": "The word was:",
   "playAgain": "Play Again",
-  "totalScore": "Total Score"
+  "totalScore": "Total Score",
+  "noInternetConnection": "Please check your internet connection and try again."
 }

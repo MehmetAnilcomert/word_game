@@ -7,8 +7,22 @@ class _HomeActionButtons extends StatelessWidget {
       children: [
         _buildActionButton(
           context: context,
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final hasInternet =
+                await InternetConnectionService.instance.checkConnection();
+            if (!context.mounted) return;
+
+            if (!hasInternet) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(LocaleKeys.noInternetConnection.tr()),
+                  backgroundColor: context.colorScheme.error,
+                ),
+              );
+              return;
+            }
+
+            await Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
                 builder: (context) => const GameSelectionView(),

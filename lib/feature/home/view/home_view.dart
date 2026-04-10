@@ -7,6 +7,7 @@ import 'package:word_game/feature/wordle/view/wordle_create_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/product_localization.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
+import 'package:word_game/product/service/internet_connection_service.dart';
 import 'package:word_game/product/state/base/base_state.dart';
 import 'package:word_game/product/utility/constants/enums/locales.dart';
 import 'package:word_game/product/utility/padding/product_padding.dart';

@@ -61,5 +61,6 @@
   "loseMessage": "OYUN BİTTİ",
   "targetWordLabel": "Kelime şuydu:",
   "playAgain": "Yeniden Oyna",
-  "totalScore": "Toplam Puan"
+  "totalScore": "Toplam Puan",
+  "noInternetConnection": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin."
 }
