@@ -53,7 +53,7 @@
   "wordleInfoTitle": "Kelime Bul Nasıl Oynanır?",
   "wordleInfoContent": "Gizli kelimeyi 6 denemede tahmin edin.\n\n- YEŞİL: Harf doğru yerde.\n- TURUNCU: Harf kelimede var ama yanlış yerde.\n- GRİ: Harf kelimede yok.",
   "settingsTitle": "Oyun Ayarları",
-  "applyRestart": "Uygula ve Yeniden Başlat",
+  "start": "Oyunu Başlat",
   "winMessage": "TEBRİKLER!",
   "loseMessage": "OYUN BİTTİ",
   "targetWordLabel": "Kelime şuydu:",

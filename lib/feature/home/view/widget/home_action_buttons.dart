@@ -26,7 +26,7 @@ class _HomeActionButtons extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (context) => const WordleView(),
+                builder: (context) => const WordleCreateView(),
               ),
             );
           },

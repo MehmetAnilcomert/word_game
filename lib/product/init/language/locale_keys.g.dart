@@ -57,7 +57,7 @@ abstract class  LocaleKeys {
   static const wordleInfoTitle = 'wordleInfoTitle';
   static const wordleInfoContent = 'wordleInfoContent';
   static const settingsTitle = 'settingsTitle';
-  static const applyRestart = 'applyRestart';
+  static const start = 'start';
   static const winMessage = 'winMessage';
   static const loseMessage = 'loseMessage';
   static const targetWordLabel = 'targetWordLabel';

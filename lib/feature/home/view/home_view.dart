@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:word_game/feature/game_selection/view/game_selection_view.dart';
 import 'package:word_game/feature/home/view/mixin/home_view_mixin.dart';
-import 'package:word_game/feature/wordle/view/wordle_view.dart';
+import 'package:word_game/feature/wordle/view/wordle_create_view.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
 import 'package:word_game/product/init/product_localization.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';

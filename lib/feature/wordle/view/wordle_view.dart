@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:word_game/feature/wordle/view/mixin/wordle_view_mixin.dart';
+import 'package:word_game/feature/wordle/view/wordle_create_view.dart';
 import 'package:word_game/feature/wordle/view_model/wordle_state.dart';
 import 'package:word_game/feature/wordle/view_model/wordle_view_model.dart';
 import 'package:word_game/product/init/language/locale_keys.g.dart';
-import 'package:word_game/product/init/product_localization.dart';
 import 'package:word_game/product/init/theme/app_theme_extension.dart';
 import 'package:word_game/product/state/base/base_state.dart';
 import 'package:word_game/product/utility/padding/product_padding.dart';
@@ -14,12 +14,17 @@ import 'package:word_game/product/utility/screen_size_extension.dart';
 part 'widget/wordle_grid.dart';
 part 'widget/wordle_header.dart';
 part 'widget/wordle_input.dart';
-part 'widget/wordle_settings_dialog.dart';
 
 /// [WordleView] is the main screen for the Wordle game.
 class WordleView extends StatefulWidget {
   /// Initializes a [WordleView].
-  const WordleView({super.key});
+  const WordleView({required this.wordLength, required this.lang, super.key});
+
+  /// The length of the word (e.g., 4, 5, 6).
+  final int wordLength;
+
+  /// The language code (e.g., 'en', 'tr').
+  final String lang;
 
   @override
   State<WordleView> createState() => _WordleViewState();
@@ -35,12 +40,11 @@ class _WordleViewState extends BaseState<WordleView>
 
   @override
   Widget build(BuildContext context) {
-    final initialLocale = ProductLocalization.getCurrentLanguageCode(context);
     return BlocProvider(
       create: (context) {
         return WordleViewModel(
-          initialLang: initialLocale,
-          initialWordLength: 5,
+          initialLang: widget.lang,
+          initialWordLength: widget.wordLength,
         )..startNewGame();
       },
       child: BlocListener<WordleViewModel, WordleState>(
@@ -118,7 +122,14 @@ class _WordleViewState extends BaseState<WordleView>
                               ),
                               const SizedBox(height: 16),
                               ElevatedButton(
-                                onPressed: () => _showSettings(context),
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (context) => const WordleCreateView(),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: context.colorScheme.surface,
                                   foregroundColor: context.colorScheme.primary,
@@ -158,17 +169,6 @@ class _WordleViewState extends BaseState<WordleView>
             child: Text(LocaleKeys.confirm.tr()),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showSettings(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => BlocProvider.value(
-        value: context.read<WordleViewModel>(),
-        child: const _WordleSettingsDialog(),
       ),
     );
   }
