@@ -1,7 +1,13 @@
 part of '../wordle_view.dart';
 
 class _WordleGrid extends StatelessWidget {
-  const _WordleGrid();
+  const _WordleGrid({
+    required this.shakeAnimation,
+    required this.scaleAnimation,
+  });
+
+  final Animation<double> shakeAnimation;
+  final Animation<double> scaleAnimation;
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +23,52 @@ class _WordleGrid extends StatelessWidget {
                   if (rowIdx < state.attempts.length) {
                     row = state.attempts[rowIdx];
                   }
-                  
-                  return Row(
+
+                  final isCurrentRow = rowIdx == state.attempts.length;
+
+                  Widget rowWidget = Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(state.wordLength, (colIdx) {
                       String letter = '';
                       LetterStatus status = LetterStatus.initial;
-                      
+
                       if (row != null) {
                         letter = row.word[colIdx];
                         status = row.statuses[colIdx];
-                      } else if (rowIdx == state.attempts.length) {
+                      } else if (isCurrentRow) {
                         if (colIdx < state.currentGuess.length) {
                           letter = state.currentGuess[colIdx];
                         }
                       }
-                      
-                      return _GridCell(letter: letter, status: status, length: state.wordLength);
+
+                      return _GridCell(
+                        letter: letter,
+                        status: status,
+                        length: state.wordLength,
+                        isError: isCurrentRow &&
+                            state.isError &&
+                            colIdx >= state.currentGuess.length,
+                      );
                     }),
                   );
+
+                  if (isCurrentRow && state.isError) {
+                    rowWidget = AnimatedBuilder(
+                      animation: shakeAnimation,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(shakeAnimation.value, 0),
+                          child: ScaleTransition(
+                            scale: scaleAnimation,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: rowWidget,
+                    );
+                  }
+
+                  return rowWidget;
                 }),
               ),
             ),
@@ -47,24 +80,35 @@ class _WordleGrid extends StatelessWidget {
 }
 
 class _GridCell extends StatelessWidget {
-  const _GridCell({required this.letter, required this.status, required this.length});
+  const _GridCell({
+    required this.letter,
+    required this.status,
+    required this.length,
+    this.isError = false,
+  });
 
   final String letter;
   final LetterStatus status;
   final int length;
+  final bool isError;
 
   @override
   Widget build(BuildContext context) {
     final cellSize = (context.width - 100) / length;
-    
+
     Color color = Colors.transparent;
     Color textColor = context.colorScheme.onSurface;
-    Border border = Border.all(color: context.colorScheme.secondary.withValues(alpha: 0.5));
-    
+    Border border = Border.all(
+      color: isError
+          ? context.colorScheme.error
+          : context.colorScheme.secondary.withValues(alpha: 0.5),
+      width: isError ? 2 : 1,
+    );
+
     switch (status) {
       case LetterStatus.initial:
         if (letter.isNotEmpty) {
-           border = Border.all(color: context.colorScheme.primary, width: 2);
+          border = Border.all(color: context.colorScheme.primary, width: 2);
         }
         break;
       case LetterStatus.absent:
@@ -85,8 +129,8 @@ class _GridCell extends StatelessWidget {
     }
 
     return Container(
-      width: cellSize.clamp(40, 60),
-      height: cellSize.clamp(40, 60),
+      width: cellSize.clamp(40.0, 60.0),
+      height: cellSize.clamp(40.0, 60.0),
       margin: const EdgeInsets.all(4),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -97,7 +141,7 @@ class _GridCell extends StatelessWidget {
       child: Text(
         letter,
         style: TextStyle(
-          fontSize: cellSize.clamp(40, 60) * 0.5,
+          fontSize: (cellSize.clamp(40.0, 60.0) * 0.5),
           fontWeight: FontWeight.bold,
           color: textColor,
         ),

@@ -61,6 +61,7 @@ class WordleState extends Equatable {
     this.errorMessage,
     this.totalScore = 0,
     this.lastEarnedScore = 0,
+    this.isError = false,
   });
 
   /// The target word to be guessed.
@@ -90,6 +91,9 @@ class WordleState extends Equatable {
   /// Last earned score for animation.
   final int lastEarnedScore;
 
+  /// Whether the current guess is showing an error animation.
+  final bool isError;
+
   @override
   List<Object?> get props => [
         targetWord,
@@ -101,6 +105,7 @@ class WordleState extends Equatable {
         errorMessage,
         totalScore,
         lastEarnedScore,
+        isError,
       ];
 
   /// Creates a copy of [WordleState] with updated fields.
@@ -114,6 +119,7 @@ class WordleState extends Equatable {
     String? errorMessage,
     int? totalScore,
     int? lastEarnedScore,
+    bool? isError,
   }) {
     return WordleState(
       targetWord: targetWord ?? this.targetWord,
@@ -122,9 +128,10 @@ class WordleState extends Equatable {
       status: status ?? this.status,
       lang: lang ?? this.lang,
       wordLength: wordLength ?? this.wordLength,
-      errorMessage: errorMessage, // Reset error message on mỗi copy
+      errorMessage: errorMessage, // Reset error message on copy
       totalScore: totalScore ?? this.totalScore,
       lastEarnedScore: lastEarnedScore ?? this.lastEarnedScore,
+      isError: isError ?? false,
     );
   }
 }

@@ -13,7 +13,7 @@ import 'package:word_game/product/utility/screen_size_extension.dart';
 
 part 'widget/wordle_grid.dart';
 part 'widget/wordle_header.dart';
-part 'widget/wordle_keyboard.dart';
+part 'widget/wordle_input.dart';
 part 'widget/wordle_settings_dialog.dart';
 
 /// [WordleView] is the main screen for the Wordle game.
@@ -30,7 +30,7 @@ class _WordleViewState extends BaseState<WordleView>
   @override
   void initState() {
     super.initState();
-    setupScoreAnimation(this);
+    setupAnimations(this);
   }
 
   @override
@@ -56,7 +56,14 @@ class _WordleViewState extends BaseState<WordleView>
           if (state.lastEarnedScore > 0) {
             playScoreAnimation();
           }
+          if (state.isError) {
+            playErrorAnimation();
+          }
         },
+        listenWhen: (previous, current) =>
+            previous.isError != current.isError ||
+            previous.lastEarnedScore != current.lastEarnedScore ||
+            previous.errorMessage != current.errorMessage,
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           body: Container(
@@ -73,8 +80,11 @@ class _WordleViewState extends BaseState<WordleView>
                       scoreScaleAnimation: scoreScaleAnimation,
                     ),
                     const SizedBox(height: 20),
-                    const _WordleGrid(),
-                    const Spacer(),
+                    _WordleGrid(
+                      shakeAnimation: errorShakeAnimation,
+                      scaleAnimation: errorScaleAnimation,
+                    ),
+                    const SizedBox(height: 20),
                     BlocBuilder<WordleViewModel, WordleState>(
                       builder: (context, state) {
                         if (state.status != WordleGameStatus.playing) {

@@ -41,49 +41,68 @@ class WordleViewModel extends Cubit<WordleState> {
   void removeLetter() {
     if (state.status != WordleGameStatus.playing) return;
     if (state.currentGuess.isNotEmpty) {
-      emit(state.copyWith(
-        currentGuess: state.currentGuess.substring(0, state.currentGuess.length - 1),
-      ),);
+      emit(
+        state.copyWith(
+          currentGuess:
+              state.currentGuess.substring(0, state.currentGuess.length - 1),
+        ),
+      );
     }
   }
 
   /// Submits the current guess.
-  Future<void> submitGuess() async {
+  Future<void> submitGuess(String word) async {
     if (state.status != WordleGameStatus.playing) return;
-    if (state.currentGuess.length != state.wordLength) return;
 
-    final word = state.currentGuess;
-    
+    if (word.length != state.wordLength) {
+      emit(state.copyWith(isError: true));
+      // Reset error flag after 3 seconds
+      Future.delayed(const Duration(seconds: 3), () {
+        if (!isClosed) emit(state.copyWith(isError: false));
+      });
+      return;
+    }
+
+    final wordUpper = word.toUpperCase();
+
     // Validate if word exists
-    final isValid = await WordleUtils.isValidWord(word, state.lang);
+    final isValid = await WordleUtils.isValidWord(wordUpper, state.lang);
     if (!isValid) {
       emit(state.copyWith(errorMessage: 'wordNotValid'));
       return;
     }
 
-    final statuses = _evaluateWord(word, state.targetWord);
-    final row = WordleRow(word: word, statuses: statuses);
+    final statuses = _evaluateWord(wordUpper, state.targetWord);
+    final row = WordleRow(word: wordUpper, statuses: statuses);
     final attempts = List<WordleRow>.from(state.attempts)..add(row);
 
-    WordleGameStatus status = WordleGameStatus.playing;
-    int earnedScore = 0;
+    var status = WordleGameStatus.playing;
+    var earnedScore = 0;
 
-    if (word == state.targetWord) {
+    if (wordUpper == state.targetWord) {
       status = WordleGameStatus.won;
       // Score: word.length * remaining attempts (max 6)
       // If found in 1st attempt: 6, 2nd: 5 ... 6th: 1
-      earnedScore = word.length * (6 - state.attempts.length);
+      earnedScore = wordUpper.length * (6 - state.attempts.length);
       await _updateScore(earnedScore);
     } else if (attempts.length >= 6) {
       status = WordleGameStatus.lost;
     }
 
-    emit(state.copyWith(
-      attempts: attempts,
-      currentGuess: '',
-      status: status,
-      lastEarnedScore: earnedScore,
-    ),);
+    emit(
+      state.copyWith(
+        attempts: attempts,
+        currentGuess: '',
+        status: status,
+        lastEarnedScore: earnedScore,
+      ),
+    );
+  }
+
+  /// Updates current guess.
+  void updateCurrentGuess(String val) {
+    if (state.status != WordleGameStatus.playing) return;
+    emit(state.copyWith(currentGuess: val.toUpperCase()));
   }
 
   List<LetterStatus> _evaluateWord(String word, String target) {

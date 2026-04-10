@@ -3,7 +3,7 @@ part of '../wordle_view.dart';
 class _WordleInput extends StatefulWidget {
   const _WordleInput({required this.wordLength, required this.onSubmitted});
   final int wordLength;
-  final Function(String) onSubmitted;
+  final void Function(String) onSubmitted;
 
   @override
   State<_WordleInput> createState() => _WordleInputState();
@@ -39,8 +39,8 @@ class _WordleInputState extends State<_WordleInput> {
               context.read<WordleViewModel>().updateCurrentGuess(val);
             },
             onSubmitted: (val) {
+              widget.onSubmitted(val.toUpperCase());
               if (val.length == widget.wordLength) {
-                widget.onSubmitted(val.toUpperCase());
                 _controller.clear();
                 _focusNode.requestFocus();
               }
@@ -58,8 +58,8 @@ class _WordleInputState extends State<_WordleInput> {
         const SizedBox(height: 10),
         ElevatedButton.icon(
           onPressed: () {
+            widget.onSubmitted(_controller.text.toUpperCase());
             if (_controller.text.length == widget.wordLength) {
-              widget.onSubmitted(_controller.text.toUpperCase());
               _controller.clear();
               _focusNode.requestFocus();
             }
