@@ -23,6 +23,9 @@ class _RoomActionButton extends StatelessWidget {
               : context.colorScheme.primary,
           backgroundColor: context.colorScheme.surface,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          side: isCreateRoom
+              ? BorderSide(color: context.appColors.successColor, width: 2)
+              : BorderSide.none,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
