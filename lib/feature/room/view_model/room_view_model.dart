@@ -55,7 +55,7 @@ class RoomState {
 class RoomViewModel extends BaseViewModel<RoomState> {
 
   /// Initializes the [RoomViewModel] and starts listening to controller changes.
-  RoomViewModel() : super(const RoomState()) {
+  RoomViewModel({String? initialLang}) : super(RoomState(lang: initialLang ?? 'tr')) {
     playerNameController.addListener(() {
       emit(state.copyWith(playerName: playerNameController.text));
     });
