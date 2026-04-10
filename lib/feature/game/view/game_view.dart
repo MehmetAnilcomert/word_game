@@ -61,7 +61,7 @@ class _GameViewState extends BaseState<GameView> with GameViewMixin {
               state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage!),
+                content: Text(state.errorMessage!.tr()),
                 backgroundColor: context.colorScheme.error,
                 duration: const Duration(seconds: 2),
               ),

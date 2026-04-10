@@ -69,7 +69,7 @@ class _LobbyViewState extends BaseState<LobbyView> with LobbyViewMixin {
           } else if (state is InLobby && state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage!),
+                content: Text(state.errorMessage!.tr()),
                 backgroundColor: context.colorScheme.error,
               ),
             );

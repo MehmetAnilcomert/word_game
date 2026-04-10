@@ -66,5 +66,6 @@ abstract class  LocaleKeys {
   static const playAgain = 'playAgain';
   static const totalScore = 'totalScore';
   static const noInternetConnection = 'noInternetConnection';
+  static const roomAlreadyExists = 'roomAlreadyExists';
 
 }

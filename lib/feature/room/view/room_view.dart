@@ -70,9 +70,9 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    state is game_state.RoomCreationFailed
+                      (state is game_state.RoomCreationFailed
                         ? state.errorMessage
-                        : (state as game_state.RoomJoinFailed).errorMessage,
+                        : (state as game_state.RoomJoinFailed).errorMessage).tr(),
                   ),
                   backgroundColor: context.colorScheme.error,
                 ),

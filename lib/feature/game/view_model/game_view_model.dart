@@ -6,6 +6,7 @@ import 'package:word_game/feature/game/view_model/game_view_model_state.dart';
 import 'package:word_game/product/service/interface/i_game_service.dart';
 import 'package:word_game/product/state/container/product_state_container.dart';
 import 'package:word_game/product/utility/letter_utils.dart';
+import 'package:word_game/product/init/language/locale_keys.g.dart';
 
 /// [GameViewModel] manages the game logic, room management,
 /// and real-time updates for a word game session.
@@ -36,7 +37,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     emit(const RoomCreating());
     try {
       if (await _gameService.doesRoomExist(event.roomId)) {
-        emit(const RoomCreationFailed(errorMessage: 'Room already exists'));
+        emit(const RoomCreationFailed(errorMessage: LocaleKeys.roomAlreadyExists));
         return;
       }
 
@@ -98,7 +99,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       if (room != null) {
         if (room.players.length <= 1) {
           emit(
-            InLobby(players: room.players, errorMessage: 'Not enough players'),
+            InLobby(players: room.players, errorMessage: LocaleKeys.notEnoughPlayer),
           );
           return;
         }

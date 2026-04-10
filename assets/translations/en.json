@@ -61,5 +61,6 @@
   "targetWordLabel": "The word was:",
   "playAgain": "Play Again",
   "totalScore": "Total Score",
-  "noInternetConnection": "Please check your internet connection and try again."
+  "noInternetConnection": "Please check your internet connection and try again.",
+  "roomAlreadyExists": "Room already exists."
 }

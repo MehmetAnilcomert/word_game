@@ -62,5 +62,6 @@
   "targetWordLabel": "Kelime şuydu:",
   "playAgain": "Yeniden Oyna",
   "totalScore": "Toplam Puan",
-  "noInternetConnection": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin."
+  "noInternetConnection": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin.",
+  "roomAlreadyExists": "Oda zaten mevcut."
 }
