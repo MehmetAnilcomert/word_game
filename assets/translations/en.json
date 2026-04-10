@@ -46,5 +46,7 @@
   "wordNotValid": "Word is not valid. Please try another word.",
   "english": "English",
   "turkish": "Turkish",
-  "language": "Language"
+  "language": "Language",
+  "wordGameTitle": "Word Arena",
+  "selectedWordArena": "You have selected Word Arena"
 }

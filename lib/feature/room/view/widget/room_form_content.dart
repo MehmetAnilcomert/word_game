@@ -40,6 +40,7 @@ class _RoomFormContent extends StatelessWidget {
                             icon: Icons.timer,
                             minValue: 1,
                             maxValue: 10,
+                            selectedValue: roomState.endTime,
                             onChanged: (value) => context
                                 .read<RoomViewModel>()
                                 .updateEndTime(value),
@@ -50,6 +51,7 @@ class _RoomFormContent extends StatelessWidget {
                             icon: Icons.person,
                             minValue: 2,
                             maxValue: 10,
+                            selectedValue: roomState.playerNumber,
                             onChanged: (value) => context
                                 .read<RoomViewModel>()
                                 .updatePlayerNumber(value),
@@ -60,6 +62,7 @@ class _RoomFormContent extends StatelessWidget {
                             icon: Icons.question_mark,
                             minValue: 6,
                             maxValue: 12,
+                            selectedValue: roomState.letterNumber,
                             onChanged: (value) => context
                                 .read<RoomViewModel>()
                                 .updateLetterNumber(value),

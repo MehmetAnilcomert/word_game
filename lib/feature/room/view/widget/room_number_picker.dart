@@ -7,12 +7,14 @@ class _IntegerNumberSelector extends StatelessWidget {
     required this.icon,
     required this.minValue,
     required this.maxValue,
+    required this.selectedValue,
     required this.onChanged,
   });
   final String label;
   final IconData icon;
   final int minValue;
   final int maxValue;
+  final int selectedValue;
   final void Function(int) onChanged;
 
   @override
@@ -23,7 +25,7 @@ class _IntegerNumberSelector extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(child: Text(label, style: const TextStyle(fontSize: 16))),
         DropdownButton<int>(
-          value: minValue,
+          value: selectedValue,
           items: List.generate(
             maxValue - minValue + 1,
             (index) => DropdownMenuItem(

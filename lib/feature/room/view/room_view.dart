@@ -35,7 +35,10 @@ class _RoomViewState extends BaseState<RoomView> with RoomViewMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RoomViewModel(),
+      create: (_) {
+        final currentLocale = EasyLocalization.of(context)?.locale.languageCode;
+        return RoomViewModel(initialLang: currentLocale);
+      },
       child: PopScope(
         canPop: false,
         onPopInvokedWithResult: (bool didPop, dynamic result) async {
