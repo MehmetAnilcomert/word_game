@@ -22,55 +22,59 @@ class _WordleInputState extends State<_WordleInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: context.colorScheme.surface.withValues(alpha: 0.9),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: TextField(
-            controller: _controller,
-            focusNode: _focusNode,
-            autofocus: true,
-            maxLength: widget.wordLength,
-            onChanged: (val) {
-              context.read<WordleViewModel>().updateCurrentGuess(val);
-            },
-            onSubmitted: (val) {
-              widget.onSubmitted(val.toUpperCase());
-              if (val.length == widget.wordLength) {
-                _controller.clear();
-                _focusNode.requestFocus();
-              }
-            },
-            decoration: InputDecoration(
-              hintText: LocaleKeys.enterWord.tr(),
-              counterText: '',
-              border: InputBorder.none,
-              icon: Icon(Icons.keyboard, color: context.colorScheme.primary),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: context.colorScheme.surface.withValues(alpha: 0.9),
+              borderRadius: BorderRadius.circular(30),
             ),
-            style: const TextStyle(fontSize: 18),
-            textCapitalization: TextCapitalization.characters,
+            child: TextField(
+              controller: _controller,
+              focusNode: _focusNode,
+              autofocus: true,
+              maxLength: widget.wordLength,
+              onChanged: (val) {
+                context.read<WordleViewModel>().updateCurrentGuess(val);
+              },
+              onSubmitted: (val) {
+                widget.onSubmitted(val.toUpperCase());
+                if (val.length == widget.wordLength) {
+                  _controller.clear();
+                  context.read<WordleViewModel>().updateCurrentGuess('');
+                  _focusNode.requestFocus();
+                }
+              },
+              decoration: InputDecoration(
+                hintText: LocaleKeys.enterWord.tr(),
+                counterText: '',
+                border: InputBorder.none,
+                icon: Icon(Icons.keyboard, color: context.colorScheme.primary),
+              ),
+              style: const TextStyle(fontSize: 18),
+              textCapitalization: TextCapitalization.characters,
+            ),
           ),
         ),
-        const SizedBox(height: 10),
-        ElevatedButton.icon(
+        const SizedBox(width: 12),
+        ElevatedButton(
           onPressed: () {
             widget.onSubmitted(_controller.text.toUpperCase());
             if (_controller.text.length == widget.wordLength) {
               _controller.clear();
+              context.read<WordleViewModel>().updateCurrentGuess('');
               _focusNode.requestFocus();
             }
           },
-          icon: const Icon(Icons.send),
-          label: Text(LocaleKeys.confirm.tr()),
           style: ElevatedButton.styleFrom(
             backgroundColor: context.colorScheme.primary,
             foregroundColor: context.colorScheme.onPrimary,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: const CircleBorder(),
+            padding: const EdgeInsets.all(14),
           ),
+          child: const Icon(Icons.send),
         ),
       ],
     );

@@ -1,6 +1,6 @@
 part of '../wordle_view.dart';
 
-class _WordleGrid extends StatelessWidget {
+class _WordleGrid extends StatefulWidget {
   const _WordleGrid({
     required this.shakeAnimation,
     required this.scaleAnimation,
@@ -10,8 +10,42 @@ class _WordleGrid extends StatelessWidget {
   final Animation<double> scaleAnimation;
 
   @override
+  State<_WordleGrid> createState() => _WordleGridState();
+}
+
+class _WordleGridState extends State<_WordleGrid> {
+  final GlobalKey _currentRowKey = GlobalKey();
+  double _lastBottomInset = -1;
+
+  void _scrollToCurrentRow() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_currentRowKey.currentContext != null) {
+        Scrollable.ensureVisible(
+          _currentRowKey.currentContext!,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          alignment: 0.5,
+        );
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WordleViewModel, WordleState>(
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    if (_lastBottomInset != bottomInset) {
+      _lastBottomInset = bottomInset;
+      if (bottomInset > 0) {
+        _scrollToCurrentRow();
+      }
+    }
+
+    return BlocConsumer<WordleViewModel, WordleState>(
+      listenWhen: (previous, current) =>
+          previous.attempts.length != current.attempts.length,
+      listener: (context, state) {
+        _scrollToCurrentRow();
+      },
       builder: (context, state) {
         return Expanded(
           child: Center(
@@ -27,6 +61,7 @@ class _WordleGrid extends StatelessWidget {
                   final isCurrentRow = rowIdx == state.attempts.length;
 
                   Widget rowWidget = Row(
+                    key: isCurrentRow ? _currentRowKey : null,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(state.wordLength, (colIdx) {
                       String letter = '';
@@ -54,12 +89,12 @@ class _WordleGrid extends StatelessWidget {
 
                   if (isCurrentRow && state.isError) {
                     rowWidget = AnimatedBuilder(
-                      animation: shakeAnimation,
+                      animation: widget.shakeAnimation,
                       builder: (context, child) {
                         return Transform.translate(
-                          offset: Offset(shakeAnimation.value, 0),
+                          offset: Offset(widget.shakeAnimation.value, 0),
                           child: ScaleTransition(
-                            scale: scaleAnimation,
+                            scale: widget.scaleAnimation,
                             child: child,
                           ),
                         );
@@ -101,8 +136,8 @@ class _GridCell extends StatelessWidget {
     Border border = Border.all(
       color: isError
           ? context.colorScheme.error
-          : context.colorScheme.secondary.withValues(alpha: 0.5),
-      width: isError ? 2 : 1,
+          : context.colorScheme.outline,
+      width: 2,
     );
 
     switch (status) {
@@ -110,22 +145,18 @@ class _GridCell extends StatelessWidget {
         if (letter.isNotEmpty) {
           border = Border.all(color: context.colorScheme.primary, width: 2);
         }
-        break;
       case LetterStatus.absent:
         color = context.colorScheme.surfaceContainerHighest;
         textColor = context.colorScheme.onSurfaceVariant;
         border = Border.all(color: Colors.transparent);
-        break;
       case LetterStatus.present:
         color = context.colorScheme.tertiaryContainer;
         textColor = context.colorScheme.onTertiaryContainer;
         border = Border.all(color: Colors.transparent);
-        break;
       case LetterStatus.correct:
         color = context.colorScheme.primaryContainer;
         textColor = context.colorScheme.onPrimaryContainer;
         border = Border.all(color: Colors.transparent);
-        break;
     }
 
     return Container(
