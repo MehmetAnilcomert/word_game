@@ -14,38 +14,49 @@ class TimerViewModel extends Bloc<TimerEvent, TimerViewModelState> {
   }
 
   Timer? _timer;
-  late int? _totalGameTime;
 
   void _onStartTimer(StartTimerEvent event, Emitter<TimerViewModelState> emit) {
     _timer?.cancel();
 
-    _totalGameTime =
-        ((event.endTime - DateTime.now().millisecondsSinceEpoch) / 1000)
-            .floor();
+    // Sektör standardı: Başlatıldığı an ilk kontrolü beklemeden manuel olarak bir kere yap.
+    _evaluateTick(event.endTime);
 
+    // Sektör Standardı: Relative timer.tick yerine Absolute timestamp (UTC veya bitiş zamanından çıkarma) 
+    // kullanmak gerekir. frame-drop, veya telefon ekranı kilitleyince timer drift yaşanmasını önler.
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (isClosed) {
         timer.cancel();
         return;
       }
-
-      final currentRemainingSeconds = _totalGameTime! - timer.tick;
-
-      if (currentRemainingSeconds <= 0) {
-        timer.cancel();
-        add(const EndTimerEvent());
-      } else {
-        final warningThreshold = _totalGameTime! ~/ 2;
-        final isFlashing = currentRemainingSeconds <= 10;
-        final isNearingEnd = currentRemainingSeconds <= warningThreshold;
-
-        add(UpdateTimerEvent(
-          remainingTime: currentRemainingSeconds,
-          isFlashing: isFlashing,
-          isNearingEnd: isNearingEnd,
-        ),);
-      }
+      _evaluateTick(event.endTime);
     });
+  }
+
+  void _evaluateTick(int endTime) {
+    final currentRemainingSeconds =
+        ((endTime - DateTime.now().millisecondsSinceEpoch) / 1000).floor();
+
+    if (currentRemainingSeconds <= 0) {
+      _timer?.cancel();
+      if (!isClosed) {
+        add(const EndTimerEvent());
+      }
+    } else {
+      // Sektör Standardı: Azalma uyarıları odanın kurulma anından ziyade "sabit son XX saniye" şeklinde tasarlanır
+      // Çünkü oyuna son 30 saniye kala giren oyuncu ile ilk baştan beri duran oyuncu farklı renk görmemelidir.
+      final isFlashing = currentRemainingSeconds <= 10;
+      final isNearingEnd = currentRemainingSeconds <= 30;
+
+      if (!isClosed) {
+        add(
+          UpdateTimerEvent(
+            remainingTime: currentRemainingSeconds,
+            isFlashing: isFlashing,
+            isNearingEnd: isNearingEnd,
+          ),
+        );
+      }
+    }
   }
 
   void _onUpdateTimer(
