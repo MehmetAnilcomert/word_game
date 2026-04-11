@@ -20,8 +20,10 @@ class _RoomActionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           foregroundColor: isCreateRoom
               ? context.appColors.successColor
+              : context.colorScheme.onPrimary,
+          backgroundColor: isCreateRoom
+              ? context.colorScheme.surface
               : context.colorScheme.primary,
-          backgroundColor: context.colorScheme.surface,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           side: isCreateRoom
               ? BorderSide(color: context.appColors.successColor, width: 2)
@@ -30,7 +32,16 @@ class _RoomActionButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
         child: isLoading
-            ? CircularProgressIndicator(color: context.colorScheme.surface)
+            ? SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: isCreateRoom
+                      ? context.appColors.successColor
+                      : context.colorScheme.onPrimary,
+                  strokeWidth: 3,
+                ),
+              )
             : Text(
                 isCreateRoom
                     ? LocaleKeys.createRoomButton.tr()
