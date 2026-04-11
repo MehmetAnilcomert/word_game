@@ -59,7 +59,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       emit(InLobby(players: [event.playerName]));
       add(ListenToGameUpdatesEvent(event.roomId));
     } catch (e) {
-      emit(RoomCreationFailed(errorMessage: e.toString()));
+      emit(RoomCreationFailed(errorMessage: e.toString().replaceFirst('Exception: ', '')));
     }
   }
 
@@ -86,7 +86,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       emit(InLobby(players: players));
       add(ListenToGameUpdatesEvent(event.roomId));
     } catch (e) {
-      emit(RoomJoinFailed(errorMessage: e.toString()));
+      emit(RoomJoinFailed(errorMessage: e.toString().replaceFirst('Exception: ', '')));
     }
   }
 
@@ -125,7 +125,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
         }
       }
     } catch (e) {
-      emit(GameError(e.toString()));
+      emit(GameError(e.toString().replaceFirst('Exception: ', '')));
     }
   }
 
@@ -176,7 +176,7 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
         emit(
           GameInProgress(
             (state as GameInProgress).room,
-            errorMessage: e.toString(),
+            errorMessage: e.toString().replaceFirst('Exception: ', ''),
           ),
         );
       }
