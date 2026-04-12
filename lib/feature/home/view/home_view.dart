@@ -45,7 +45,10 @@ class _HomeViewState extends BaseState<HomeView> with HomeViewMixin {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const _HomeTitle(),
+                          GestureDetector(
+                            onTap: onTitleTapped,
+                            child: const _HomeTitle(),
+                          ),
                           const SizedBox(height: 50),
                           _HomeActionButtons(),
                         ],

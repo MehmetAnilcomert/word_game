@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:word_game/product/state/admin_state.dart';
 import 'package:word_game/feature/game/model/game_room.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_event.dart';
 import 'package:word_game/feature/game/view_model/game_view_model_state.dart';
@@ -37,7 +38,8 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     emit(const RoomCreating());
     try {
       if (await _gameService.doesRoomExist(event.roomId)) {
-        emit(const RoomCreationFailed(errorMessage: LocaleKeys.roomAlreadyExists));
+        emit(const RoomCreationFailed(
+            errorMessage: LocaleKeys.roomAlreadyExists));
         return;
       }
 
@@ -59,7 +61,8 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       emit(InLobby(players: [event.playerName]));
       add(ListenToGameUpdatesEvent(event.roomId));
     } catch (e) {
-      emit(RoomCreationFailed(errorMessage: e.toString().replaceFirst('Exception: ', '')));
+      emit(RoomCreationFailed(
+          errorMessage: e.toString().replaceFirst('Exception: ', '')));
     }
   }
 
@@ -86,7 +89,8 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
       emit(InLobby(players: players));
       add(ListenToGameUpdatesEvent(event.roomId));
     } catch (e) {
-      emit(RoomJoinFailed(errorMessage: e.toString().replaceFirst('Exception: ', '')));
+      emit(RoomJoinFailed(
+          errorMessage: e.toString().replaceFirst('Exception: ', '')));
     }
   }
 
@@ -97,9 +101,11 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
     try {
       final room = await _gameService.getRoomData(event.roomId);
       if (room != null) {
-        if (room.players.length <= 1) {
+        if (room.players.length <= 1 && !AdminState.isAdmin) {
           emit(
-            InLobby(players: room.players, errorMessage: LocaleKeys.notEnoughPlayer),
+            InLobby(
+                players: room.players,
+                errorMessage: LocaleKeys.notEnoughPlayer),
           );
           return;
         }
@@ -153,12 +159,14 @@ class GameViewModel extends Bloc<GameEvent, GameViewModelState> {
   ) async {
     await _gameSubscription?.cancel();
 
-    _gameSubscription =
-        _gameService.listenToGameUpdates(event.roomId).listen((room) {
-      add(UpdateGameStateEvent(room));
-    }, onError: (dynamic error) {
-      // Handle error
-    },);
+    _gameSubscription = _gameService.listenToGameUpdates(event.roomId).listen(
+      (room) {
+        add(UpdateGameStateEvent(room));
+      },
+      onError: (dynamic error) {
+        // Handle error
+      },
+    );
   }
 
   Future<void> _onSubmitWord(
